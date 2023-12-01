@@ -1,4 +1,5 @@
 import Hex from './Hex';
+import Point from './Point';
 
 export function getLayoutHexes({ width, height }: { width: number; height: number }): Array<Hex> {
   const hexes: Array<Hex> = [];
@@ -18,4 +19,21 @@ export function getLayoutHexes({ width, height }: { width: number; height: numbe
   }
 
   return hexes;
+}
+
+export function isPointInsideHexCorners({ x, y }: Point, corners: Array<Point>): boolean {
+  let isInside = false;
+
+  for (let i = 0, j = corners.length - 1; i < corners.length; j = i++) {
+    const xi = corners[i].x;
+    const yi = corners[i].y;
+
+    const xj = corners[j].x;
+    const yj = corners[j].y;
+
+    const intersect = yi > y != yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+    if (intersect) isInside = !isInside;
+  }
+
+  return isInside;
 }

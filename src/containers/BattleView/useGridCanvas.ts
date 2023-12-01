@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 
 import { fillCanvas, setCanvasSize } from '../../lib/canvas';
-import { drawHexGrid, getGridLayout } from '../../lib/canvas/drawHex';
+import { drawHexGrid, getGridLayout, setHexagonHoverEvent } from '../../lib/canvas/drawHex';
 
 const useCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -18,6 +18,7 @@ const useCanvas = () => {
 
     const layout = getGridLayout(canvasSize);
     drawHexGrid(ctx, layout);
+    setHexagonHoverEvent(canvas, layout);
   }, []);
 
   return canvasRef;
