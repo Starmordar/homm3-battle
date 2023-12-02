@@ -83,6 +83,10 @@ class Hex {
     return result;
   }
 
+  static isEqual(hex1: Hex, hex2: Hex): boolean {
+    return hex1.q === hex2.q && hex1.r === hex2.r && hex1.s === hex2.s;
+  }
+
   static diagonals: Hex[] = [
     new Hex(2, -1, -1),
     new Hex(1, -2, 1),

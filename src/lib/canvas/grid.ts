@@ -6,6 +6,7 @@ import {
   hexStyles,
   hexLabelStyles,
   activeHexStyles,
+  hexObstacles,
 } from '../../constants/hex';
 
 import { Point, Hex, Layout } from '../gridLayout';
@@ -105,6 +106,9 @@ function fillActiveHex(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) 
   for (let i = 0; i < 6; i++) {
     ctx.lineTo(corners[i].x, corners[i].y);
   }
+
+  const isObstacle = hexObstacles.some((obstacle) => Hex.isEqual(obstacle, hex));
+  if (isObstacle) ctx.fillStyle = 'red';
 
   ctx.fill();
 }

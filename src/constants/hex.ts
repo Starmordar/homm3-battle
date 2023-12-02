@@ -1,3 +1,5 @@
+import { Hex } from '../lib/gridLayout';
+
 export const battleGridSize = { width: 15, height: 11 };
 export const hexagonCount = Math.max(...Object.values(battleGridSize)) + 5;
 
@@ -23,3 +25,12 @@ export const hexLabelStyles = {
 export const activeHexStyles = {
   fillStyle: 'rgba(0, 0, 0, 0.4)',
 } as const;
+
+export const hexObstacles: Array<Hex> = [
+  new Hex(0, -2, 2),
+  new Hex(-1, -1, 2),
+  new Hex(-2, 0, 2),
+  new Hex(0, -1, 1),
+  new Hex(-3, 1, 2),
+  new Hex(1, -3, 2),
+];
