@@ -1,8 +1,7 @@
-type ICanvasSize = { height: number; width: number };
-
-export function setCanvasSize(canvas: HTMLCanvasElement, { height, width }: ICanvasSize) {
-  const ctx = canvas.getContext('2d')!;
-
+export function setCanvasSize(
+  { canvas, ctx }: { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D },
+  { height, width }: { height: number; width: number }
+) {
   // Set display size (css pixels)
   canvas.style.width = width + 'px';
   canvas.style.height = height + 'px';
@@ -14,9 +13,10 @@ export function setCanvasSize(canvas: HTMLCanvasElement, { height, width }: ICan
   ctx.scale(devicePixelRatio, devicePixelRatio);
 }
 
-export function fillCanvas(canvas: HTMLCanvasElement, color: string) {
-  const ctx = canvas.getContext('2d')!;
-
+export function fillCanvas(
+  { canvas, ctx }: { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D },
+  color: string
+) {
   ctx.fillStyle = color;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }

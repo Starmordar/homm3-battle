@@ -1,13 +1,18 @@
-import { battleGridSize, hexLabelColors } from '../../constants/hex';
-import Hex from '../gridLayout/Hex';
-import Layout from '../gridLayout/Layout';
-import Point from '../gridLayout/Point';
+import { fillCanvas, setCanvasSize } from '.';
+import {
+  battleGridSize,
+  hexagonCount,
+  hexLabelColors,
+  hexStyles,
+  hexLabelStyles,
+  activeHexStyles,
+} from '../../constants/hex';
+
+import { Point, Hex, Layout } from '../gridLayout';
 import { getLayoutHexes, isPointInsideHexCorners } from '../gridLayout/utils';
 
-type ICanvasSize = { height: number; width: number };
-
-export function getGridLayout(canvasSize: ICanvasSize): Layout {
-  const pointSize = Math.min(canvasSize.height, canvasSize.width) / 20;
+function getGridLayout(canvasSize: { height: number; width: number }): Layout {
+  const pointSize = Math.min(canvasSize.height, canvasSize.width) / hexagonCount;
 
   const originPoint = new Point((canvasSize.width - pointSize) / 2, canvasSize.height / 2);
   const sizePoint = new Point(pointSize, pointSize);
@@ -19,7 +24,8 @@ export function drawHexGrid(ctx: CanvasRenderingContext2D, layout: Layout) {
   const hexes = getLayoutHexes(battleGridSize);
 
   hexes.forEach((hex) => {
-    const corners = layout.polygonCorners(hex);
+    const corners = layout.getHexCorners(hex);
+
     drawHex(ctx, corners);
     drawHexLabel(ctx, layout, hex);
   });
@@ -35,10 +41,9 @@ function drawHex(ctx: CanvasRenderingContext2D, corners: Array<Point>) {
     ctx.lineTo(corners[i].x, corners[i].y);
   }
 
-  ctx.strokeStyle = 'black';
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = hexStyles.strokeStyle;
+  ctx.lineWidth = hexStyles.lineWidth;
 
-  ctx.closePath();
   ctx.stroke();
 }
 
@@ -46,9 +51,9 @@ function drawHexLabel(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
   const center = layout.hexToPixel(hex);
 
   ctx.fillStyle = getHexLabelColor(hex);
-  ctx.font = '16px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
+  ctx.font = hexLabelStyles.font;
+  ctx.textAlign = hexLabelStyles.textAlign;
+  ctx.textBaseline = hexLabelStyles.textBaseline;
 
   ctx.fillText(`${hex.q},${hex.r},${hex.s}`, center.x, center.y);
 }
@@ -62,9 +67,10 @@ function getHexLabelColor(hex: Hex): string {
   return hexLabelColors.other;
 }
 
-export function setHexagonHoverEvent(canvas: HTMLCanvasElement, layout: Layout) {
-  const ctx = canvas.getContext('2d')!;
-
+export function setHexHoverEvent(
+  { canvas, ctx }: { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D },
+  layout: Layout
+) {
   canvas.addEventListener('mousemove', (evt: MouseEvent) => {
     const rect = (evt.target as HTMLElement).getBoundingClientRect();
     const x = evt.clientX - rect.left;
@@ -81,7 +87,7 @@ function drawActiveHexes(ctx: CanvasRenderingContext2D, layout: Layout, mousePoi
   const hexes = getLayoutHexes(battleGridSize);
 
   const hoverHex = hexes.find((hex) =>
-    isPointInsideHexCorners(mousePoint, layout.polygonCorners(hex))
+    isPointInsideHexCorners(mousePoint, layout.getHexCorners(hex))
   );
 
   if (hoverHex) {
@@ -90,10 +96,10 @@ function drawActiveHexes(ctx: CanvasRenderingContext2D, layout: Layout, mousePoi
 }
 
 function fillActiveHex(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
-  const corners = layout.polygonCorners(hex);
+  const corners = layout.getHexCorners(hex);
 
   ctx.beginPath();
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+  ctx.fillStyle = activeHexStyles.fillStyle;
 
   ctx.moveTo(corners[5].x, corners[5].y);
   for (let i = 0; i < 6; i++) {
@@ -101,4 +107,16 @@ function fillActiveHex(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) 
   }
 
   ctx.fill();
+}
+
+export function setupGridCanvas(canvas: HTMLCanvasElement) {
+  const ctx = canvas.getContext('2d')!;
+  const canvasSize = { width: window.innerWidth, height: window.innerHeight };
+
+  setCanvasSize({ canvas, ctx }, canvasSize);
+  fillCanvas({ canvas, ctx }, 'transparent');
+
+  const layout = getGridLayout(canvasSize);
+  drawHexGrid(ctx, layout);
+  setHexHoverEvent({ canvas, ctx }, layout);
 }

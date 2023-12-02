@@ -33,7 +33,7 @@ class Layout {
     return new Point(this.size.x * Math.cos(angle), this.size.y * Math.sin(angle));
   }
 
-  polygonCorners(hex: Hex): Array<Point> {
+  getHexCorners(hex: Hex): Array<Point> {
     const center = this.hexToPixel(hex);
     const corners = [];
 

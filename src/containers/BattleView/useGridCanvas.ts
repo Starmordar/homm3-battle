@@ -1,9 +1,7 @@
 import { useRef, useEffect } from 'react';
+import { setupGridCanvas } from '../../lib/canvas/grid';
 
-import { fillCanvas, setCanvasSize } from '../../lib/canvas';
-import { drawHexGrid, getGridLayout, setHexagonHoverEvent } from '../../lib/canvas/drawHex';
-
-const useCanvas = () => {
+const useGridCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -11,16 +9,10 @@ const useCanvas = () => {
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
 
-    const canvasSize = { width: window.innerWidth, height: window.innerHeight };
-
-    setCanvasSize(canvas, canvasSize);
-    fillCanvas(canvas, 'transparent');
-
-    const layout = getGridLayout(canvasSize);
-    drawHexGrid(ctx, layout);
-    setHexagonHoverEvent(canvas, layout);
+    setupGridCanvas(canvas);
   }, []);
 
   return canvasRef;
 };
-export default useCanvas;
+
+export default useGridCanvas;
