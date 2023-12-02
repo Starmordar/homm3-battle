@@ -26,6 +26,7 @@ class HexagonalCanvas extends Canvas {
   readonly options: HexagonalCanvasOptions;
   readonly layout: Layout;
 
+  private activeHex = new Hexagon(0, 0, 0);
   private reachableHexes: IReachableHexes = { fringes: [], path: {} };
 
   constructor(canvas: HTMLCanvasElement, options: HexagonalCanvasOptions) {
@@ -51,6 +52,7 @@ class HexagonalCanvas extends Canvas {
     this.drawReachableHexes();
     this.drawHexagonalGrid();
     this.setHexHoverEvent();
+    this.setOnClickEvent();
   }
 
   private moveNotAllowed(hex: Hexagon) {
@@ -60,7 +62,7 @@ class HexagonalCanvas extends Canvas {
   }
 
   private computeReachableHexes() {
-    this.reachableHexes = getReachableHexes(new Hexagon(0, 0, 0), this.options.obstacles, 4);
+    this.reachableHexes = getReachableHexes(this.activeHex, this.options.obstacles, 4);
   }
 
   private drawReachableHexes() {
@@ -176,6 +178,24 @@ class HexagonalCanvas extends Canvas {
 
     this.canvas.classList.add(newCursor);
     this.canvas.classList.remove(oldCursor);
+  }
+
+  private setOnClickEvent() {
+    this.canvas.addEventListener('click', (evt: MouseEvent) => {
+      const rect = (evt.target as HTMLElement).getBoundingClientRect();
+      const x = evt.clientX - rect.left;
+      const y = evt.clientY - rect.top;
+
+      console.log('this.reachableHexes :>> ', this.reachableHexes);
+
+      const lastHex = this.reachableHexes.fringes
+        .flat()
+        .find((reachable) =>
+          isPointInsideHexCorners(new Point(x, y), this.layout.hexToCorners(reachable))
+        );
+
+      if (!lastHex) return;
+    });
   }
 }
 
