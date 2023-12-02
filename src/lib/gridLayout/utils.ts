@@ -1,8 +1,15 @@
-import Hex from './Hex';
+import { battleGridSize } from '../../constants/hex';
+import Hexagon from './Hexagon';
 import Point from './Point';
 
-export function getLayoutHexes({ width, height }: { width: number; height: number }): Array<Hex> {
-  const hexes: Array<Hex> = [];
+export function getLayoutHexes({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}): Array<Hexagon> {
+  const hexes: Array<Hexagon> = [];
 
   const rowStart = -Math.floor(width / 2);
   const rowEnd = rowStart + width;
@@ -14,7 +21,7 @@ export function getLayoutHexes({ width, height }: { width: number; height: numbe
     const offset = -Math.floor(j / 2);
 
     for (let i = rowStart + offset; i < rowEnd + offset; i++) {
-      hexes.push(new Hex(i, j, -i - j));
+      hexes.push(new Hexagon(i, j, -i - j));
     }
   }
 
@@ -38,51 +45,35 @@ export function isPointInsideHexCorners({ x, y }: Point, corners: Array<Point>):
   return isInside;
 }
 
-function isObstacle(hex: Hex, obstacles: Array<Hex>): boolean {
-  for (const obstackle of obstacles) {
-    if (hex.toString() === obstackle.toString()) return true;
-  }
+function isObstacle(hex: Hexagon, obstacles: Array<Hexagon>): boolean {
+  return obstacles.some((obstacle) => Hexagon.isEqual(hex, obstacle));
+}
+
+function isOutsideHexLayout(hex: Hexagon, size: { width: number; height: number }): boolean {
+  const heightBorder = Math.floor(size.height / 2);
+
+  if (hex.r < -heightBorder || hex.r > heightBorder) return true;
+  if (Math.abs(hex.q) + Math.abs(hex.s) > size.width) return true;
+
+  if (hex.r === -5 && hex.s > 9) return true;
+  if (hex.r === -3 && hex.s > 8) return true;
+  if (hex.r === -1 && hex.s > 7) return true;
+  if (hex.r === 1 && hex.s > 6) return true;
+  if (hex.r === 3 && hex.s > 5) return true;
+  if (hex.r === 5 && hex.s > 4) return true;
 
   return false;
 }
 
-function isOutsideBorders(hex: Hex): boolean {
-  if (hex.r < -5 || hex.r > 5) return true;
-  if (Math.abs(hex.q) + Math.abs(hex.s) > 15) return true;
-
-  switch (hex.r) {
-    case -5:
-      if (hex.s > 9) return true;
-      return false;
-    case -3:
-      if (hex.s > 8) return true;
-      return false;
-    case -1:
-      if (hex.s > 7) return true;
-      return false;
-    case 1:
-      if (hex.s > 6) return true;
-      return false;
-    case 3:
-      if (hex.s > 5) return true;
-      return false;
-    case 5:
-      if (hex.s > 4) return true;
-      return false;
-    default:
-      return false;
-  }
-}
-export function getReachableHexes(activeHex: Hex, obstacles: Array<Hex>, range: number) {
-  const fringes: Array<Array<Hex>> = [];
+export function getReachableHexes(activeHex: Hexagon, obstacles: Array<Hexagon>, range: number) {
+  const fringes: Array<Array<Hexagon>> = [];
 
   const costSoFar: Record<string, number> = {};
-  const path: Record<string, null | Hex> = {};
+  const path: Record<string, null | Hexagon> = {};
 
   costSoFar[activeHex.toString()] = 0;
   path[activeHex.toString()] = null;
 
-  console.log('costSoFar, path :>> ', costSoFar, path);
   fringes.push([activeHex]);
 
   for (let i = 1; i <= range; i++) {
@@ -91,15 +82,18 @@ export function getReachableHexes(activeHex: Hex, obstacles: Array<Hex>, range: 
     fringes[i - 1].forEach((hex) => {
       for (let j = 0; j < 6; j++) {
         const neighbor = hex.neighbor(j);
+
         if (
-          !isObstacle(neighbor, obstacles) &&
-          costSoFar[neighbor.toString()] === undefined &&
-          !isOutsideBorders(neighbor)
+          isObstacle(neighbor, obstacles) ||
+          isOutsideHexLayout(neighbor, battleGridSize) ||
+          costSoFar[neighbor.toString()] !== undefined
         ) {
-          costSoFar[neighbor.toString()] = i;
-          path[neighbor.toString()] = hex;
-          fringes[i].push(neighbor);
+          continue;
         }
+
+        costSoFar[neighbor.toString()] = i;
+        path[neighbor.toString()] = hex;
+        fringes[i].push(neighbor);
       }
     });
   }

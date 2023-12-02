@@ -9,17 +9,17 @@ import {
 
 import Canvas, { CanvasOptions } from './Canvas';
 
-import { Point, Hex, Layout } from '../gridLayout';
+import { Point, Hexagon, Layout } from '../gridLayout';
 import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../gridLayout/utils';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
-  obstacles: Array<Hex>;
+  obstacles: Array<Hexagon>;
   backgroundImage: string;
 }
 
 interface IReachableHexes {
-  fringes: Hex[][];
-  path: Record<string, Hex | null>;
+  fringes: Hexagon[][];
+  path: Record<string, Hexagon | null>;
 }
 
 class HexagonalCanvas extends Canvas {
@@ -42,7 +42,7 @@ class HexagonalCanvas extends Canvas {
     const originPoint = new Point((width - pointSize) / 2, height / 2);
     const sizePoint = new Point(pointSize, pointSize);
 
-    return new Layout(Layout.pointy, sizePoint, originPoint);
+    return new Layout(Layout.pointyOnTop, sizePoint, originPoint);
   }
 
   public setupCanvas() {
@@ -53,19 +53,19 @@ class HexagonalCanvas extends Canvas {
     this.setHexHoverEvent();
   }
 
-  private moveNotAllowed(hex: Hex) {
+  private moveNotAllowed(hex: Hexagon) {
     return !this.reachableHexes.fringes
       .flat()
-      .find((reachableHex) => Hex.isEqual(reachableHex, hex));
+      .find((reachableHex) => Hexagon.isEqual(reachableHex, hex));
   }
 
   private computeReachableHexes() {
-    this.reachableHexes = getReachableHexes(new Hex(0, 0, 0), this.options.obstacles, 4);
+    this.reachableHexes = getReachableHexes(new Hexagon(0, 0, 0), this.options.obstacles, 4);
   }
 
   private drawReachableHexes() {
     this.reachableHexes.fringes.flat().forEach((hex) => {
-      const corners = this.layout.getHexCorners(hex);
+      const corners = this.layout.hexToCorners(hex);
 
       this.ctx.beginPath();
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
@@ -83,7 +83,7 @@ class HexagonalCanvas extends Canvas {
     const hexes = getLayoutHexes(battleGridSize);
 
     hexes.forEach((hex) => {
-      const corners = this.layout.getHexCorners(hex);
+      const corners = this.layout.hexToCorners(hex);
 
       this.drawHexOutline(corners);
       this.drawHexLabel(hex);
@@ -106,7 +106,7 @@ class HexagonalCanvas extends Canvas {
     this.ctx.stroke();
   }
 
-  private drawHexLabel(hex: Hex) {
+  private drawHexLabel(hex: Hexagon) {
     const center = this.layout.hexToPixel(hex);
 
     this.ctx.fillStyle = this.getHexLabelColor(hex);
@@ -117,7 +117,7 @@ class HexagonalCanvas extends Canvas {
     this.ctx.fillText(`${hex.q},${hex.r},${hex.s}`, center.x, center.y);
   }
 
-  private getHexLabelColor(hex: Hex): string {
+  private getHexLabelColor(hex: Hexagon): string {
     if (hex.q === 0 && hex.r === 0 && hex.s === 0) return hexLabelColors.startHex;
     else if (hex.q === 0) return hexLabelColors.zeroQ;
     else if (hex.r === 0) return hexLabelColors.zeroR;
@@ -144,7 +144,7 @@ class HexagonalCanvas extends Canvas {
     const hexes = getLayoutHexes(battleGridSize);
 
     const hoveredHex = hexes.find((hex) =>
-      isPointInsideHexCorners(hoveredPoint, this.layout.getHexCorners(hex))
+      isPointInsideHexCorners(hoveredPoint, this.layout.hexToCorners(hex))
     );
 
     if (hoveredHex && !this.moveNotAllowed(hoveredHex)) {
@@ -154,8 +154,8 @@ class HexagonalCanvas extends Canvas {
     this.setMoveCursor(hoveredHex);
   }
 
-  private highlightHex(hex: Hex) {
-    const corners = this.layout.getHexCorners(hex);
+  private highlightHex(hex: Hexagon) {
+    const corners = this.layout.hexToCorners(hex);
 
     this.ctx.beginPath();
     this.ctx.fillStyle = activeHexStyles.fillStyle;
@@ -168,7 +168,7 @@ class HexagonalCanvas extends Canvas {
     this.ctx.fill();
   }
 
-  private setMoveCursor(hex: Hex | undefined) {
+  private setMoveCursor(hex: Hexagon | undefined) {
     const moveNotAllowed = !hex || this.moveNotAllowed(hex);
 
     const newCursor = moveNotAllowed ? 'cursor-not-allowed' : 'cursor-move-unit';

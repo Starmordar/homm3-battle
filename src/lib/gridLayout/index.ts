@@ -1,6 +1,6 @@
-import Hex from './Hex';
+import Hexagon from './Hexagon';
 import Layout from './Layout';
-import Orientation from './Orientation';
+import OrientationMatrix from './OrientationMatrix';
 import Point from './Point';
 
-export { Point, Hex, Layout, Orientation };
+export { Point, Hexagon, Layout, OrientationMatrix };
