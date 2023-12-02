@@ -8,7 +8,17 @@ body {
 
 canvas {
   /* background-image: url('./assets/battlefields/bg.jpg'); */
+  cursor: url('./assets/cursor/move-unit.png') 16 16, pointer;
+
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.cursor-move-unit {
+  cursor: url('./assets/cursor/move-unit.png') 16 16, default;
+}
+
+.cursor-not-allowed {
+  cursor: url('./assets/cursor/not_allowed.png') 16 16, default;
 }

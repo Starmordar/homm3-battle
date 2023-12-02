@@ -44,7 +44,6 @@ class Canvas {
     const { width, height } = this.options.size;
     const image = await loadImage(url);
 
-    console.log('image :>> ', image);
     this.ctx.drawImage(image, 0, 0, width, height);
   }
 }

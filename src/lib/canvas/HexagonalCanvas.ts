@@ -113,6 +113,8 @@ class HexagonalCanvas extends Canvas {
     if (hoveredHex) {
       this.highlightHex(hoveredHex);
     }
+
+    this.setMoveCursor(hoveredHex);
   }
 
   private highlightHex(hex: Hex) {
@@ -126,10 +128,18 @@ class HexagonalCanvas extends Canvas {
       this.ctx.lineTo(corners[i].x, corners[i].y);
     }
 
-    const isObstacle = this.options.obstacles.some((obstacle) => Hex.isEqual(obstacle, hex));
-    if (isObstacle) this.ctx.fillStyle = 'red';
-
     this.ctx.fill();
+  }
+
+  private setMoveCursor(hex: Hex | undefined) {
+    const moveNotAllowed =
+      !hex || this.options.obstacles.some((obstacle) => Hex.isEqual(obstacle, hex));
+
+    const newCursor = moveNotAllowed ? 'cursor-not-allowed' : 'cursor-move-unit';
+    const oldCursor = moveNotAllowed ? 'cursor-move-unit' : 'cursor-not-allowed';
+
+    this.canvas.classList.add(newCursor);
+    this.canvas.classList.remove(oldCursor);
   }
 }
 

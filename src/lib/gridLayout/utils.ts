@@ -37,3 +37,36 @@ export function isPointInsideHexCorners({ x, y }: Point, corners: Array<Point>):
 
   return isInside;
 }
+
+// export function getReachableHexes(activeHex, movement, obstackles, friendlyUnits) {
+//   const fringes = [];
+
+//   const costSoFar = {};
+//   const cameFrom = {};
+
+//   costSoFar[activeHex] = 0;
+//   cameFrom[activeHex] = null;
+//   fringes.push([activeHex]);
+
+//   for (let i = 1; i <= movement; i++) {
+//     fringes.push([]);
+
+//     fringes[i - 1].forEach((hex) => {
+//       for (let j = 0; j < 6; j++) {
+//         const neighbor = hex.neighbor(j);
+//         if (
+//           !this.isObstacle(neighbor, obstackles) &&
+//           !this.isObstacle(neighbor, friendlyUnits) &&
+//           costSoFar[neighbor] === undefined &&
+//           !this.isOutsideBorders(neighbor)
+//         ) {
+//           costSoFar[neighbor] = i;
+//           cameFrom[neighbor] = hex;
+//           fringes[i].push(neighbor);
+//         }
+//       }
+//     });
+//   }
+
+//   return { fringes: fringes, came_from: cameFrom };
+// }
