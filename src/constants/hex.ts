@@ -23,7 +23,7 @@ export const hexLabelStyles = {
 } as const;
 
 export const activeHexStyles = {
-  fillStyle: 'rgba(0, 0, 0, 0.4)',
+  fillStyle: 'rgba(0, 0, 0, 0.5)',
 } as const;
 
 export const hexObstacles: Array<Hex> = [

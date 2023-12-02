@@ -10,16 +10,23 @@ import {
 import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hex, Layout } from '../gridLayout';
-import { getLayoutHexes, isPointInsideHexCorners } from '../gridLayout/utils';
+import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../gridLayout/utils';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hex>;
   backgroundImage: string;
 }
 
+interface IReachableHexes {
+  fringes: Hex[][];
+  path: Record<string, Hex | null>;
+}
+
 class HexagonalCanvas extends Canvas {
   readonly options: HexagonalCanvasOptions;
   readonly layout: Layout;
+
+  private reachableHexes: IReachableHexes = { fringes: [], path: {} };
 
   constructor(canvas: HTMLCanvasElement, options: HexagonalCanvasOptions) {
     super(canvas, options);
@@ -39,8 +46,37 @@ class HexagonalCanvas extends Canvas {
   }
 
   public setupCanvas() {
+    this.computeReachableHexes();
+
+    this.drawReachableHexes();
     this.drawHexagonalGrid();
     this.setHexHoverEvent();
+  }
+
+  private moveNotAllowed(hex: Hex) {
+    return !this.reachableHexes.fringes
+      .flat()
+      .find((reachableHex) => Hex.isEqual(reachableHex, hex));
+  }
+
+  private computeReachableHexes() {
+    this.reachableHexes = getReachableHexes(new Hex(0, 0, 0), this.options.obstacles, 4);
+  }
+
+  private drawReachableHexes() {
+    this.reachableHexes.fringes.flat().forEach((hex) => {
+      const corners = this.layout.getHexCorners(hex);
+
+      this.ctx.beginPath();
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+
+      this.ctx.moveTo(corners[5].x, corners[5].y);
+      for (let i = 0; i < 6; i++) {
+        this.ctx.lineTo(corners[i].x, corners[i].y);
+      }
+
+      this.ctx.fill();
+    });
   }
 
   private drawHexagonalGrid() {
@@ -98,6 +134,7 @@ class HexagonalCanvas extends Canvas {
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+      this.drawReachableHexes();
       this.drawHexagonalGrid();
       this.highlightHoveredHex(new Point(x, y));
     });
@@ -110,7 +147,7 @@ class HexagonalCanvas extends Canvas {
       isPointInsideHexCorners(hoveredPoint, this.layout.getHexCorners(hex))
     );
 
-    if (hoveredHex) {
+    if (hoveredHex && !this.moveNotAllowed(hoveredHex)) {
       this.highlightHex(hoveredHex);
     }
 
@@ -132,8 +169,7 @@ class HexagonalCanvas extends Canvas {
   }
 
   private setMoveCursor(hex: Hex | undefined) {
-    const moveNotAllowed =
-      !hex || this.options.obstacles.some((obstacle) => Hex.isEqual(obstacle, hex));
+    const moveNotAllowed = !hex || this.moveNotAllowed(hex);
 
     const newCursor = moveNotAllowed ? 'cursor-not-allowed' : 'cursor-move-unit';
     const oldCursor = moveNotAllowed ? 'cursor-move-unit' : 'cursor-not-allowed';

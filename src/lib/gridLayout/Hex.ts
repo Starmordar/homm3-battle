@@ -83,6 +83,10 @@ class Hex {
     return result;
   }
 
+  toString(): string {
+    return `${this.q},${this.r},${this.s}`;
+  }
+
   static isEqual(hex1: Hex, hex2: Hex): boolean {
     return hex1.q === hex2.q && hex1.r === hex2.r && hex1.s === hex2.s;
   }

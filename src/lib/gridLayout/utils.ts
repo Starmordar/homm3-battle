@@ -38,35 +38,71 @@ export function isPointInsideHexCorners({ x, y }: Point, corners: Array<Point>):
   return isInside;
 }
 
-// export function getReachableHexes(activeHex, movement, obstackles, friendlyUnits) {
-//   const fringes = [];
+function isObstacle(hex: Hex, obstacles: Array<Hex>): boolean {
+  for (const obstackle of obstacles) {
+    if (hex.toString() === obstackle.toString()) return true;
+  }
 
-//   const costSoFar = {};
-//   const cameFrom = {};
+  return false;
+}
 
-//   costSoFar[activeHex] = 0;
-//   cameFrom[activeHex] = null;
-//   fringes.push([activeHex]);
+function isOutsideBorders(hex: Hex): boolean {
+  if (hex.r < -5 || hex.r > 5) return true;
+  if (Math.abs(hex.q) + Math.abs(hex.s) > 15) return true;
 
-//   for (let i = 1; i <= movement; i++) {
-//     fringes.push([]);
+  switch (hex.r) {
+    case -5:
+      if (hex.s > 9) return true;
+      return false;
+    case -3:
+      if (hex.s > 8) return true;
+      return false;
+    case -1:
+      if (hex.s > 7) return true;
+      return false;
+    case 1:
+      if (hex.s > 6) return true;
+      return false;
+    case 3:
+      if (hex.s > 5) return true;
+      return false;
+    case 5:
+      if (hex.s > 4) return true;
+      return false;
+    default:
+      return false;
+  }
+}
+export function getReachableHexes(activeHex: Hex, obstacles: Array<Hex>, range: number) {
+  const fringes: Array<Array<Hex>> = [];
 
-//     fringes[i - 1].forEach((hex) => {
-//       for (let j = 0; j < 6; j++) {
-//         const neighbor = hex.neighbor(j);
-//         if (
-//           !this.isObstacle(neighbor, obstackles) &&
-//           !this.isObstacle(neighbor, friendlyUnits) &&
-//           costSoFar[neighbor] === undefined &&
-//           !this.isOutsideBorders(neighbor)
-//         ) {
-//           costSoFar[neighbor] = i;
-//           cameFrom[neighbor] = hex;
-//           fringes[i].push(neighbor);
-//         }
-//       }
-//     });
-//   }
+  const costSoFar: Record<string, number> = {};
+  const path: Record<string, null | Hex> = {};
 
-//   return { fringes: fringes, came_from: cameFrom };
-// }
+  costSoFar[activeHex.toString()] = 0;
+  path[activeHex.toString()] = null;
+
+  console.log('costSoFar, path :>> ', costSoFar, path);
+  fringes.push([activeHex]);
+
+  for (let i = 1; i <= range; i++) {
+    fringes.push([]);
+
+    fringes[i - 1].forEach((hex) => {
+      for (let j = 0; j < 6; j++) {
+        const neighbor = hex.neighbor(j);
+        if (
+          !isObstacle(neighbor, obstacles) &&
+          costSoFar[neighbor.toString()] === undefined &&
+          !isOutsideBorders(neighbor)
+        ) {
+          costSoFar[neighbor.toString()] = i;
+          path[neighbor.toString()] = hex;
+          fringes[i].push(neighbor);
+        }
+      }
+    });
+  }
+
+  return { fringes, path };
+}
