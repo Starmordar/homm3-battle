@@ -14,6 +14,7 @@ const useGridCanvas = () => {
       backgroundColor: 'transparent',
       size: { width: window.innerWidth, height: window.innerHeight },
       obstacles: hexObstacles,
+      backgroundImage: 'src/assets/battlefields/CmBkDrDd.png',
     };
 
     const hexCanvas = new HexagonalCanvas(canvas, options);

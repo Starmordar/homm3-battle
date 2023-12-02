@@ -14,6 +14,7 @@ import { getLayoutHexes, isPointInsideHexCorners } from '../gridLayout/utils';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hex>;
+  backgroundImage: string;
 }
 
 class HexagonalCanvas extends Canvas {

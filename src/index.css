@@ -5,3 +5,10 @@ body {
 :root {
   overflow: hidden;
 }
+
+canvas {
+  /* background-image: url('./assets/battlefields/bg.jpg'); */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

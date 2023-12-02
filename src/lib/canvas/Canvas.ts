@@ -1,3 +1,5 @@
+import { loadImage } from '../common/loadImage';
+
 export interface CanvasOptions {
   size: { height: number; width: number };
   backgroundColor: string;
@@ -19,7 +21,7 @@ class Canvas {
     this.fillCanvas();
   }
 
-  private setCanvasSize() {
+  protected setCanvasSize() {
     const { width, height } = this.options.size;
 
     // Set display size (css pixels)
@@ -33,9 +35,17 @@ class Canvas {
     this.ctx.scale(devicePixelRatio, devicePixelRatio);
   }
 
-  private fillCanvas() {
+  protected fillCanvas() {
     this.ctx.fillStyle = this.options.backgroundColor;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  protected async setBackgroundImage(url: string) {
+    const { width, height } = this.options.size;
+    const image = await loadImage(url);
+
+    console.log('image :>> ', image);
+    this.ctx.drawImage(image, 0, 0, width, height);
   }
 }
 
