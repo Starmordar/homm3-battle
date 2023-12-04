@@ -26,7 +26,7 @@ class HexagonalCanvas extends Canvas {
   readonly options: HexagonalCanvasOptions;
   readonly layout: Layout;
 
-  private activeHex = new Hexagon(0, 0, 0);
+  private activeHex = new Hexagon(-7, 0, 7);
   private reachableHexes: IReachableHexes = { fringes: [], path: {} };
 
   constructor(canvas: HTMLCanvasElement, options: HexagonalCanvasOptions) {
@@ -40,7 +40,7 @@ class HexagonalCanvas extends Canvas {
     const { width, height } = this.options.size;
     const pointSize = Math.min(height, width) / hexagonCount;
 
-    const originPoint = new Point((width - pointSize) / 2, height / 2);
+    const originPoint = new Point((width - pointSize) / 2, height / 2 + height / 11);
     const sizePoint = new Point(pointSize, pointSize);
 
     return new Layout(Layout.pointyOnTop, sizePoint, originPoint);
@@ -49,8 +49,8 @@ class HexagonalCanvas extends Canvas {
   public setupCanvas() {
     this.computeReachableHexes();
 
-    this.drawReachableHexes();
     this.drawHexagonalGrid();
+    this.drawReachableHexes();
     this.setHexHoverEvent();
     this.setOnClickEvent();
   }
@@ -70,7 +70,7 @@ class HexagonalCanvas extends Canvas {
       const corners = this.layout.hexToCorners(hex);
 
       this.ctx.beginPath();
-      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
 
       this.ctx.moveTo(corners[5].x, corners[5].y);
       for (let i = 0; i < 6; i++) {
@@ -109,14 +109,14 @@ class HexagonalCanvas extends Canvas {
   }
 
   private drawHexLabel(hex: Hexagon) {
-    const center = this.layout.hexToPixel(hex);
+    // const center = this.layout.hexToPixel(hex);
 
     this.ctx.fillStyle = this.getHexLabelColor(hex);
     this.ctx.font = hexLabelStyles.font;
     this.ctx.textAlign = hexLabelStyles.textAlign;
     this.ctx.textBaseline = hexLabelStyles.textBaseline;
 
-    this.ctx.fillText(`${hex.q},${hex.r},${hex.s}`, center.x, center.y);
+    // this.ctx.fillText(`${hex.q},${hex.r},${hex.s}`, center.x, center.y);
   }
 
   private getHexLabelColor(hex: Hexagon): string {
@@ -129,7 +129,7 @@ class HexagonalCanvas extends Canvas {
   }
 
   private setHexHoverEvent() {
-    this.canvas.addEventListener('mousemove', (evt: MouseEvent) => {
+    this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
       const rect = (evt.target as HTMLElement).getBoundingClientRect();
       const x = evt.clientX - rect.left;
       const y = evt.clientY - rect.top;
@@ -186,16 +186,27 @@ class HexagonalCanvas extends Canvas {
       const x = evt.clientX - rect.left;
       const y = evt.clientY - rect.top;
 
-      console.log('this.reachableHexes :>> ', this.reachableHexes);
-
-      const lastHex = this.reachableHexes.fringes
+      let lastHex = this.reachableHexes.fringes
         .flat()
         .find((reachable) =>
           isPointInsideHexCorners(new Point(x, y), this.layout.hexToCorners(reachable))
         );
 
       if (!lastHex) return;
+
+      const animationPath: Array<Hexagon> = [];
+
+      while (lastHex !== null) {
+        animationPath.push(lastHex);
+        lastHex = this.reachableHexes.path[lastHex?.toString()] as Hexagon;
+      }
+
+      this.animate(animationPath);
     });
+  }
+
+  private animate(path: Array<Hexagon>) {
+    console.log(path);
   }
 }
 

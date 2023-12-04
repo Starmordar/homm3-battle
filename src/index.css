@@ -7,8 +7,8 @@ body {
 }
 
 canvas {
-  /* background-image: url('./assets/battlefields/bg.jpg'); */
-  cursor: url('./assets/cursor/move-unit.png') 16 16, pointer;
+  /* background-image: url('./assets/battlefields/1_0.jpg'); */
+  cursor: url('./assets/cursor/move-unit.png') 8 8, pointer;
 
   background-repeat: no-repeat;
   background-position: center;
@@ -16,9 +16,38 @@ canvas {
 }
 
 .cursor-move-unit {
-  cursor: url('./assets/cursor/move-unit.png') 16 16, default;
+  cursor: url('./assets/cursor/move-unit.png') 8 8, default;
 }
 
 .cursor-not-allowed {
-  cursor: url('./assets/cursor/not_allowed.png') 16 16, default;
+  cursor: url('./assets/cursor/not_allowed.png') 8 8, default;
+}
+
+.canvas-wrapper {
+  display: flex;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.grid-canvas {
+  margin: 0 auto;
+  z-index: 2;
+}
+
+.background-canvas {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  z-index: 0;
+}
+
+.hero-canvas {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  z-index: 1;
 }

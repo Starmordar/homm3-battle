@@ -1,8 +1,7 @@
 import { useRef, useEffect } from 'react';
-import HexagonalCanvas from '../../lib/canvas/HexagonalCanvas';
-import { hexObstacles } from '../../constants/hex';
+import TerrarianCanvas from '../../lib/canvas/TerrarianCanvas';
 
-const useGridCanvas = () => {
+const useTerrarianCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -16,15 +15,14 @@ const useGridCanvas = () => {
         width: Math.min(window.innerHeight * 1.5, window.innerWidth),
         height: window.innerHeight - 100,
       },
-      obstacles: hexObstacles,
       backgroundImage: 'src/assets/battlefields/1_0.jpg',
     };
 
-    const hexCanvas = new HexagonalCanvas(canvas, options);
-    hexCanvas.setupCanvas();
+    const hexCanvas = new TerrarianCanvas(canvas, options);
+    hexCanvas.setup();
   }, []);
 
   return canvasRef;
 };
 
-export default useGridCanvas;
+export default useTerrarianCanvas;
