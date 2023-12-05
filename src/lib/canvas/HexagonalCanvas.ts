@@ -173,8 +173,8 @@ class HexagonalCanvas extends Canvas {
   private setMoveCursor(hex: Hexagon | undefined) {
     const moveNotAllowed = !hex || this.moveNotAllowed(hex);
 
-    const newCursor = moveNotAllowed ? 'cursor-not-allowed' : 'cursor-move-unit';
-    const oldCursor = moveNotAllowed ? 'cursor-move-unit' : 'cursor-not-allowed';
+    const newCursor = moveNotAllowed ? 'cursor-stop' : 'cursor-move';
+    const oldCursor = moveNotAllowed ? 'cursor-move' : 'cursor-stop';
 
     this.canvas.classList.add(newCursor);
     this.canvas.classList.remove(oldCursor);

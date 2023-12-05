@@ -14,7 +14,7 @@ function BattleView() {
 
   return (
     <div className="canvas-wrapper">
-      <canvas className="ui-canvas" ref={uiCanvas} />
+      <canvas className="ui-canvas cursor-default" ref={uiCanvas} />
 
       <canvas className="hero-canvas" ref={heroCanvas} />
       <canvas className="background-canvas" ref={terrarianCanvas} />
