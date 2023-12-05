@@ -28,9 +28,9 @@ export const hero2SpriteOptions: IAnimatedSpriteOptions = {
 export const cornerGems: ISpriteOptions = {
   url: '/src/assets/cornergems.png',
   width: 46,
-  height: 46,
+  height: 45,
   canvasWidth: 46,
-  canvasHeight: 46,
+  canvasHeight: 45,
 };
 // "corner_gems": {
 //   path: `${UI_DIR}/sprites/cornerGems.png`,

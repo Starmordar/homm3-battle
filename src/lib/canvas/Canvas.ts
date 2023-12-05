@@ -5,13 +5,13 @@ export interface CanvasOptions {
   backgroundColor: string;
 }
 
-class Canvas {
+class Canvas<Options extends CanvasOptions> {
   readonly canvas: HTMLCanvasElement;
   readonly ctx: CanvasRenderingContext2D;
 
-  readonly options: CanvasOptions;
+  readonly options: Options;
 
-  constructor(canvas: HTMLCanvasElement, options: CanvasOptions) {
+  constructor(canvas: HTMLCanvasElement, options: Options) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
 
@@ -45,6 +45,16 @@ class Canvas {
     const image = await loadImage(url);
 
     this.ctx.drawImage(image, 0, 0, width, height);
+  }
+
+  protected async createPattern(url: string) {
+    const { width, height } = this.options.size;
+    const image = await loadImage(url);
+
+    const pattern = this.ctx.createPattern(image, 'repeat')!;
+
+    this.ctx.fillStyle = pattern;
+    this.ctx.fillRect(0, 0, width, height);
   }
 }
 

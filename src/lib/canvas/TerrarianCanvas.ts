@@ -4,7 +4,7 @@ interface TerrarianCanvasOptions extends CanvasOptions {
   backgroundImage: string;
 }
 
-class TerrarianCanvas extends Canvas {
+class TerrarianCanvas extends Canvas<TerrarianCanvasOptions> {
   readonly options: TerrarianCanvasOptions;
 
   constructor(canvas: HTMLCanvasElement, options: TerrarianCanvasOptions) {

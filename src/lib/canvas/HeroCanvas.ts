@@ -6,7 +6,7 @@ interface TerrarianCanvasOptions extends CanvasOptions {
   backgroundImage: string;
 }
 
-class HeroCanvas extends Canvas {
+class HeroCanvas extends Canvas<TerrarianCanvasOptions> {
   readonly options: TerrarianCanvasOptions;
   private heroSprites: Array<AnimatedSprite> = [];
 

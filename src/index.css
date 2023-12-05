@@ -24,9 +24,6 @@ canvas {
 }
 
 .canvas-wrapper {
-  background-image: url('./assets/edge_pattern.png');
-  background-repeat: repeat;
-
   display: flex;
   align-items: center;
   min-width: 100vw;
@@ -37,6 +34,14 @@ canvas {
 .grid-canvas {
   margin: 0 auto;
   z-index: 2;
+}
+
+.ui-canvas {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  z-index: 0;
 }
 
 .background-canvas {
