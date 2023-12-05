@@ -34,7 +34,7 @@ abstract class Sprite<Options extends ISpriteOptions> {
     });
   }
 
-  abstract drawFrame(canvasX: number, canvasY: number): void;
+  // abstract drawFrame(canvasX: number, canvasY: number): void;
 }
 
 export default Sprite;

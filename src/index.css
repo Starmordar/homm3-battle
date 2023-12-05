@@ -24,6 +24,9 @@ canvas {
 }
 
 .canvas-wrapper {
+  background-image: url('./assets/edge_pattern.png');
+  background-repeat: repeat;
+
   display: flex;
   align-items: center;
   min-width: 100vw;

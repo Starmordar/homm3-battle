@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import TerrarianCanvas from '../../lib/canvas/TerrarianCanvas';
 
-const useTerrarianCanvas = () => {
+const useTerrarianCanvas = (height: number, width: number) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -11,10 +11,7 @@ const useTerrarianCanvas = () => {
 
     const options = {
       backgroundColor: 'transparent',
-      size: {
-        width: Math.min(window.innerHeight * 1.5, window.innerWidth),
-        height: window.innerHeight - 100,
-      },
+      size: { width, height },
       backgroundImage: 'src/assets/battlefields/1_0.jpg',
     };
 

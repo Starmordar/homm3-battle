@@ -40,7 +40,7 @@ class HexagonalCanvas extends Canvas {
     const { width, height } = this.options.size;
     const pointSize = Math.min(height, width) / hexagonCount;
 
-    const originPoint = new Point((width - pointSize) / 2, height / 2 + height / 11);
+    const originPoint = new Point((width - pointSize) / 2, height / 2 + height / 10);
     const sizePoint = new Point(pointSize, pointSize);
 
     return new Layout(Layout.pointyOnTop, sizePoint, originPoint);

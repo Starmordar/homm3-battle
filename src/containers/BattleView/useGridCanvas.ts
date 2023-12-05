@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import HexagonalCanvas from '../../lib/canvas/HexagonalCanvas';
 import { hexObstacles } from '../../constants/hex';
 
-const useGridCanvas = () => {
+const useGridCanvas = (height: number, width: number) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -12,10 +12,7 @@ const useGridCanvas = () => {
 
     const options = {
       backgroundColor: 'transparent',
-      size: {
-        width: Math.min(window.innerHeight * 1.5, window.innerWidth),
-        height: window.innerHeight - 100,
-      },
+      size: { width, height },
       obstacles: hexObstacles,
       backgroundImage: 'src/assets/battlefields/1_0.jpg',
     };

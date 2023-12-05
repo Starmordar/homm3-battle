@@ -1,4 +1,5 @@
 import type { IAnimatedSpriteOptions } from '../models/sprites/AnimatedSprite';
+import { ISpriteOptions } from '../models/sprites/Sprite';
 
 export const hero1SpriteOptions: IAnimatedSpriteOptions = {
   url: '/src/assets/heroes/undead.png',
@@ -23,3 +24,16 @@ export const hero2SpriteOptions: IAnimatedSpriteOptions = {
     active: [19, 18, 17, 16, 11, 10, 9, 8, 8, 9, 10, 11],
   },
 };
+
+export const cornerGems: ISpriteOptions = {
+  url: '/src/assets/cornergems.png',
+  width: 46,
+  height: 46,
+  canvasWidth: 46,
+  canvasHeight: 46,
+};
+// "corner_gems": {
+//   path: `${UI_DIR}/sprites/cornerGems.png`,
+//   width: 46,
+//   height: 46
+// },

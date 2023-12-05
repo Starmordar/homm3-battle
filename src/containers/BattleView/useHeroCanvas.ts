@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import HeroCanvas from '../../lib/canvas/HeroCanvas';
 
-const useHeroCanvas = () => {
+const useHeroCanvas = (height: number, width: number) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -11,10 +11,7 @@ const useHeroCanvas = () => {
 
     const options = {
       backgroundColor: 'transparent',
-      size: {
-        width: Math.min(window.innerHeight * 1.5, window.innerWidth),
-        height: window.innerHeight - 100,
-      },
+      size: { width, height },
       backgroundImage: 'src/assets/battlefields/1_0.jpg',
     };
 

@@ -3,9 +3,12 @@ import useHeroCanvas from './useHeroCanvas';
 import useTerrarianCanvas from './useTerrarianCanvas';
 
 function BattleView() {
-  const canvasRef = useGridCanvas();
-  const terrarianCanvas = useTerrarianCanvas();
-  const heroCanvas = useHeroCanvas();
+  const height = window.innerHeight - 25;
+  const width = Math.min(window.innerHeight * 1.5, window.innerWidth);
+
+  const canvasRef = useGridCanvas(height, width);
+  const terrarianCanvas = useTerrarianCanvas(height, width);
+  const heroCanvas = useHeroCanvas(height, width);
 
   return (
     <div className="canvas-wrapper">

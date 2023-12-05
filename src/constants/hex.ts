@@ -1,7 +1,7 @@
 import { Hexagon } from '../lib/gridLayout';
 
 export const battleGridSize = { width: 15, height: 11 };
-export const hexagonCount = 21;
+export const hexagonCount = 22;
 
 export const hexLabelColors = {
   startHex: 'hsl(0, 50%, 0%)',
