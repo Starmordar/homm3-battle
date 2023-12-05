@@ -8,8 +8,8 @@ export interface ISpriteOptions {
 }
 
 abstract class Sprite<Options extends ISpriteOptions> {
-  readonly ctx: CanvasRenderingContext2D;
-  readonly options: Options;
+  protected readonly ctx: CanvasRenderingContext2D;
+  protected readonly options: Options;
 
   public image: HTMLImageElement = new Image();
   public loadPromise: Promise<this>;
@@ -33,6 +33,8 @@ abstract class Sprite<Options extends ISpriteOptions> {
       this.image.src = url;
     });
   }
+
+  abstract drawFrame(canvasX: number, canvasY: number): void;
 }
 
 export default Sprite;

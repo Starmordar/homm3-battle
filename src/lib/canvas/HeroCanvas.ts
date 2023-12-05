@@ -21,7 +21,7 @@ class HeroCanvas extends Canvas {
   private animationStep() {
     this.frameCount++;
 
-    if (this.frameCount < 20) {
+    if (this.frameCount < 15) {
       requestAnimationFrame(() => this.animationStep());
       return;
     }
@@ -34,11 +34,14 @@ class HeroCanvas extends Canvas {
     requestAnimationFrame(() => this.animationStep());
   }
 
+  // 1. requestAnimationFrame
+
   private animate() {
     this.heroSprites[0].drawFrame(0, 0);
     this.heroSprites[0].currentFrame++;
+    this.heroSprites[0].nextAnimation = 'active';
 
-    this.heroSprites[1].drawFrame(parseInt(this.canvas.style.width, 10) - 150, 0);
+    this.heroSprites[1].drawFrame(parseInt(this.canvas.style.width, 10) - 175, 0);
     this.heroSprites[1].currentFrame++;
   }
 
