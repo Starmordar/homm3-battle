@@ -1,6 +1,6 @@
-import { battleGridSize } from '../../constants/hex';
-import Hexagon from './Hexagon';
-import Point from './Point';
+import { battleGridSize } from '../constants/hex';
+import Hexagon from '../models/grid/Hexagon';
+import Point from '../models/grid/Point';
 
 export function getLayoutHexes({
   width,

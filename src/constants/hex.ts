@@ -1,4 +1,4 @@
-import { Hexagon } from '../lib/gridLayout';
+import { Hexagon } from '../models/grid';
 
 export const battleGridSize = { width: 15, height: 11 };
 export const hexagonCount = 22;

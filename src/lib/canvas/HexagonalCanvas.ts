@@ -9,8 +9,8 @@ import {
 
 import Canvas, { CanvasOptions } from './Canvas';
 
-import { Point, Hexagon, Layout } from '../gridLayout';
-import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../gridLayout/utils';
+import { Point, Hexagon, Layout } from '../../models/grid';
+import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../../utils/grid';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hexagon>;
@@ -22,7 +22,7 @@ interface IReachableHexes {
   path: Record<string, Hexagon | null>;
 }
 
-class HexagonalCanvas extends Canvas {
+class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   readonly options: HexagonalCanvasOptions;
   readonly layout: Layout;
 
