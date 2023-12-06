@@ -10,7 +10,7 @@ function BattleView() {
   const canvasRef = useGridCanvas(height, width);
   const terrarianCanvas = useTerrarianCanvas(height, width);
   const heroCanvas = useHeroCanvas(height, width);
-  const uiCanvas = useUiCanvas(window.innerHeight, window.innerWidth);
+  const uiCanvas = useUiCanvas(window.innerHeight, window.innerWidth, width, height);
 
   return (
     <div className="canvas-wrapper">

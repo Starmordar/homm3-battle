@@ -1,8 +1,12 @@
-import { cornerGems } from '../../constants/sprites';
+import { cornerGems, heroAvatar } from '../../constants/sprites';
 import UISprite from '../../models/sprites/UISprite';
+import UIHeroAvatar from '../../models/ui/UIHeroAvatar';
 import Canvas, { CanvasOptions } from './Canvas';
 
 interface UICanvasOptions extends CanvasOptions {
+  battleWidth: number;
+  battleHeight: number;
+
   patternImage: string;
 }
 
@@ -21,6 +25,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
     await this.createPattern(this.options.patternImage);
     this.drawBorders();
     this.drawCornerGems();
+    this.drawHeroAvatars();
   }
 
   private drawBorders() {
@@ -50,6 +55,34 @@ class UICanvas extends Canvas<UICanvasOptions> {
     cornerGemsSprite.drawFrame(1, 0, right, top);
     cornerGemsSprite.drawFrame(2, 0, left, bottom);
     cornerGemsSprite.drawFrame(3, 0, right, bottom);
+  }
+
+  private drawHeroAvatars() {
+    const { size, battleWidth, battleHeight } = this.options;
+    const avatarSprite = new UISprite(this.ctx, heroAvatar);
+
+    const uiHeroWidth = 90;
+    const border = 5;
+
+    const options = {
+      sx: (size.width - battleWidth) / 2 - uiHeroWidth - border,
+      sy: (size.height - battleHeight) / 2,
+      width: uiHeroWidth,
+      avatarSprite,
+    };
+
+    const avatar = new UIHeroAvatar(this.ctx, options);
+    avatar.draw();
+
+    const options2 = {
+      sx: (size.width + battleWidth) / 2 + border,
+      sy: (window.innerHeight - battleHeight) / 2,
+      width: uiHeroWidth,
+      avatarSprite,
+    };
+
+    const avatar2 = new UIHeroAvatar(this.ctx, options2);
+    avatar2.draw();
   }
 }
 

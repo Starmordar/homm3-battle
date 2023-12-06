@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
-import UICanvas from '../../lib/canvas/UIElementsCanvas';
+import UICanvas from '../../lib/canvas/UICanvas';
 
-const useUiCanvas = (height: number, width: number) => {
+const useUiCanvas = (height: number, width: number, bWidth: number, bHeight: number) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -13,6 +13,8 @@ const useUiCanvas = (height: number, width: number) => {
       backgroundColor: 'transparent',
       size: { width, height },
       patternImage: 'src/assets/edge_pattern.png',
+      battleWidth: bWidth,
+      battleHeight: bHeight,
     };
 
     const uiCanvas = new UICanvas(canvas, options);

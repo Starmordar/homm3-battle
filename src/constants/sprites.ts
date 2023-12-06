@@ -32,8 +32,19 @@ export const cornerGems: ISpriteOptions = {
   canvasWidth: 46,
   canvasHeight: 45,
 };
-// "corner_gems": {
-//   path: `${UI_DIR}/sprites/cornerGems.png`,
-//   width: 46,
-//   height: 46
-// },
+
+export const panelBackground: ISpriteOptions = {
+  url: '/src/assets/panelbg.jpg',
+  width: 80,
+  height: 200,
+  canvasWidth: 100,
+  canvasHeight: 200,
+};
+
+export const heroAvatar: ISpriteOptions = {
+  url: '/src/assets/hero-avatars/lg.png',
+  width: 58,
+  height: 64,
+  canvasWidth: 90,
+  canvasHeight: 100,
+};
