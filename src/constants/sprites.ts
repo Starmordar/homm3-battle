@@ -42,9 +42,31 @@ export const panelBackground: ISpriteOptions = {
 };
 
 export const heroAvatar: ISpriteOptions = {
-  url: '/src/assets/hero-avatars/lg.png',
+  url: '/src/assets/portraits/heroes/lg.png',
   width: 58,
   height: 64,
   canvasWidth: 90,
   canvasHeight: 100,
 };
+
+interface ISprite {
+  url: string;
+  width: number;
+  height: number;
+}
+
+const sprites: Record<string, ISprite> = {
+  hero_avatar_sm: {
+    url: '/src/assets/portraits/heroes/sm.png',
+    width: 32,
+    height: 32,
+  },
+
+  hero_avatar_md: {
+    url: '/src/assets/portraits/heroes/md.png',
+    width: 58,
+    height: 64,
+  },
+};
+
+export default sprites;
