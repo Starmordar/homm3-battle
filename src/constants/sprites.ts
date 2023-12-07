@@ -20,6 +20,16 @@ export const hero2SpriteOptions: IAnimatedSpriteOptions = {
   },
 };
 
+export const wrathSprite: IAnimatedSpriteOptions = {
+  url: '/src/assets/wraith.png',
+  width: 155,
+  height: 138,
+  animations: {
+    idle: [0, 1, 2, 3],
+    // idle: [1, 2, 3, 4, 3, 2, 1],
+  },
+};
+
 export interface ISpriteOptions {
   url: string;
   width: number;

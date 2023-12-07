@@ -109,14 +109,14 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private drawHexLabel(hex: Hexagon) {
-    // const center = this.layout.hexToPixel(hex);
+    const center = this.layout.hexToPixel(hex);
 
     this.ctx.fillStyle = this.getHexLabelColor(hex);
     this.ctx.font = hexLabelStyles.font;
     this.ctx.textAlign = hexLabelStyles.textAlign;
     this.ctx.textBaseline = hexLabelStyles.textBaseline;
 
-    // this.ctx.fillText(`${hex.q},${hex.r},${hex.s}`, center.x, center.y);
+    this.ctx.fillText(`${hex.q},${hex.r},${hex.s}`, center.x, center.y);
   }
 
   private getHexLabelColor(hex: Hexagon): string {
