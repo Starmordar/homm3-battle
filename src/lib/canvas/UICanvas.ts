@@ -1,4 +1,4 @@
-import { cornerGems, heroAvatar } from '../../constants/sprites';
+import sprites from '../../constants/sprites';
 import UISprite from '../../models/sprites/UISprite';
 import UIHeroAvatar from '../../models/ui/UIHeroAvatar';
 import Canvas, { CanvasOptions } from './Canvas';
@@ -44,22 +44,23 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
   private drawCornerGems() {
     const { width, height } = this.options.size;
-    const cornerGemsSprite = new UISprite(this.ctx, cornerGems);
+    const cornerGemsSprite = new UISprite(this.ctx, sprites.corner_gems);
 
     const top = border;
-    const bottom = height - cornerGems.height - border;
+    const bottom = height - sprites.corner_gems.height - border;
     const left = border;
-    const right = width - cornerGems.width - border;
+    const right = width - sprites.corner_gems.width - border;
 
-    cornerGemsSprite.drawFrame(0, 0, left, top);
-    cornerGemsSprite.drawFrame(1, 0, right, top);
-    cornerGemsSprite.drawFrame(2, 0, left, bottom);
-    cornerGemsSprite.drawFrame(3, 0, right, bottom);
+    cornerGemsSprite.drawFrame(0, 0, left, top, 46, 45);
+    cornerGemsSprite.drawFrame(1, 0, right, top, 46, 45);
+    cornerGemsSprite.drawFrame(2, 0, left, bottom, 46, 45);
+    cornerGemsSprite.drawFrame(3, 0, right, bottom, 46, 45);
   }
 
   private drawHeroAvatars() {
     const { size, battleWidth, battleHeight } = this.options;
-    const avatarSprite = new UISprite(this.ctx, heroAvatar);
+    const avatarSprite = new UISprite(this.ctx, sprites.hero_avatar_lg);
+    console.log('avatarSprite :>> ', avatarSprite);
 
     const uiHeroWidth = 90;
     const border = 5;

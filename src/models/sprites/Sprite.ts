@@ -2,9 +2,6 @@ export interface ISpriteOptions {
   url: string;
   width: number;
   height: number;
-
-  canvasWidth: number;
-  canvasHeight: number;
 }
 
 abstract class Sprite<Options extends ISpriteOptions> {

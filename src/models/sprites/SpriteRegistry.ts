@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-class InjectionsManager {
+import { Injectables } from '../injection/injections';
+import { Injectable } from '../../decorators/inject';
+
+@Injectable(Injectables.Textures)
+class SpriteRegistry {
   private _registry: Map<string, any> = new Map();
 
   constructor() {}
@@ -15,4 +19,4 @@ class InjectionsManager {
   }
 }
 
-export default new InjectionsManager();
+export default new SpriteRegistry();

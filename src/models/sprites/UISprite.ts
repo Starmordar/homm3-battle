@@ -5,17 +5,17 @@ class UISprite extends Sprite<ISpriteOptions> {
     super(ctx, options);
   }
 
-  public drawFrame(frameX: number, frameY: number, canvasX: number, canvasY: number) {
+  public drawFrame(frameX: number, frameY: number, dx: number, dy: number, dw: number, dh: number) {
     this.ctx.drawImage(
       this.image,
       frameX * this.options.width,
       frameY * this.options.height,
       this.options.width,
       this.options.height,
-      canvasX,
-      canvasY,
-      this.options.canvasWidth,
-      this.options.canvasHeight
+      dx,
+      dy,
+      dw,
+      dh
     );
   }
 }

@@ -1,7 +1,7 @@
 import UISprite from '../sprites/UISprite';
 import UIBlock from './UIBlock';
 
-import { heroAvatar, panelBackground } from '../../constants/sprites';
+import sprites from '../../constants/sprites';
 
 interface IOptions {
   sx: number;
@@ -32,11 +32,11 @@ class UIHeroAvatar {
   private drawAvatarImage() {
     const { sx, sy, width, avatarSprite } = this.options;
 
-    avatarSprite.drawFrame(0, 0, sx, sy);
+    avatarSprite.drawFrame(0, 0, sx, sy, 90, 100);
 
     this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = '#e7ce8c';
-    this.ctx.strokeRect(sx, sy, width, heroAvatar.canvasHeight);
+    this.ctx.strokeRect(sx, sy, width, 100);
   }
 
   private setTextDefault() {
@@ -52,11 +52,11 @@ class UIHeroAvatar {
     const textLeft = sx + 8;
     const textRight = sx + width - 6;
 
-    let sy = this.options.sy + heroAvatar.canvasHeight;
+    let sy = this.options.sy + 100;
     let height = 75;
     let textSy = sy + 5;
 
-    const panelSprite = new UISprite(this.ctx, panelBackground);
+    const panelSprite = new UISprite(this.ctx, sprites.panelBg);
 
     const statsUI = new UIBlock(this.ctx, { sx, sy, width, height });
     statsUI.draw(panelSprite);

@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Injectables } from '../injection/injections';
-import { Injectable } from '../../decorators/inject';
-
-@Injectable(Injectables.Textures)
-class TexturesManager {
+class InjectionRegistry {
   private _registry: Map<string, any> = new Map();
 
   constructor() {}
@@ -19,4 +15,4 @@ class TexturesManager {
   }
 }
 
-export default new TexturesManager();
+export default new InjectionRegistry();

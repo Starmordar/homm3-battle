@@ -1,5 +1,4 @@
 import type { IAnimatedSpriteOptions } from '../models/sprites/AnimatedSprite';
-import { ISpriteOptions } from '../models/sprites/Sprite';
 
 export const hero1SpriteOptions: IAnimatedSpriteOptions = {
   url: '/src/assets/heroes/undead.png',
@@ -25,47 +24,35 @@ export const hero2SpriteOptions: IAnimatedSpriteOptions = {
   },
 };
 
-export const cornerGems: ISpriteOptions = {
-  url: '/src/assets/cornergems.png',
-  width: 46,
-  height: 45,
-  canvasWidth: 46,
-  canvasHeight: 45,
-};
-
-export const panelBackground: ISpriteOptions = {
-  url: '/src/assets/panelbg.jpg',
-  width: 80,
-  height: 200,
-  canvasWidth: 100,
-  canvasHeight: 200,
-};
-
-export const heroAvatar: ISpriteOptions = {
-  url: '/src/assets/portraits/heroes/lg.png',
-  width: 58,
-  height: 64,
-  canvasWidth: 90,
-  canvasHeight: 100,
-};
-
-interface ISprite {
+export interface ISprite {
   url: string;
   width: number;
   height: number;
 }
 
-const sprites: Record<string, ISprite> = {
+const sprites = {
+  // Heroes
   hero_avatar_sm: {
     url: '/src/assets/portraits/heroes/sm.png',
     width: 32,
     height: 32,
   },
-
-  hero_avatar_md: {
-    url: '/src/assets/portraits/heroes/md.png',
+  hero_avatar_lg: {
+    url: '/src/assets/portraits/heroes/lg.png',
     width: 58,
     height: 64,
+  },
+
+  // UI
+  corner_gems: {
+    url: '/src/assets/ui/cornergems.png',
+    width: 46,
+    height: 45,
+  },
+  panelBg: {
+    url: '/src/assets/ui/panelbg.jpg',
+    width: 80,
+    height: 200,
   },
 };
 
