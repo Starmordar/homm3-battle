@@ -32,7 +32,7 @@ class UIHeroAvatar {
   private drawAvatarImage() {
     const { sx, sy, width, avatarSprite } = this.options;
 
-    avatarSprite.drawFrame(0, 0, sx, sy, 90, 100);
+    avatarSprite.drawFrame(this.ctx, 0, 0, sx, sy, 90, 100);
 
     this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = '#e7ce8c';
@@ -56,7 +56,7 @@ class UIHeroAvatar {
     let height = 75;
     let textSy = sy + 5;
 
-    const panelSprite = new UISprite(this.ctx, sprites.panelBg);
+    const panelSprite = new UISprite(sprites.panelBg);
 
     const statsUI = new UIBlock(this.ctx, { sx, sy, width, height });
     statsUI.draw(panelSprite);

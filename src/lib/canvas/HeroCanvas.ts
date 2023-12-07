@@ -37,18 +37,24 @@ class HeroCanvas extends Canvas<TerrarianCanvasOptions> {
   // 1. requestAnimationFrame
 
   private animate() {
-    this.heroSprites[0].drawFrame(0, 0);
+    this.heroSprites[0].drawFrame(this.ctx, 0, 0, 175, 200);
     this.heroSprites[0].currentFrame++;
     this.heroSprites[0].nextAnimation = 'active';
 
-    this.heroSprites[1].drawFrame(parseInt(this.canvas.style.width, 10) - 175, 0);
+    this.heroSprites[1].drawFrame(
+      this.ctx,
+      parseInt(this.canvas.style.width, 10) - 175,
+      0,
+      175,
+      200
+    );
     this.heroSprites[1].currentFrame++;
   }
 
   public async setup() {
     this.heroSprites = await Promise.all([
-      new AnimatedSprite(this.ctx, hero1SpriteOptions).loadPromise,
-      new AnimatedSprite(this.ctx, hero2SpriteOptions).loadPromise,
+      new AnimatedSprite(hero1SpriteOptions).loadPromise,
+      new AnimatedSprite(hero2SpriteOptions).loadPromise,
     ]);
 
     requestAnimationFrame(() => this.animationStep());

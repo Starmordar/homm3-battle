@@ -1,4 +1,5 @@
-import Sprite, { ISpriteOptions } from './Sprite';
+import Sprite from './Sprite';
+import type { ISpriteOptions } from '../../constants/sprites';
 
 export interface ISpriteAnimation {
   idle: Array<number>;
@@ -18,8 +19,8 @@ class AnimatedSprite extends Sprite<IAnimatedSpriteOptions> {
   private _currentAnimation: keyof ISpriteAnimation = defaultAnimation;
   private _animationSteps: Array<number> = [];
 
-  constructor(ctx: CanvasRenderingContext2D, options: IAnimatedSpriteOptions) {
-    super(ctx, options);
+  constructor(options: IAnimatedSpriteOptions) {
+    super(options);
 
     this._animationSteps = this.options.animations[this._currentAnimation] as Array<number>;
   }
@@ -46,17 +47,17 @@ class AnimatedSprite extends Sprite<IAnimatedSpriteOptions> {
     this._nextAnimation = mode;
   }
 
-  public drawFrame(canvasX: number, canvasY: number) {
-    this.ctx.drawImage(
+  public drawFrame(ctx: CanvasRenderingContext2D, dx: number, dy: number, dw: number, dh: number) {
+    ctx.drawImage(
       this.image,
       this._animationSteps[this._currentFrame] * this.options.width,
       0 * this.options.height,
       this.options.width,
       this.options.height,
-      canvasX,
-      canvasY,
-      this.options.canvasWidth,
-      this.options.canvasHeight
+      dx,
+      dy,
+      dw,
+      dh
     );
   }
 }

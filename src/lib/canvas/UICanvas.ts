@@ -1,4 +1,7 @@
 import sprites from '../../constants/sprites';
+import { Inject } from '../../decorators/inject';
+import { Injectables } from '../../models/injection/injections';
+import { SpriteRegistry } from '../../models/sprites/SpriteRegistry';
 import UISprite from '../../models/sprites/UISprite';
 import UIHeroAvatar from '../../models/ui/UIHeroAvatar';
 import Canvas, { CanvasOptions } from './Canvas';
@@ -14,6 +17,9 @@ const border = 2;
 
 class UICanvas extends Canvas<UICanvasOptions> {
   readonly options: UICanvasOptions;
+
+  // @Inject(Injectables.Textures)
+  // private spriteRegistry!: SpriteRegistry;
 
   constructor(canvas: HTMLCanvasElement, options: UICanvasOptions) {
     super(canvas, options);
@@ -44,23 +50,25 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
   private drawCornerGems() {
     const { width, height } = this.options.size;
-    const cornerGemsSprite = new UISprite(this.ctx, sprites.corner_gems);
+    // const result = this.spriteRegistry.get('corner_gems');
+    // console.log('result :>> ', this.spriteRegistry);
+
+    const cornerGemsSprite = new UISprite(sprites.corner_gems);
 
     const top = border;
     const bottom = height - sprites.corner_gems.height - border;
     const left = border;
     const right = width - sprites.corner_gems.width - border;
 
-    cornerGemsSprite.drawFrame(0, 0, left, top, 46, 45);
-    cornerGemsSprite.drawFrame(1, 0, right, top, 46, 45);
-    cornerGemsSprite.drawFrame(2, 0, left, bottom, 46, 45);
-    cornerGemsSprite.drawFrame(3, 0, right, bottom, 46, 45);
+    cornerGemsSprite.drawFrame(this.ctx, 0, 0, left, top, 46, 45);
+    cornerGemsSprite.drawFrame(this.ctx, 1, 0, right, top, 46, 45);
+    cornerGemsSprite.drawFrame(this.ctx, 2, 0, left, bottom, 46, 45);
+    cornerGemsSprite.drawFrame(this.ctx, 3, 0, right, bottom, 46, 45);
   }
 
   private drawHeroAvatars() {
     const { size, battleWidth, battleHeight } = this.options;
-    const avatarSprite = new UISprite(this.ctx, sprites.hero_avatar_lg);
-    console.log('avatarSprite :>> ', avatarSprite);
+    const avatarSprite = new UISprite(sprites.hero_avatar_lg);
 
     const uiHeroWidth = 90;
     const border = 5;

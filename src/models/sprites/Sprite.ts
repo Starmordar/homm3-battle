@@ -1,18 +1,12 @@
-export interface ISpriteOptions {
-  url: string;
-  width: number;
-  height: number;
-}
+import type { ISpriteOptions } from '../../constants/sprites';
 
 abstract class Sprite<Options extends ISpriteOptions> {
-  protected readonly ctx: CanvasRenderingContext2D;
   protected readonly options: Options;
 
   public image: HTMLImageElement = new Image();
   public loadPromise: Promise<this>;
 
-  constructor(ctx: CanvasRenderingContext2D, options: Options) {
-    this.ctx = ctx;
+  constructor(options: Options) {
     this.options = options;
 
     this.loadPromise = this.loadImage(options.url);
@@ -30,8 +24,6 @@ abstract class Sprite<Options extends ISpriteOptions> {
       this.image.src = url;
     });
   }
-
-  // abstract drawFrame(canvasX: number, canvasY: number): void;
 }
 
 export default Sprite;

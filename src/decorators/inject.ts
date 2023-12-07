@@ -11,9 +11,9 @@ export function Inject(key: string) {
   return function (target: any, propertyKey: string) {
     Object.defineProperty(target, propertyKey, {
       get: () => InjectionRegistry.get(key),
-      writable: false,
-      enumerable: false,
-      configurable: false,
+      enumerable: true,
+      configurable: true,
     });
+    console.log('inject target :>> ', target);
   };
 }
