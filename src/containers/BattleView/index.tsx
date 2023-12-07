@@ -4,6 +4,7 @@ import useTerrarianCanvas from './useTerrarianCanvas';
 import useUiCanvas from './uiCanvas';
 import { useEffect } from 'react';
 
+import SpriteRegistry from '../../models/sprites/SpriteRegistry';
 import ResourceController from '../../controllers/ResourceController';
 
 function BattleView() {
@@ -11,8 +12,9 @@ function BattleView() {
   const width = Math.min(window.innerHeight * 1.5, window.innerWidth);
 
   useEffect(() => {
-    const resource = new ResourceController();
-    console.log('resource :>> ', resource, resource.__proto__);
+    const spriteRegistry = new SpriteRegistry();
+
+    const resource = new ResourceController(spriteRegistry);
     resource.loadUISprites();
   }, []);
 

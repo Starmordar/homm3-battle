@@ -1,7 +1,5 @@
 import sprites from '../../constants/sprites';
-import { Inject } from '../../decorators/inject';
-import { Injectables } from '../../models/injection/injections';
-import { SpriteRegistry } from '../../models/sprites/SpriteRegistry';
+
 import UISprite from '../../models/sprites/UISprite';
 import UIHeroAvatar from '../../models/ui/UIHeroAvatar';
 import Canvas, { CanvasOptions } from './Canvas';
@@ -17,9 +15,6 @@ const border = 2;
 
 class UICanvas extends Canvas<UICanvasOptions> {
   readonly options: UICanvasOptions;
-
-  // @Inject(Injectables.Textures)
-  // private spriteRegistry!: SpriteRegistry;
 
   constructor(canvas: HTMLCanvasElement, options: UICanvasOptions) {
     super(canvas, options);
@@ -50,8 +45,6 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
   private drawCornerGems() {
     const { width, height } = this.options.size;
-    // const result = this.spriteRegistry.get('corner_gems');
-    // console.log('result :>> ', this.spriteRegistry);
 
     const cornerGemsSprite = new UISprite(sprites.corner_gems);
 

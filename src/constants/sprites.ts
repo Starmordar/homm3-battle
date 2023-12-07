@@ -26,6 +26,19 @@ export interface ISpriteOptions {
   height: number;
 }
 
+export const uiSprites = {
+  corner_gems: {
+    url: '/src/assets/ui/cornergems.png',
+    width: 46,
+    height: 45,
+  },
+  panelBg: {
+    url: '/src/assets/ui/panelbg.jpg',
+    width: 80,
+    height: 200,
+  },
+};
+
 const sprites = {
   // Heroes
   hero_avatar_sm: {
