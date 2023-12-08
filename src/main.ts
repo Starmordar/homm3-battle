@@ -6,6 +6,9 @@ import SpriteFactory from './models/sprites/SpriteFactory';
 import { SPRITE } from './constants/sprites';
 import UnitsCanvas from './lib/canvas/UnitsCanvas';
 import { CanvasOptions } from './lib/canvas/Canvas';
+import HexagonalCanvas from './lib/canvas/HexagonalCanvas';
+import { hexObstacles } from './constants/hex';
+import { buildGridLayout } from './utils/grid';
 
 const spriteRepository = new SpriteRepository();
 const spriteFactory = new SpriteFactory();
@@ -15,6 +18,8 @@ await resources.load();
 
 const battleWidth = Math.min(window.innerHeight * 1.5, window.innerWidth);
 const battleHeight = window.innerHeight - 25;
+
+const layout = buildGridLayout({ width: battleWidth, height: battleHeight });
 
 const uiCanvasOptions: UICanvasOptions = {
   classNames: ['ui-canvas', 'cursor-default'],
@@ -35,3 +40,12 @@ const unitsCanvasOptions: CanvasOptions = {
 
 const unitsCanvas = new UnitsCanvas(spriteRepository, unitsCanvasOptions);
 unitsCanvas.setup();
+
+const hexCanvasOptions = {
+  classNames: ['grid-canvas'],
+  size: { width: battleWidth, height: battleHeight },
+  obstacles: hexObstacles,
+};
+
+const hexagonCanvas = new HexagonalCanvas(layout, hexCanvasOptions);
+hexagonCanvas.setup();

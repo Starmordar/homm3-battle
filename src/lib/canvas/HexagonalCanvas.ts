@@ -1,6 +1,5 @@
 import {
   battleGridSize,
-  hexagonCount,
   hexLabelColors,
   hexStyles,
   hexLabelStyles,
@@ -14,7 +13,6 @@ import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../.
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hexagon>;
-  backgroundImage: string;
 }
 
 interface IReachableHexes {
@@ -23,30 +21,17 @@ interface IReachableHexes {
 }
 
 class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
-  readonly options: HexagonalCanvasOptions;
   readonly layout: Layout;
-
   private activeHex = new Hexagon(-7, 0, 7);
   private reachableHexes: IReachableHexes = { fringes: [], path: {} };
 
-  constructor(canvas: HTMLCanvasElement, options: HexagonalCanvasOptions) {
-    super(canvas, options);
+  constructor(layout: Layout, options: HexagonalCanvasOptions) {
+    super(options);
 
-    this.options = options;
-    this.layout = this.buildGridLayout();
+    this.layout = layout;
   }
 
-  private buildGridLayout(): Layout {
-    const { width, height } = this.options.size;
-    const pointSize = Math.min(height, width) / hexagonCount;
-
-    const originPoint = new Point((width - pointSize) / 2, height / 2 + height / 10);
-    const sizePoint = new Point(pointSize, pointSize);
-
-    return new Layout(Layout.pointyOnTop, sizePoint, originPoint);
-  }
-
-  public setupCanvas() {
+  public setup() {
     this.computeReachableHexes();
 
     this.drawHexagonalGrid();
@@ -136,8 +121,8 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      this.drawReachableHexes();
       this.drawHexagonalGrid();
+      this.drawReachableHexes();
       this.highlightHoveredHex(new Point(x, y));
     });
   }
