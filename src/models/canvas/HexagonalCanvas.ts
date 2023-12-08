@@ -8,7 +8,7 @@ import {
 
 import Canvas, { CanvasOptions } from './Canvas';
 
-import { Point, Hexagon, Layout } from '../../models/grid';
+import { Point, Hexagon, Layout } from '../grid';
 import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../../utils/grid';
 
 interface HexagonalCanvasOptions extends CanvasOptions {

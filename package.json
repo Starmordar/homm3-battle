@@ -1,7 +1,7 @@
 {
-  "name": "my-app",
+  "name": "homm3-battle",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,9 +11,5 @@
   "devDependencies": {
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
-  },
-  "dependencies": {
-    "inversify": "^6.0.2",
-    "reflect-metadata": "^0.1.13"
   }
 }

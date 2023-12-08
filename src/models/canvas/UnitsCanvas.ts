@@ -1,8 +1,8 @@
 import { SPRITE, wrathSprite } from '../../constants/sprites';
 import { units } from '../../constants/units';
-import AnimatedSprite from '../../models/sprites/AnimatedSprite';
+import AnimatedSprite from '../sprites/AnimatedSprite';
 // import { Hexagon } from '../../models/grid';
-import SpriteRepository from '../../models/sprites/SpriteRepository';
+import SpriteRepository from '../sprites/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
 class UnitsCanvas extends Canvas<CanvasOptions> {

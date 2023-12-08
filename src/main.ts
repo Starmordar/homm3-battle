@@ -1,12 +1,12 @@
 import './index.css';
 import ResourceController from './controllers/ResourceController';
 import SpriteRepository from './models/sprites/SpriteRepository';
-import UICanvas, { UICanvasOptions } from './lib/canvas/UICanvas';
+import UICanvas, { UICanvasOptions } from './models/canvas/UICanvas';
 import SpriteFactory from './models/sprites/SpriteFactory';
 import { SPRITE } from './constants/sprites';
-import UnitsCanvas from './lib/canvas/UnitsCanvas';
-import { CanvasOptions } from './lib/canvas/Canvas';
-import HexagonalCanvas from './lib/canvas/HexagonalCanvas';
+import UnitsCanvas from './models/canvas/UnitsCanvas';
+import { CanvasOptions } from './models/canvas/Canvas';
+import HexagonalCanvas from './models/canvas/HexagonalCanvas';
 import { hexObstacles } from './constants/hex';
 import { buildGridLayout } from './utils/grid';
 

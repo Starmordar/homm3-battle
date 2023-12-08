@@ -1,7 +1,7 @@
 import { SPRITE } from '../../constants/sprites';
-import Sprite from '../../models/sprites/Sprite';
-import SpriteRepository from '../../models/sprites/SpriteRepository';
-import UIHeroAvatar from '../../models/ui/UIHeroAvatar';
+import Sprite from '../sprites/Sprite';
+import SpriteRepository from '../sprites/SpriteRepository';
+import UIHeroAvatar from '../ui/UIHeroAvatar';
 import Canvas, { CanvasOptions } from './Canvas';
 
 export interface UICanvasOptions extends CanvasOptions {
