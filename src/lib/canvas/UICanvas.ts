@@ -72,6 +72,8 @@ class UICanvas extends Canvas<UICanvasOptions> {
     const { size, battleWidth, battleHeight } = this.options;
 
     const heroPortraits = this.spriteRepository.get(SPRITE.hero_avatar_lg);
+    const background = this.spriteRepository.get(SPRITE.panel_bg);
+
     const blockWidth = 90;
     const border = 5;
 
@@ -79,13 +81,13 @@ class UICanvas extends Canvas<UICanvasOptions> {
       sx: (size.width - battleWidth) / 2 - blockWidth - border,
       sy: (size.height - battleHeight) / 2,
     });
-    yourHero.draw(heroPortraits);
+    yourHero.draw(heroPortraits, background);
 
     const enemyHero = new UIHeroAvatar(this.ctx, {
       sx: (size.width + battleWidth) / 2 + border,
       sy: (window.innerHeight - battleHeight) / 2,
     });
-    enemyHero.draw(heroPortraits);
+    enemyHero.draw(heroPortraits, background);
   }
 
   private drawBattleControls() {

@@ -1,7 +1,4 @@
-import UISprite from '../sprites/UISprite';
 import UIBlock from './UIBlock';
-
-import sprites from '../../constants/sprites';
 import Sprite from '../sprites/Sprite';
 
 interface IOptions {
@@ -23,10 +20,9 @@ class UIHeroAvatar {
     this.options = { ...defaultOptions, ...options };
   }
 
-  public draw(portrait: Sprite | undefined) {
+  public draw(portrait: Sprite | undefined, background: Sprite | undefined) {
     if (portrait) this.drawAvatarImage(portrait);
-
-    this.drawUIBlocks();
+    if (background) this.drawUIBlocks(background);
   }
 
   private drawAvatarImage(portrait: Sprite) {
@@ -45,7 +41,7 @@ class UIHeroAvatar {
     this.ctx.textBaseline = 'bottom';
   }
 
-  private drawUIBlocks() {
+  private drawUIBlocks(backgroundSprite: Sprite) {
     const { sx, width } = this.options;
 
     const lineHeight = 16;
@@ -56,10 +52,8 @@ class UIHeroAvatar {
     let height = 75;
     let textSy = sy + 5;
 
-    const panelSprite = new UISprite(sprites.panelBg);
-
     const statsUI = new UIBlock(this.ctx, { sx, sy, width, height });
-    statsUI.draw(panelSprite);
+    statsUI.draw(backgroundSprite);
 
     this.setTextDefault();
 
@@ -80,7 +74,7 @@ class UIHeroAvatar {
     textSy = sy + 7;
 
     const moraleUI = new UIBlock(this.ctx, { sx, sy, width, height });
-    moraleUI.draw(panelSprite);
+    moraleUI.draw(backgroundSprite);
 
     this.setTextDefault();
 
@@ -97,7 +91,7 @@ class UIHeroAvatar {
     textSy = sy + 7;
 
     const manaUI = new UIBlock(this.ctx, { sx, sy, width, height });
-    manaUI.draw(panelSprite);
+    manaUI.draw(backgroundSprite);
 
     this.setTextDefault();
 

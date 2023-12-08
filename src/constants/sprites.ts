@@ -1,8 +1,3 @@
-export enum SpriteType {
-  UI = 'UI',
-  ANIMATED = 'ANIMATED',
-}
-
 export const hero1SpriteOptions: IAnimatedSpriteOptions = {
   url: '/src/assets/heroes/undead.png',
   width: 150,
@@ -33,18 +28,22 @@ export const wrathSprite: IAnimatedSpriteOptions = {
   },
 };
 
-export interface ISpriteAnimation {
-  idle: Array<number>;
-  active?: Array<number>;
-  attack?: Array<number>;
-}
-
 export interface ISpriteOptions {
   url: string;
   width: number;
   height: number;
 
   animations?: ISpriteAnimation;
+}
+
+export interface ISpriteAnimation {
+  idle: Array<number>;
+  active?: Array<number>;
+  attack?: Array<number>;
+}
+
+export interface IAnimatedSpriteOptions extends ISpriteOptions {
+  animations: ISpriteAnimation;
 }
 
 export enum SPRITE {
@@ -55,10 +54,6 @@ export enum SPRITE {
   edge_pattern = 'edge_pattern',
   panel_bg = 'panel_bg',
   battle_bg_01 = 'battle_bg_01',
-}
-
-export interface IAnimatedSpriteOptions extends ISpriteOptions {
-  animations: ISpriteAnimation;
 }
 
 export const uiSprites = {
@@ -94,31 +89,3 @@ export const uiSprites = {
     height: 556,
   },
 };
-
-const sprites = {
-  // Heroes
-  hero_avatar_sm: {
-    url: '/src/assets/portraits/heroes/sm.png',
-    width: 32,
-    height: 32,
-  },
-  hero_avatar_lg: {
-    url: '/src/assets/portraits/heroes/lg.png',
-    width: 58,
-    height: 64,
-  },
-
-  // UI
-  corner_gems: {
-    url: '/src/assets/ui/cornergems.png',
-    width: 46,
-    height: 45,
-  },
-  panelBg: {
-    url: '/src/assets/ui/panelbg.jpg',
-    width: 80,
-    height: 200,
-  },
-};
-
-export default sprites;

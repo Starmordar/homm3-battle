@@ -1,4 +1,4 @@
-import UISprite from '../sprites/UISprite';
+import Sprite from '../sprites/Sprite';
 
 interface IBlockOptions {
   sx: number;
@@ -36,7 +36,7 @@ class UIBlock {
     this.createShadows();
   }
 
-  public draw(sprite: UISprite) {
+  public draw(sprite: Sprite) {
     this.drawPatternImage(sprite);
 
     this.drawShadows();
@@ -65,7 +65,7 @@ class UIBlock {
     this.ctx.strokeRect(this.options.sx, this.options.sy, this.options.width, this.options.height);
   }
 
-  private drawPatternImage(sprite: UISprite) {
+  private drawPatternImage(sprite: Sprite) {
     const { width, height, sx, sy } = this.options;
     const pattern = this.ctx.createPattern(sprite.image, 'repeat')!;
 
