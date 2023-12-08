@@ -15,8 +15,8 @@ class HeroCanvas extends Canvas<TerrarianCanvasOptions> {
 
   private frameCount = 0;
 
-  constructor(canvas: HTMLCanvasElement, options: TerrarianCanvasOptions) {
-    super(canvas, options);
+  constructor(options: TerrarianCanvasOptions) {
+    super(options);
 
     this.options = options;
   }

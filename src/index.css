@@ -39,14 +39,6 @@ body {
   z-index: 0;
 }
 
-.background-canvas {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0 auto;
-  z-index: 0;
-}
-
 .hero-canvas {
   position: absolute;
   top: 50%;
