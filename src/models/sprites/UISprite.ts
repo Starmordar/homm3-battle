@@ -1,7 +1,7 @@
 import Sprite from './Sprite';
 import type { ISpriteOptions } from '../../constants/sprites';
 
-class UISprite extends Sprite<ISpriteOptions> {
+class UISprite extends Sprite {
   constructor(options: ISpriteOptions) {
     super(options);
   }

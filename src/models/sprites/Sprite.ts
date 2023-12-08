@@ -1,7 +1,7 @@
 import type { ISpriteOptions } from '../../constants/sprites';
 
-abstract class Sprite<Options extends ISpriteOptions> {
-  protected readonly options: Options;
+abstract class Sprite<Options extends ISpriteOptions = ISpriteOptions> {
+  public readonly options: ISpriteOptions;
 
   public image: HTMLImageElement = new Image();
   public loadPromise: Promise<this>;
@@ -24,6 +24,16 @@ abstract class Sprite<Options extends ISpriteOptions> {
       this.image.src = url;
     });
   }
+
+  abstract drawFrame(
+    ctx: CanvasRenderingContext2D,
+    fx: number,
+    fy: number,
+    dx: number,
+    dy: number,
+    dw: number,
+    dh: number
+  ): void;
 }
 
 export default Sprite;

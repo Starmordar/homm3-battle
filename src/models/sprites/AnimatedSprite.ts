@@ -1,14 +1,9 @@
 import Sprite from './Sprite';
-import type { ISpriteOptions } from '../../constants/sprites';
-
-export interface ISpriteAnimation {
-  idle: Array<number>;
-  active?: Array<number>;
-  attack?: Array<number>;
-}
-export interface IAnimatedSpriteOptions extends ISpriteOptions {
-  animations: ISpriteAnimation;
-}
+import type {
+  IAnimatedSpriteOptions,
+  ISpriteAnimation,
+  ISpriteOptions,
+} from '../../constants/sprites';
 
 const defaultAnimation: keyof ISpriteAnimation = 'idle';
 

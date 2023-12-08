@@ -5,12 +5,8 @@ interface TerrarianCanvasOptions extends CanvasOptions {
 }
 
 class TerrarianCanvas extends Canvas<TerrarianCanvasOptions> {
-  readonly options: TerrarianCanvasOptions;
-
-  constructor(canvas: HTMLCanvasElement, options: TerrarianCanvasOptions) {
-    super(canvas, options);
-
-    this.options = options;
+  constructor(options: TerrarianCanvasOptions) {
+    super(options);
   }
 
   public async setup() {

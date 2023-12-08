@@ -2,12 +2,11 @@ import UISprite from '../sprites/UISprite';
 import UIBlock from './UIBlock';
 
 import sprites from '../../constants/sprites';
+import Sprite from '../sprites/Sprite';
 
 interface IOptions {
   sx: number;
   sy: number;
-
-  avatarSprite: UISprite;
   width?: number;
 }
 
@@ -24,15 +23,16 @@ class UIHeroAvatar {
     this.options = { ...defaultOptions, ...options };
   }
 
-  public draw() {
-    this.drawAvatarImage();
+  public draw(portrait: Sprite | undefined) {
+    if (portrait) this.drawAvatarImage(portrait);
+
     this.drawUIBlocks();
   }
 
-  private drawAvatarImage() {
-    const { sx, sy, width, avatarSprite } = this.options;
+  private drawAvatarImage(portrait: Sprite) {
+    const { sx, sy, width } = this.options;
 
-    avatarSprite.drawFrame(this.ctx, 0, 0, sx, sy, 90, 100);
+    portrait.drawFrame(this.ctx, 0, 0, sx, sy, 90, 100);
 
     this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = '#e7ce8c';

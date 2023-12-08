@@ -1,32 +1,35 @@
-import sprites from '../../constants/sprites';
-
-import UISprite from '../../models/sprites/UISprite';
+import { SPRITE } from '../../constants/sprites';
+import Sprite from '../../models/sprites/Sprite';
+import SpriteRepository from '../../models/sprites/SpriteRepository';
 import UIHeroAvatar from '../../models/ui/UIHeroAvatar';
 import Canvas, { CanvasOptions } from './Canvas';
 
-interface UICanvasOptions extends CanvasOptions {
+export interface UICanvasOptions extends CanvasOptions {
   battleWidth: number;
   battleHeight: number;
-
-  patternImage: string;
 }
 
-const border = 2;
-
 class UICanvas extends Canvas<UICanvasOptions> {
-  readonly options: UICanvasOptions;
+  private readonly spriteRepository: SpriteRepository;
 
-  constructor(canvas: HTMLCanvasElement, options: UICanvasOptions) {
-    super(canvas, options);
+  constructor(spriteRepository: SpriteRepository, options: UICanvasOptions) {
+    super(options);
 
-    this.options = options;
+    this.spriteRepository = spriteRepository;
   }
 
-  public async setup() {
-    await this.createPattern(this.options.patternImage);
+  public setup(patternKey: string, backgroundKey: string) {
+    const patternSprite = this.spriteRepository.get(patternKey);
+    if (patternSprite) this.createCanvasPattern(patternSprite);
+
     this.drawBorders();
-    this.drawCornerGems();
-    this.drawHeroAvatars();
+    this.drawCorners();
+    this.drawHeroPortraits();
+
+    this.drawBattleControls();
+
+    const bgSprite = this.spriteRepository.get(backgroundKey);
+    if (bgSprite) this.drawBattleBackground(bgSprite);
   }
 
   private drawBorders() {
@@ -43,48 +46,64 @@ class UICanvas extends Canvas<UICanvasOptions> {
     this.ctx.strokeRect(2, 2, width - 4, height - 4);
   }
 
-  private drawCornerGems() {
+  private drawCorners() {
     const { width, height } = this.options.size;
 
-    const cornerGemsSprite = new UISprite(sprites.corner_gems);
+    const sprite = this.spriteRepository.get(SPRITE.corner_gems);
+    if (!sprite) return;
 
-    const top = border;
-    const bottom = height - sprites.corner_gems.height - border;
-    const left = border;
-    const right = width - sprites.corner_gems.width - border;
+    const dw = sprite.options.width;
+    const dh = sprite.options.height;
 
-    cornerGemsSprite.drawFrame(this.ctx, 0, 0, left, top, 46, 45);
-    cornerGemsSprite.drawFrame(this.ctx, 1, 0, right, top, 46, 45);
-    cornerGemsSprite.drawFrame(this.ctx, 2, 0, left, bottom, 46, 45);
-    cornerGemsSprite.drawFrame(this.ctx, 3, 0, right, bottom, 46, 45);
+    const margin = 2;
+
+    const top = margin;
+    const bottom = height - sprite.options.height - margin;
+    const left = margin;
+    const right = width - sprite.options.width - margin;
+
+    sprite.drawFrame(this.ctx, 0, 0, left, top, dw, dh);
+    sprite.drawFrame(this.ctx, 1, 0, right, top, dw, dh);
+    sprite.drawFrame(this.ctx, 2, 0, left, bottom, dw, dh);
+    sprite.drawFrame(this.ctx, 3, 0, right, bottom, dw, dh);
   }
 
-  private drawHeroAvatars() {
+  private drawHeroPortraits() {
     const { size, battleWidth, battleHeight } = this.options;
-    const avatarSprite = new UISprite(sprites.hero_avatar_lg);
 
-    const uiHeroWidth = 90;
+    const heroPortraits = this.spriteRepository.get(SPRITE.hero_avatar_lg);
+    const blockWidth = 90;
     const border = 5;
 
-    const options = {
-      sx: (size.width - battleWidth) / 2 - uiHeroWidth - border,
+    const yourHero = new UIHeroAvatar(this.ctx, {
+      sx: (size.width - battleWidth) / 2 - blockWidth - border,
       sy: (size.height - battleHeight) / 2,
-      width: uiHeroWidth,
-      avatarSprite,
-    };
+    });
+    yourHero.draw(heroPortraits);
 
-    const avatar = new UIHeroAvatar(this.ctx, options);
-    avatar.draw();
-
-    const options2 = {
+    const enemyHero = new UIHeroAvatar(this.ctx, {
       sx: (size.width + battleWidth) / 2 + border,
       sy: (window.innerHeight - battleHeight) / 2,
-      width: uiHeroWidth,
-      avatarSprite,
-    };
+    });
+    enemyHero.draw(heroPortraits);
+  }
 
-    const avatar2 = new UIHeroAvatar(this.ctx, options2);
-    avatar2.draw();
+  private drawBattleControls() {
+    console.log('TODO :>> draw battle control buttons');
+  }
+
+  private drawBattleBackground(background: Sprite) {
+    const { size, battleWidth, battleHeight } = this.options;
+
+    background.drawFrame(
+      this.ctx,
+      0,
+      0,
+      (size.width - battleWidth) / 2,
+      (size.height - battleHeight) / 2,
+      battleWidth,
+      battleHeight
+    );
   }
 }
 

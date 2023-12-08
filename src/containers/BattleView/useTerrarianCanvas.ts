@@ -15,7 +15,7 @@ const useTerrarianCanvas = (height: number, width: number) => {
       backgroundImage: 'src/assets/battlefields/1_0.jpg',
     };
 
-    const hexCanvas = new TerrarianCanvas(canvas, options);
+    const hexCanvas = new TerrarianCanvas(options);
     hexCanvas.setup();
   }, []);
 

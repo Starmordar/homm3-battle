@@ -1,24 +1,35 @@
-import { loadImage } from '../common/loadImage';
+import Sprite from '../../models/sprites/Sprite';
 
 export interface CanvasOptions {
+  classNames: Array<string>;
   size: { height: number; width: number };
   backgroundColor: string;
 }
 
 class Canvas<Options extends CanvasOptions> {
-  readonly canvas: HTMLCanvasElement;
-  readonly ctx: CanvasRenderingContext2D;
+  protected readonly options: Options;
+  protected readonly canvas: HTMLCanvasElement;
+  protected readonly ctx: CanvasRenderingContext2D;
 
-  readonly options: Options;
+  constructor(options: Options) {
+    this.options = options;
 
-  constructor(canvas: HTMLCanvasElement, options: Options) {
+    const canvas = this.createCanvas();
+
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
 
-    this.options = options;
-
     this.setCanvasSize();
-    this.fillCanvas();
+  }
+
+  private createCanvas(): HTMLCanvasElement {
+    const canvas = document.createElement('canvas');
+    canvas.classList.add(...this.options.classNames);
+
+    const body = document.getElementsByTagName('body')[0];
+    body.appendChild(canvas);
+
+    return canvas;
   }
 
   protected setCanvasSize() {
@@ -35,23 +46,9 @@ class Canvas<Options extends CanvasOptions> {
     this.ctx.scale(devicePixelRatio, devicePixelRatio);
   }
 
-  protected fillCanvas() {
-    this.ctx.fillStyle = this.options.backgroundColor;
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-  }
-
-  protected async setBackgroundImage(url: string) {
+  protected createCanvasPattern(sprite: Sprite) {
     const { width, height } = this.options.size;
-    const image = await loadImage(url);
-
-    this.ctx.drawImage(image, 0, 0, width, height);
-  }
-
-  protected async createPattern(url: string) {
-    const { width, height } = this.options.size;
-    const image = await loadImage(url);
-
-    const pattern = this.ctx.createPattern(image, 'repeat')!;
+    const pattern = this.ctx.createPattern(sprite.image, 'repeat')!;
 
     this.ctx.fillStyle = pattern;
     this.ctx.fillRect(0, 0, width, height);
