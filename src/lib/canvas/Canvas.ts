@@ -3,7 +3,6 @@ import Sprite from '../../models/sprites/Sprite';
 export interface CanvasOptions {
   classNames: Array<string>;
   size: { height: number; width: number };
-  backgroundColor: string;
 }
 
 class Canvas<Options extends CanvasOptions> {
@@ -26,8 +25,8 @@ class Canvas<Options extends CanvasOptions> {
     const canvas = document.createElement('canvas');
     canvas.classList.add(...this.options.classNames);
 
-    const body = document.getElementsByTagName('body')[0];
-    body.appendChild(canvas);
+    const root = document.getElementById('root')!;
+    root.appendChild(canvas);
 
     return canvas;
   }

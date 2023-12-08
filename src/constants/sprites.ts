@@ -1,23 +1,3 @@
-export const hero1SpriteOptions: IAnimatedSpriteOptions = {
-  url: '/src/assets/heroes/undead.png',
-  width: 150,
-  height: 175,
-  animations: {
-    idle: [0, 1, 2, 3, 2, 1],
-    active: [0, 1, 2, 3, 8, 9, 10, 11, 11, 10, 9, 8],
-  },
-};
-
-export const hero2SpriteOptions: IAnimatedSpriteOptions = {
-  url: '/src/assets/heroes/undead-mirror.png',
-  width: 150,
-  height: 175,
-  animations: {
-    idle: [19, 18, 17, 16, 17, 18],
-    active: [19, 18, 17, 16, 11, 10, 9, 8, 8, 9, 10, 11],
-  },
-};
-
 export const wrathSprite: IAnimatedSpriteOptions = {
   url: '/src/assets/wraith.png',
   width: 155,
@@ -54,7 +34,32 @@ export enum SPRITE {
   edge_pattern = 'edge_pattern',
   panel_bg = 'panel_bg',
   battle_bg_01 = 'battle_bg_01',
+
+  heroes_undead = 'heroes_undead',
+  heroes_undead_mirror = 'heroes_undead_mirror',
 }
+
+export const animatedSprites = {
+  [SPRITE.heroes_undead]: {
+    url: '/src/assets/heroes/undead.png',
+    width: 150,
+    height: 175,
+    animations: {
+      idle: [0, 1, 2, 3, 2, 1],
+      active: [0, 1, 2, 3, 8, 9, 10, 11, 11, 10, 9, 8],
+    },
+  },
+
+  [SPRITE.heroes_undead_mirror]: {
+    url: '/src/assets/heroes/undead-mirror.png',
+    width: 150,
+    height: 175,
+    animations: {
+      idle: [19, 18, 17, 16, 17, 18],
+      active: [19, 18, 17, 16, 11, 10, 9, 8, 8, 9, 10, 11],
+    },
+  },
+};
 
 export const uiSprites = {
   [SPRITE.hero_avatar_sm]: {

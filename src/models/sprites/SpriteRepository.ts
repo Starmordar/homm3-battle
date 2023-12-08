@@ -10,8 +10,8 @@ class SpriteRepository {
     this.repository.set(key, instance);
   }
 
-  public get(key: string): Sprite | undefined {
-    return this.repository.get(key);
+  public get<T extends Sprite>(key: string): T | undefined {
+    return this.repository.get(key) as T | undefined;
   }
 }
 

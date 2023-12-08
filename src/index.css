@@ -18,7 +18,7 @@ body {
   cursor: url('./assets/cursor/stop.png') 8 8, default;
 }
 
-.canvas-wrapper {
+#root {
   display: flex;
   align-items: center;
   min-width: 100vw;
@@ -39,7 +39,7 @@ body {
   z-index: 0;
 }
 
-.hero-canvas {
+.units-canvas {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
