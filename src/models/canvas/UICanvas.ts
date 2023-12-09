@@ -40,19 +40,56 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
     this.drawBattleControls();
     this.setHoverEvents();
+    this.setClickEvent();
   }
 
   private setHoverEvents() {
+    const { size, battleWidth, battleHeight } = this.options;
+
     this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
-      // const mousePosition = getMousePosition(this.canvas, evt);
-      // const isInside = isMouseInsideRect(mousePosition);
-      // const rect = (evt.target as HTMLElement).getBoundingClientRect();
-      // const x = evt.clientX - rect.left;
-      // const y = evt.clientY - rect.top;
-      // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      // this.drawHexagonalGrid();
-      // this.drawReachableHexes();
-      // this.highlightHoveredHex(new Point(x, y));
+      const mousePosition = getMousePosition(this.canvas, evt);
+
+      const dx = (size.width - battleWidth) / 2;
+      const dy = battleHeight - 16;
+      const isInside = isMouseInsideRect(mousePosition, {
+        width: battleWidth,
+        height: 47,
+        x: dx,
+        y: dy,
+      });
+
+      const newCursor = isInside ? 'cursor-move' : 'cursor-default';
+      const oldCursor = isInside ? 'cursor-default' : 'cursor-move';
+
+      this.canvas.classList.add(newCursor);
+      this.canvas.classList.remove(oldCursor);
+
+      // TODO: Set cursor id isInside true
+      console.log('isInside :>> ', isInside);
+    });
+  }
+
+  private setClickEvent() {
+    const { size, battleWidth, battleHeight } = this.options;
+
+    this.canvas.addEventListener('click', async (evt: MouseEvent) => {
+      const mousePosition = getMousePosition(this.canvas, evt);
+
+      const border = 1;
+      const dx = (size.width - battleWidth) / 2 + border;
+      const dy = battleHeight - 16 - border;
+      const isInside = isMouseInsideRect(mousePosition, { width: 60, height: 47, x: dx, y: dy });
+
+      this.ctx.clearRect(dx, dy, 60, 47);
+
+      this.ctx.fillStyle = 'black';
+      this.ctx.fillRect(dx, dy, 60, 47);
+      const sprite = this.spriteRepository.get(SPRITE.settings_btn_active)!;
+      const controlBtn = new UISpriteButton({ width: 60, height: 47, dx: dx - 1, dy: dy - 1 });
+      controlBtn.draw(this.ctx, sprite);
+
+      // TODO: Set cursor id isInside true
+      console.log('click inside button :>> ', isInside);
     });
   }
 
@@ -117,8 +154,9 @@ class UICanvas extends Canvas<UICanvasOptions> {
   private drawBattleControls() {
     const { size, battleWidth, battleHeight } = this.options;
 
-    const dx = (size.width - battleWidth) / 2;
-    const dy = battleHeight - 16;
+    const border = 1;
+    const dx = (size.width - battleWidth) / 2 + border;
+    const dy = battleHeight - 16 - border;
 
     battleButtons.forEach((btn) => {
       const sprite = this.spriteRepository.get(btn.sprite)!;

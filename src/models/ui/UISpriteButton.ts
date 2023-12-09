@@ -20,6 +20,8 @@ class UISpriteButton {
 
     sprite.drawFrame(ctx, 0, 0, dx, dy, width, height);
   }
+
+  // public setClickEvent(canvas: HTMLCanvasElement) {}
 }
 
 export default UISpriteButton;

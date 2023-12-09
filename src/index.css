@@ -7,7 +7,7 @@ body {
 }
 
 .cursor-default {
-  cursor: url('./assets/cursor/default.png') 8 8, default;
+  cursor: url('./assets/cursor/default.png') 0 0, default;
 }
 
 .cursor-move {
