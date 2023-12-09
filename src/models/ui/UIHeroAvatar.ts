@@ -52,7 +52,7 @@ class UIHeroAvatar {
     let height = 75;
     let textSy = sy + 5;
 
-    const statsUI = new UIBlock(this.ctx, { sx, sy, width, height });
+    const statsUI = new UIBlock(this.ctx, { x: sx, y: sy, width, height });
     statsUI.draw(backgroundSprite);
 
     this.setTextDefault();
@@ -73,7 +73,7 @@ class UIHeroAvatar {
     height = 45;
     textSy = sy + 7;
 
-    const moraleUI = new UIBlock(this.ctx, { sx, sy, width, height });
+    const moraleUI = new UIBlock(this.ctx, { x: sx, y: sy, width, height });
     moraleUI.draw(backgroundSprite);
 
     this.setTextDefault();
@@ -90,7 +90,7 @@ class UIHeroAvatar {
     height = 45;
     textSy = sy + 7;
 
-    const manaUI = new UIBlock(this.ctx, { sx, sy, width, height });
+    const manaUI = new UIBlock(this.ctx, { x: sx, y: sy, width, height });
     manaUI.draw(backgroundSprite);
 
     this.setTextDefault();

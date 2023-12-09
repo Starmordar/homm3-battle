@@ -10,7 +10,7 @@ interface IRect {
   y: number;
 }
 
-export function getMousePosition(cavans: HTMLCanvasElement, event: MouseEvent): IMousePosition {
+export function mousePosition(cavans: HTMLCanvasElement, event: MouseEvent): IMousePosition {
   const rect = cavans.getBoundingClientRect();
   return { x: event.clientX - rect.left, y: event.clientY - rect.top };
 }

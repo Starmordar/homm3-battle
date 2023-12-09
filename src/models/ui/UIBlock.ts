@@ -1,8 +1,8 @@
 import Sprite from '../sprites/Sprite';
 
 interface IBlockOptions {
-  sx: number;
-  sy: number;
+  x: number;
+  y: number;
   height: number;
   width: number;
   borderSize?: number;
@@ -62,11 +62,11 @@ class UIBlock {
   private drawStroke() {
     this.ctx.strokeStyle = '#e7ce8c';
     this.ctx.lineWidth = 1;
-    this.ctx.strokeRect(this.options.sx, this.options.sy, this.options.width, this.options.height);
+    this.ctx.strokeRect(this.options.x, this.options.y, this.options.width, this.options.height);
   }
 
   private drawPatternImage(sprite: Sprite) {
-    const { width, height, sx, sy } = this.options;
+    const { width, height, x: sx, y: sy } = this.options;
     const pattern = this.ctx.createPattern(sprite.image, 'repeat')!;
 
     this.ctx.fillStyle = pattern;
@@ -74,7 +74,7 @@ class UIBlock {
   }
 
   private createShadows() {
-    const { width, height, sx, sy, borderSize } = this.options;
+    const { width, height, x: sx, y: sy, borderSize } = this.options;
 
     this.lightShadow = new Path2D(`\
             M ${sx} ${sy + height}
