@@ -16,8 +16,14 @@ const spriteFactory = new SpriteFactory();
 const resources = new ResourceController(spriteRepository, spriteFactory);
 await resources.load();
 
-const battleWidth = Math.min(window.innerHeight * 1.5, window.innerWidth);
-const battleHeight = window.innerHeight - 25;
+// const battleWidth = Math.min(window.innerHeight * 1.5, window.innerWidth);
+// const battleHeight = window.innerHeight - 75;
+
+// width - (battleWidth + (width - battleWidth) / 2)
+// width - (width - battleWidth) / 2
+
+const battleWidth = 950;
+const battleHeight = 650;
 
 const layout = buildGridLayout({ width: battleWidth, height: battleHeight });
 
@@ -33,19 +39,19 @@ const uiCanvas = new UICanvas(spriteRepository, uiCanvasOptions);
 uiCanvas.setup(SPRITE.edge_pattern, SPRITE.battle_bg_01);
 
 console.log('battleWidth :>> ', battleWidth);
-const unitsCanvasOptions: CanvasOptions = {
-  classNames: ['units-canvas'],
-  size: { width: battleWidth, height: battleHeight },
-};
+// const unitsCanvasOptions: CanvasOptions = {
+//   classNames: ['units-canvas'],
+//   size: { width: battleWidth, height: battleHeight },
+// };
 
-const unitsCanvas = new UnitsCanvas(spriteRepository, unitsCanvasOptions);
-unitsCanvas.setup();
+// const unitsCanvas = new UnitsCanvas(spriteRepository, layout, unitsCanvasOptions);
+// unitsCanvas.setup();
 
-const hexCanvasOptions = {
-  classNames: ['grid-canvas'],
-  size: { width: battleWidth, height: battleHeight },
-  obstacles: hexObstacles,
-};
+// const hexCanvasOptions = {
+//   classNames: ['grid-canvas'],
+//   size: { width: battleWidth, height: battleHeight },
+//   obstacles: hexObstacles,
+// };
 
-const hexagonCanvas = new HexagonalCanvas(layout, hexCanvasOptions);
-hexagonCanvas.setup();
+// const hexagonCanvas = new HexagonalCanvas(layout, hexCanvasOptions);
+// hexagonCanvas.setup();

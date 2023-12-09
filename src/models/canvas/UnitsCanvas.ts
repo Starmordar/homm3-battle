@@ -1,20 +1,22 @@
-import { SPRITE, wrathSprite } from '../../constants/sprites';
+import { SPRITE } from '../../constants/sprites';
 import { units } from '../../constants/units';
 import AnimatedSprite from '../sprites/AnimatedSprite';
-// import { Hexagon } from '../../models/grid';
+import { Hexagon, Layout } from '../../models/grid';
 import SpriteRepository from '../sprites/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
 class UnitsCanvas extends Canvas<CanvasOptions> {
+  private readonly layout: Layout;
   private readonly spriteRepository: SpriteRepository;
 
   private animationStart: number = 0;
   private heroSprites: Array<AnimatedSprite> = [];
-  // private unitSprites: Array<{ sprite: AnimatedSprite; hex: Hexagon }> = [];
+  private unitSprites: Array<{ sprite: AnimatedSprite; hex: Hexagon }> = [];
 
-  constructor(spriteRepository: SpriteRepository, options: CanvasOptions) {
+  constructor(spriteRepository: SpriteRepository, layout: Layout, options: CanvasOptions) {
     super(options);
 
+    this.layout = layout;
     this.spriteRepository = spriteRepository;
     this.animationStep = this.animationStep.bind(this);
   }
@@ -25,12 +27,10 @@ class UnitsCanvas extends Canvas<CanvasOptions> {
       this.spriteRepository.get<AnimatedSprite>(SPRITE.heroes_undead_mirror)!,
     ];
 
-    // this.unitSprites = await Promise.all(
-    //   units.map(async (hex) => {
-    //     const sprite = await new AnimatedSprite(wrathSprite).loadPromise;
-    //     return { hex, sprite };
-    //   })
-    // );
+    this.unitSprites = units.map((hex) => {
+      const sprite = this.spriteRepository.get<AnimatedSprite>(SPRITE.wraith)!;
+      return { hex, sprite };
+    });
 
     requestAnimationFrame(this.firstFrame.bind(this));
   }
@@ -41,7 +41,7 @@ class UnitsCanvas extends Canvas<CanvasOptions> {
   }
 
   private animationStep(timeStamp: DOMHighResTimeStamp) {
-    const delta = (timeStamp - this.animationStart) / 200;
+    const delta = (timeStamp - this.animationStart) / 250;
 
     if (delta < 1) {
       requestAnimationFrame(this.animationStep);
@@ -70,10 +70,11 @@ class UnitsCanvas extends Canvas<CanvasOptions> {
     this.heroSprites[1].currentFrame++;
     // if (Math.random() < 0.01) this.heroSprites[1].nextAnimation = 'active';
 
-    // this.unitSprites.forEach(({ sprite, hex }, index) => {
-    //   sprite.drawFrame(this.ctx, 0, 0, 155, 138);
-    //   sprite.currentFrame++;
-    // });
+    this.unitSprites.forEach(({ sprite, hex }, index) => {
+      const pixel = this.layout.hexToPixel(hex);
+      sprite.drawFrame(this.ctx, pixel.x - 70 / 2, pixel.y - 100, 70, 115);
+      sprite.currentFrame++;
+    });
   }
 }
 

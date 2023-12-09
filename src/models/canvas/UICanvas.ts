@@ -1,7 +1,10 @@
 import { SPRITE } from '../../constants/sprites';
+import { battleButtons } from '../../constants/ui';
+import { getMousePosition, isMouseInsideRect } from '../../utils/canvas';
 import Sprite from '../sprites/Sprite';
 import SpriteRepository from '../sprites/SpriteRepository';
 import UIHeroAvatar from '../ui/UIHeroAvatar';
+import UISpriteButton from '../ui/UISpriteButton';
 import Canvas, { CanvasOptions } from './Canvas';
 
 export interface UICanvasOptions extends CanvasOptions {
@@ -10,12 +13,18 @@ export interface UICanvasOptions extends CanvasOptions {
 }
 
 class UICanvas extends Canvas<UICanvasOptions> {
+  private battleCanvasOffset: { x: number; y: number };
   private readonly spriteRepository: SpriteRepository;
 
   constructor(spriteRepository: SpriteRepository, options: UICanvasOptions) {
     super(options);
 
     this.spriteRepository = spriteRepository;
+
+    this.battleCanvasOffset = {
+      x: (this.options.size.width - this.options.battleWidth) / 2,
+      y: (this.options.size.height - this.options.battleHeight) / 2,
+    };
   }
 
   public setup(patternKey: string, backgroundKey: string) {
@@ -26,10 +35,25 @@ class UICanvas extends Canvas<UICanvasOptions> {
     this.drawCorners();
     this.drawHeroPortraits();
 
-    this.drawBattleControls();
-
     const bgSprite = this.spriteRepository.get(backgroundKey);
     if (bgSprite) this.drawBattleBackground(bgSprite);
+
+    this.drawBattleControls();
+    this.setHoverEvents();
+  }
+
+  private setHoverEvents() {
+    this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
+      // const mousePosition = getMousePosition(this.canvas, evt);
+      // const isInside = isMouseInsideRect(mousePosition);
+      // const rect = (evt.target as HTMLElement).getBoundingClientRect();
+      // const x = evt.clientX - rect.left;
+      // const y = evt.clientY - rect.top;
+      // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      // this.drawHexagonalGrid();
+      // this.drawReachableHexes();
+      // this.highlightHoveredHex(new Point(x, y));
+    });
   }
 
   private drawBorders() {
@@ -85,24 +109,44 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
     const enemyHero = new UIHeroAvatar(this.ctx, {
       sx: (size.width + battleWidth) / 2 + border,
-      sy: (window.innerHeight - battleHeight) / 2,
+      sy: (size.height - battleHeight) / 2,
     });
     enemyHero.draw(heroPortraits, background);
   }
 
   private drawBattleControls() {
-    console.log('TODO :>> draw battle control buttons');
+    const { size, battleWidth, battleHeight } = this.options;
+
+    const dx = (size.width - battleWidth) / 2;
+    const dy = battleHeight - 16;
+
+    battleButtons.forEach((btn) => {
+      const sprite = this.spriteRepository.get(btn.sprite)!;
+
+      const controlBtn = new UISpriteButton({ ...btn, dx: dx + btn.dx, dy: dy + btn.dy });
+      controlBtn.draw(this.ctx, sprite);
+    });
   }
 
   private drawBattleBackground(background: Sprite) {
-    const { size, battleWidth, battleHeight } = this.options;
+    const { battleWidth, battleHeight } = this.options;
 
     background.drawFrame(
       this.ctx,
       0,
       0,
-      (size.width - battleWidth) / 2,
-      (size.height - battleHeight) / 2,
+      this.battleCanvasOffset.x,
+      this.battleCanvasOffset.y,
+      battleWidth,
+      battleHeight
+    );
+
+    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = '#e7ce8c';
+
+    this.ctx.strokeRect(
+      this.battleCanvasOffset.x,
+      this.battleCanvasOffset.y,
       battleWidth,
       battleHeight
     );
