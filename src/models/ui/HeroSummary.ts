@@ -1,10 +1,10 @@
-import InfoPanel from './InfoPanel';
-import SpriteRepository from '../sprites/SpriteRepository';
-import Stroke from './Stroke';
+import SpriteRepository from '@/models/sprites/SpriteRepository';
+import InfoPanel from '@/models/ui/InfoPanel';
+import Stroke from '@/models/ui/Stroke';
 
-import { SummaryConfig, heroSummaryConfig } from '../../constants/ui';
-import type { Renderable } from '../../types';
-import { SPRITE } from '../../constants/sprites';
+import { SPRITE } from '@/constants/sprites';
+import { SummaryConfig, heroSummaryConfig } from '@/constants/ui';
+import type { Renderable } from '@/types';
 
 interface Settings {
   x: number;

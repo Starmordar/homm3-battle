@@ -1,14 +1,9 @@
-import SpriteRepository from '../sprites/SpriteRepository';
-import BattleControl from './BattleControl';
-import InfoPanel from './InfoPanel';
+import SpriteRepository from '@/models/sprites/SpriteRepository';
+import BattleControl from '@/models/ui/BattleControl';
+import InfoPanel from '@/models/ui/InfoPanel';
 
-import {
-  type BattleControlConfig,
-  battleControlsConfig,
-  battlePanelConfig,
-} from '../../constants/ui';
-
-import type { Renderable } from '../../types';
+import { type BattleControlConfig, battleControlsConfig, battlePanelConfig } from '@/constants/ui';
+import type { Renderable } from '@/types';
 
 interface Settings {
   width: number;

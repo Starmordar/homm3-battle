@@ -1,10 +1,10 @@
-import SpriteRepository from '../sprites/SpriteRepository';
-import UISprite from '../sprites/UISprite';
-import { mousePosition, isMouseInsideRect } from '../../utils/canvas';
+import SpriteRepository from '@/models/sprites/SpriteRepository';
+import UISprite from '@/models/sprites/UISprite';
+import Stroke from '@/models/ui/Stroke';
+import { mousePosition, isMouseInsideRect } from '@/utils/canvas';
 
-import type { BattleControlConfig } from '../../constants/ui';
-import type { Renderable } from '../../types';
-import Stroke from './Stroke';
+import type { BattleControlConfig } from '@/constants/ui';
+import type { Renderable } from '@/types';
 
 class BattleControl implements Renderable {
   private readonly spriteRepository: SpriteRepository;

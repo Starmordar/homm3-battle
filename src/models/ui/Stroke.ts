@@ -1,4 +1,4 @@
-import { Renderable } from '../../types';
+import { Renderable } from '@/types';
 
 interface StrokeSettings {
   x: number;

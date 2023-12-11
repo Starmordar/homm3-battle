@@ -1,5 +1,5 @@
-import Sprite from './Sprite';
-import type { IAnimatedSpriteOptions, ISpriteAnimation } from '../../constants/sprites';
+import Sprite from '@/models/sprites/Sprite';
+import type { IAnimatedSpriteOptions, ISpriteAnimation } from '@/constants/sprites';
 
 const defaultAnimation: keyof ISpriteAnimation = 'idle';
 

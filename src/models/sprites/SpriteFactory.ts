@@ -1,8 +1,8 @@
-import Sprite from './Sprite';
-import AnimatedSprite from './AnimatedSprite';
-import UISprite from './UISprite';
+import Sprite from '@/models/sprites/Sprite';
+import AnimatedSprite from '@/models/sprites/AnimatedSprite';
+import UISprite from '@/models/sprites/UISprite';
 
-import { IAnimatedSpriteOptions, ISpriteOptions } from '../../constants/sprites';
+import { IAnimatedSpriteOptions, ISpriteOptions } from '@/constants/sprites';
 
 class SpriteFactory {
   constructor() {}

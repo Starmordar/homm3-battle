@@ -1,7 +1,8 @@
-import SpriteRepository from '../sprites/SpriteRepository';
-import Stroke from './Stroke';
-import type { Renderable } from '../../types';
-import { SPRITE } from '../../constants/sprites';
+import SpriteRepository from '@/models/sprites/SpriteRepository';
+import Stroke from '@/models/ui/Stroke';
+
+import { SPRITE } from '@/constants/sprites';
+import type { Renderable } from '@/types';
 
 interface Settings {
   x: number;

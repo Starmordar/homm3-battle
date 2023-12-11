@@ -1,4 +1,4 @@
-import type { ISpriteOptions } from '../../constants/sprites';
+import type { ISpriteOptions } from '@/constants/sprites';
 
 abstract class Sprite<Options extends ISpriteOptions = ISpriteOptions> {
   public readonly options: Options;
