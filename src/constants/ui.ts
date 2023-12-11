@@ -25,7 +25,9 @@ export interface BattleInfoConfig {
   sprite: string;
 }
 
-const defaultControlSettings = { width: 60, height: 47 };
+export const battlePanelHeight = 47;
+
+const defaultControlSettings = { width: 60, height: battlePanelHeight };
 export const battleControlsConfig = (panelWidth: number): Array<BattleControlConfig> => [
   {
     ...defaultControlSettings,
@@ -133,7 +135,7 @@ export interface SummaryConfig {
   y: number;
 }
 
-const summaryWidth = 90;
+export const summaryWidth = 90;
 
 export const heroSummaryConfig = {
   avatar: {

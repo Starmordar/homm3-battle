@@ -34,11 +34,9 @@ class Canvas<Options extends CanvasOptions> {
   protected setCanvasSize() {
     const { width, height } = this.options.size;
 
-    // Set display size (css pixels)
     this.canvas.style.width = width + 'px';
     this.canvas.style.height = height + 'px';
 
-    // Set actual size in memory (scaled to account for extra pixel density)
     this.canvas.width = Math.floor(width * devicePixelRatio);
     this.canvas.height = Math.floor(height * devicePixelRatio);
 

@@ -33,10 +33,11 @@ const uiCanvasOptions: UICanvasOptions = {
 
   battleHeight,
   battleWidth,
+  backgroundSprite: SPRITE.battle_bg_01,
 };
 
 const uiCanvas = new UICanvas(spriteRepository, uiCanvasOptions);
-uiCanvas.setup(SPRITE.edge_pattern, SPRITE.battle_bg_01);
+uiCanvas.display();
 
 console.log('battleWidth :>> ', battleWidth);
 // const unitsCanvasOptions: CanvasOptions = {

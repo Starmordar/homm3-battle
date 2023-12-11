@@ -1,17 +1,19 @@
 import { SPRITE } from '../../constants/sprites';
-import Sprite from '../sprites/Sprite';
+import { battlePanelHeight, summaryWidth } from '../../constants/ui';
 import SpriteRepository from '../sprites/SpriteRepository';
 import BattlePanel from '../ui/BattlePanel';
 import HeroSummary from '../ui/HeroSummary';
+import Stroke from '../ui/Stroke';
 import Canvas, { CanvasOptions } from './Canvas';
 
 export interface UICanvasOptions extends CanvasOptions {
+  backgroundSprite: string;
   battleWidth: number;
   battleHeight: number;
 }
 
 class UICanvas extends Canvas<UICanvasOptions> {
-  private battleCanvasOffset: { x: number; y: number };
+  private readonly battleCanvasOffset: { x: number; y: number };
   private readonly spriteRepository: SpriteRepository;
 
   constructor(spriteRepository: SpriteRepository, options: UICanvasOptions) {
@@ -25,17 +27,15 @@ class UICanvas extends Canvas<UICanvasOptions> {
     };
   }
 
-  public setup(patternKey: string, backgroundKey: string) {
-    const patternSprite = this.spriteRepository.get(patternKey);
-    if (patternSprite) this.createCanvasPattern(patternSprite);
+  public display() {
+    const patternSprite = this.spriteRepository.get(SPRITE.edge_pattern);
+    this.createCanvasPattern(patternSprite);
 
     this.drawBorders();
     this.drawCorners();
     this.drawHeroPortraits();
 
-    const bgSprite = this.spriteRepository.get(backgroundKey);
-    if (bgSprite) this.drawBattleBackground(bgSprite);
-
+    this.drawBattleBackground();
     this.drawBattleControls();
   }
 
@@ -57,7 +57,6 @@ class UICanvas extends Canvas<UICanvasOptions> {
     const { width, height } = this.options.size;
 
     const sprite = this.spriteRepository.get(SPRITE.corner_gems);
-    if (!sprite) return;
 
     const dw = sprite.options.width;
     const dh = sprite.options.height;
@@ -78,56 +77,55 @@ class UICanvas extends Canvas<UICanvasOptions> {
   private drawHeroPortraits() {
     const { size, battleWidth, battleHeight } = this.options;
 
-    const blockWidth = 90;
-    const border = 5;
+    const battleOffset = 5;
 
     const yourHero = new HeroSummary(this.spriteRepository, {
-      x: (size.width - battleWidth) / 2 - blockWidth - border,
+      x: (size.width - battleWidth) / 2 - summaryWidth - battleOffset,
       y: (size.height - battleHeight) / 2,
     });
     yourHero.draw(this.ctx);
 
     const enemyHero = new HeroSummary(this.spriteRepository, {
-      x: (size.width + battleWidth) / 2 + border,
+      x: (size.width + battleWidth) / 2 + battleOffset,
       y: (size.height - battleHeight) / 2,
     });
     enemyHero.draw(this.ctx);
   }
 
-  private drawBattleControls() {
-    const { size, battleWidth, battleHeight } = this.options;
-
-    const battlePanel = new BattlePanel(this.spriteRepository, {
-      width: battleWidth - 2,
-      x: (size.width - battleWidth) / 2 + 1,
-      y: battleHeight - 16,
-    });
-
-    battlePanel.draw(this.ctx, this.canvas);
-  }
-
-  private drawBattleBackground(background: Sprite) {
+  private drawBattleBackground() {
     const { battleWidth, battleHeight } = this.options;
+    const sprite = this.spriteRepository.get(this.options.backgroundSprite);
 
-    background.drawFrame(
+    sprite.drawFrame(
       this.ctx,
       0,
       0,
       this.battleCanvasOffset.x,
       this.battleCanvasOffset.y,
       battleWidth,
-      battleHeight
+      battleHeight - battlePanelHeight
     );
 
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = '#e7ce8c';
+    const stroke = new Stroke({
+      x: this.battleCanvasOffset.x,
+      y: this.battleCanvasOffset.y,
+      width: battleWidth,
+      height: battleHeight,
+    });
+    stroke.draw(this.ctx);
+  }
 
-    this.ctx.strokeRect(
-      this.battleCanvasOffset.x,
-      this.battleCanvasOffset.y,
-      battleWidth,
-      battleHeight
-    );
+  private drawBattleControls() {
+    const { size, battleWidth, battleHeight } = this.options;
+
+    const border = 2;
+    const battlePanel = new BattlePanel(this.spriteRepository, {
+      width: battleWidth - border,
+      x: (size.width - battleWidth + border) / 2,
+      y: (size.height + battleHeight) / 2 - battlePanelHeight,
+    });
+
+    battlePanel.draw(this.ctx, this.canvas);
   }
 }
 
