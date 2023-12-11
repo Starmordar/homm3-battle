@@ -1,25 +1,26 @@
-import { uiSprites } from '../constants/sprites';
-import SpriteRegistry from '../models/sprites/SpriteRegistry';
-import UISprite from '../models/sprites/UISprite';
-
-type IUISpriteKey = keyof typeof uiSprites;
+import { uiSprites, animatedSprites, type ISpriteOptions } from '../constants/sprites';
+import Sprite from '../models/sprites/Sprite';
+import SpriteFactory from '../models/sprites/SpriteFactory';
+import SpriteRepository from '../models/sprites/SpriteRepository';
 
 class ResourceController {
-  private readonly spriteRegistry: SpriteRegistry;
+  private readonly spriteRegistry: SpriteRepository;
+  private readonly spriteFactory: SpriteFactory;
 
-  constructor(spriteRegistry: SpriteRegistry) {
+  constructor(spriteRegistry: SpriteRepository, spriteFactory: SpriteFactory) {
     this.spriteRegistry = spriteRegistry;
+    this.spriteFactory = spriteFactory;
   }
 
-  // public loadSprites() {
+  public load() {
+    return Promise.all([this.loadSprites(uiSprites), this.loadSprites(animatedSprites)]);
+  }
 
-  // }
+  private async loadSprites(options: Record<string, ISpriteOptions>): Promise<Array<Sprite>> {
+    const promises = Object.keys(options).map((key) => {
+      const sprite = this.spriteFactory.create(options[key as keyof typeof options]);
 
-  public loadUISprites(): Promise<Array<UISprite>> {
-    const promises = Object.keys(uiSprites).map((spriteKey) => {
-      const sprite = new UISprite(uiSprites[spriteKey as IUISpriteKey]);
-      this.spriteRegistry.register(spriteKey, sprite);
-
+      this.spriteRegistry.register(key, sprite);
       return sprite.loadPromise;
     });
 

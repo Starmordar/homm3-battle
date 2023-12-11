@@ -1,14 +1,21 @@
-import { battleGridSize } from '../constants/hex';
-import Hexagon from '../models/grid/Hexagon';
-import Point from '../models/grid/Point';
+import { Layout, Hexagon, Point } from '@/models/grid';
+import { battleGridSize, hexagonCount } from '@/constants/hex';
 
-export function getLayoutHexes({
-  width,
-  height,
-}: {
+interface Dimensions {
   width: number;
   height: number;
-}): Array<Hexagon> {
+}
+
+export function buildGridLayout({ width, height }: Dimensions): Layout {
+  const pointSize = Math.min(height, width) / hexagonCount;
+
+  const originPoint = new Point((width - pointSize) / 2, height / 2 + height / 10);
+  const sizePoint = new Point(pointSize, pointSize);
+
+  return new Layout(Layout.pointyOnTop, sizePoint, originPoint);
+}
+
+export function getLayoutHexes({ width, height }: Dimensions): Array<Hexagon> {
   const hexes: Array<Hexagon> = [];
 
   const rowStart = -Math.floor(width / 2);

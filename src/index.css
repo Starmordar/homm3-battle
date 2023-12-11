@@ -7,7 +7,7 @@ body {
 }
 
 .cursor-default {
-  cursor: url('./assets/cursor/default.png') 8 8, default;
+  cursor: url('./assets/cursor/default.png') 0 0, default;
 }
 
 .cursor-move {
@@ -18,7 +18,7 @@ body {
   cursor: url('./assets/cursor/stop.png') 8 8, default;
 }
 
-.canvas-wrapper {
+#root {
   display: flex;
   align-items: center;
   min-width: 100vw;
@@ -39,15 +39,7 @@ body {
   z-index: 0;
 }
 
-.background-canvas {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0 auto;
-  z-index: 0;
-}
-
-.hero-canvas {
+.units-canvas {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
