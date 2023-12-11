@@ -1,11 +1,8 @@
 import { SPRITE } from '../../constants/sprites';
-import { battleControlBtns } from '../../constants/ui';
-import { mousePosition, isMouseInsideRect } from '../../utils/canvas';
 import Sprite from '../sprites/Sprite';
 import SpriteRepository from '../sprites/SpriteRepository';
-import UIBattlePanel from '../ui/UIBattlePanel';
-import UIHeroAvatar from '../ui/UIHeroAvatar';
-import UISpriteButton from '../ui/UIBattleBtn';
+import BattlePanel from '../ui/BattlePanel';
+import HeroSummary from '../ui/HeroSummary';
 import Canvas, { CanvasOptions } from './Canvas';
 
 export interface UICanvasOptions extends CanvasOptions {
@@ -81,35 +78,32 @@ class UICanvas extends Canvas<UICanvasOptions> {
   private drawHeroPortraits() {
     const { size, battleWidth, battleHeight } = this.options;
 
-    const heroPortraits = this.spriteRepository.get(SPRITE.hero_avatar_lg);
-    const background = this.spriteRepository.get(SPRITE.panel_bg);
-
     const blockWidth = 90;
     const border = 5;
 
-    const yourHero = new UIHeroAvatar(this.ctx, {
-      sx: (size.width - battleWidth) / 2 - blockWidth - border,
-      sy: (size.height - battleHeight) / 2,
+    const yourHero = new HeroSummary(this.spriteRepository, {
+      x: (size.width - battleWidth) / 2 - blockWidth - border,
+      y: (size.height - battleHeight) / 2,
     });
-    yourHero.draw(heroPortraits, background);
+    yourHero.draw(this.ctx);
 
-    const enemyHero = new UIHeroAvatar(this.ctx, {
-      sx: (size.width + battleWidth) / 2 + border,
-      sy: (size.height - battleHeight) / 2,
+    const enemyHero = new HeroSummary(this.spriteRepository, {
+      x: (size.width + battleWidth) / 2 + border,
+      y: (size.height - battleHeight) / 2,
     });
-    enemyHero.draw(heroPortraits, background);
+    enemyHero.draw(this.ctx);
   }
 
   private drawBattleControls() {
     const { size, battleWidth, battleHeight } = this.options;
 
-    const battlePanelUI = new UIBattlePanel(this.spriteRepository, {
+    const battlePanel = new BattlePanel(this.spriteRepository, {
       width: battleWidth - 2,
       x: (size.width - battleWidth) / 2 + 1,
       y: battleHeight - 16,
     });
 
-    battlePanelUI.draw(this.canvas);
+    battlePanel.draw(this.ctx, this.canvas);
   }
 
   private drawBattleBackground(background: Sprite) {

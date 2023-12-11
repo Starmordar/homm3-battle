@@ -1,30 +1,32 @@
 import { SPRITE } from './sprites';
 
-interface IControlBtnSprite {
+interface BattleControlSprite {
   idle: string;
   active: string;
   disabled: string;
 }
 
-export interface IBattleControlBtn {
+export interface BattleControlConfig {
   width: number;
   height: number;
   x: number;
   y: number;
 
   disabled: boolean;
-  sprite: IControlBtnSprite;
+  sprite: BattleControlSprite;
 }
 
-export interface IBattleControlGroup {
+export interface BattleInfoConfig {
   width: number;
   height: number;
   x: number;
   y: number;
+
+  sprite: string;
 }
 
 const defaultControlSettings = { width: 60, height: 47 };
-export const battleControlBtns = (panelWidth: number): Array<IBattleControlBtn> => [
+export const battleControlsConfig = (panelWidth: number): Array<BattleControlConfig> => [
   {
     ...defaultControlSettings,
     x: 0,
@@ -112,26 +114,56 @@ export const battleControlBtns = (panelWidth: number): Array<IBattleControlBtn> 
   },
 ];
 
-export const infoPanel = (panelWidth: number): IBattleControlGroup => {
+export const battlePanelConfig = (panelWidth: number): BattleInfoConfig => {
   return {
     x: defaultControlSettings.width * 4,
-    y: 2,
+    y: 0,
     width: panelWidth - defaultControlSettings.width * 7,
-    height: defaultControlSettings.height - 2,
+    height: defaultControlSettings.height,
+    sprite: SPRITE.panel_bg,
   };
 };
 
-export const battleControlGroups = (panelWidth: number): Array<IBattleControlGroup> => [
-  {
+// Hero Summary Section
+
+export interface SummaryConfig {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
+
+const summaryWidth = 90;
+
+export const heroSummaryConfig = {
+  avatar: {
     x: 0,
     y: 0,
-    width: defaultControlSettings.width * 4,
-    height: defaultControlSettings.height,
+    width: summaryWidth,
+    height: 100,
   },
-  {
-    x: panelWidth - defaultControlSettings.width * 3,
-    y: 0,
-    width: defaultControlSettings.width * 3,
-    height: defaultControlSettings.height,
+  statistic: {
+    x: 0,
+    y: 100,
+    width: summaryWidth,
+    height: 75,
   },
-];
+  morale: {
+    x: 0,
+    y: 175,
+    width: summaryWidth,
+    height: 45,
+  },
+  mana: {
+    x: 0,
+    y: 220,
+    width: summaryWidth,
+    height: 45,
+  },
+  text: {
+    lineHeight: 16,
+    top: 5,
+    left: 8,
+    right: summaryWidth - 8,
+  },
+};
