@@ -1,3 +1,4 @@
+import type { HeroOptions } from '@/constants/hero';
 import { SPRITE } from '../../constants/sprites';
 import { battlePanelHeight, summaryWidth } from '../../constants/ui';
 import SpriteRepository from '../sprites/SpriteRepository';
@@ -5,8 +6,11 @@ import BattlePanel from '../ui/BattlePanel';
 import HeroSummary from '../ui/HeroSummary';
 import Stroke from '../ui/Stroke';
 import Canvas, { CanvasOptions } from './Canvas';
+import BattleHeroInfo from '../battle/BattleHeroInfo';
 
 export interface UICanvasOptions extends CanvasOptions {
+  heroes: Array<BattleHeroInfo>;
+
   backgroundSprite: string;
   battleWidth: number;
   battleHeight: number;
@@ -75,17 +79,19 @@ class UICanvas extends Canvas<UICanvasOptions> {
   }
 
   private drawHeroPortraits() {
-    const { size, battleWidth, battleHeight } = this.options;
+    const { size, battleWidth, battleHeight, heroes } = this.options;
 
     const battleOffset = 5;
 
     const yourHero = new HeroSummary(this.spriteRepository, {
+      hero: heroes[0],
       x: (size.width - battleWidth) / 2 - summaryWidth - battleOffset,
       y: (size.height - battleHeight) / 2,
     });
     yourHero.draw(this.ctx);
 
     const enemyHero = new HeroSummary(this.spriteRepository, {
+      hero: heroes[1],
       x: (size.width + battleWidth) / 2 + battleOffset,
       y: (size.height - battleHeight) / 2,
     });

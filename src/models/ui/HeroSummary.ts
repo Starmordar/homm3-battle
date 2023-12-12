@@ -5,19 +5,24 @@ import Stroke from '@/models/ui/Stroke';
 import { SPRITE } from '@/constants/sprites';
 import { SummaryConfig, heroSummaryConfig } from '@/constants/ui';
 import type { Renderable } from '@/types';
+import BattleHeroInfo from '../battle/BattleHeroInfo';
 
 interface Settings {
+  hero: BattleHeroInfo;
   x: number;
   y: number;
 }
 
 class HeroSummary implements Renderable {
+  private readonly heroInfo: BattleHeroInfo;
   private readonly spriteRepository: SpriteRepository;
   private readonly settings: Settings;
 
   constructor(spriteRepository: SpriteRepository, settings: Settings) {
     this.spriteRepository = spriteRepository;
     this.settings = settings;
+
+    this.heroInfo = this.settings.hero;
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
@@ -27,12 +32,13 @@ class HeroSummary implements Renderable {
 
   private drawPortrait(ctx: CanvasRenderingContext2D) {
     const { avatar } = heroSummaryConfig;
+    const [frameX, frameY] = this.heroInfo.options.sprite;
 
     const portraitSprite = this.spriteRepository.get(SPRITE.hero_avatar_lg);
     portraitSprite.drawFrame(
       ctx,
-      0,
-      0,
+      frameX,
+      frameY,
       this.settings.x + avatar.x,
       this.settings.y + avatar.y,
       avatar.width,
@@ -90,6 +96,7 @@ class HeroSummary implements Renderable {
   private drawStatisticPanelText(ctx: CanvasRenderingContext2D) {
     const { text, statistic } = heroSummaryConfig;
     const { top, left, right } = this.textOffset(statistic);
+    const { attack, defense, spellPower, knowledge } = this.heroInfo.primarySkills;
 
     this.setTextStyles(ctx);
 
@@ -100,32 +107,34 @@ class HeroSummary implements Renderable {
     ctx.fillText('Know:', left, top + text.lineHeight * 4);
 
     ctx.textAlign = 'right';
-    ctx.fillText('5', right, top + text.lineHeight);
-    ctx.fillText('8', right, top + 2 * text.lineHeight);
-    ctx.fillText('1', right, top + 3 * text.lineHeight);
-    ctx.fillText('4', right, top + 4 * text.lineHeight);
+    ctx.fillText(`${attack}`, right, top + text.lineHeight);
+    ctx.fillText(`${defense}`, right, top + 2 * text.lineHeight);
+    ctx.fillText(`${spellPower}`, right, top + 3 * text.lineHeight);
+    ctx.fillText(`${knowledge}`, right, top + 4 * text.lineHeight);
   }
 
   private drawMoralePanelText(ctx: CanvasRenderingContext2D) {
-    const { text, morale } = heroSummaryConfig;
-    const { top, left, right } = this.textOffset(morale);
+    const { text, morale: moraleConfig } = heroSummaryConfig;
+    const { top, left, right } = this.textOffset(moraleConfig);
+    const { morale, luck } = this.heroInfo;
 
     ctx.textAlign = 'start';
     ctx.fillText('Morale:', left, top + text.lineHeight);
     ctx.fillText('Luck', left, top + text.lineHeight * 2);
 
     ctx.textAlign = 'right';
-    ctx.fillText('1', right, top + text.lineHeight);
-    ctx.fillText('3', right, top + text.lineHeight * 2);
+    ctx.fillText(`${morale}`, right, top + text.lineHeight);
+    ctx.fillText(`${luck}`, right, top + text.lineHeight * 2);
   }
 
   private drawManaPanelText(ctx: CanvasRenderingContext2D) {
-    const { text, mana } = heroSummaryConfig;
-    const { top, middle } = this.textOffset(mana);
+    const { text, mana: manaConfig } = heroSummaryConfig;
+    const { top, middle } = this.textOffset(manaConfig);
+    const { mana } = this.heroInfo;
 
     ctx.textAlign = 'center';
     ctx.fillText('Spell Points', middle, top + text.lineHeight);
-    ctx.fillText('24/40', middle, top + text.lineHeight * 2);
+    ctx.fillText(`${mana.mana}/${mana.manaLimit}`, middle, top + text.lineHeight * 2);
   }
 }
 
