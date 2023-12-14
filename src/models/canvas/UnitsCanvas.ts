@@ -4,35 +4,45 @@ import AnimatedSprite from '../sprites/AnimatedSprite';
 import { Hexagon, Layout } from '../../models/grid';
 import SpriteRepository from '../sprites/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
+import BattleHeroInfo from '../battle/BattleHeroInfo';
+import { heroAnimationSize, heroesClasses } from '@/constants/hero';
 
-class UnitsCanvas extends Canvas<CanvasOptions> {
+export interface UnitsCanvasOptions extends CanvasOptions {
+  heroes: Array<BattleHeroInfo>;
+}
+
+class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   private readonly layout: Layout;
   private readonly spriteRepository: SpriteRepository;
 
   private animationStart: number = 0;
-  private heroSprites: Array<AnimatedSprite> = [];
+  private heroSprites: Array<{ sprite: AnimatedSprite; frameY: number }> = [];
   private unitSprites: Array<{ sprite: AnimatedSprite; hex: Hexagon }> = [];
 
-  constructor(spriteRepository: SpriteRepository, layout: Layout, options: CanvasOptions) {
+  constructor(spriteRepository: SpriteRepository, layout: Layout, options: UnitsCanvasOptions) {
     super(options);
 
     this.layout = layout;
     this.spriteRepository = spriteRepository;
+
     this.animationStep = this.animationStep.bind(this);
   }
 
   public async setup() {
-    this.heroSprites = [
-      this.spriteRepository.get<AnimatedSprite>(SPRITE.heroes_undead)!,
-      this.spriteRepository.get<AnimatedSprite>(SPRITE.heroes_undead_mirror)!,
-    ];
+    const heroes = this.options.heroes;
 
-    this.unitSprites = units.map((hex) => {
-      const sprite = this.spriteRepository.get<AnimatedSprite>(SPRITE.wraith)!;
-      return { hex, sprite };
-    });
+    this.createHero(heroes[0], false);
+    this.createHero(heroes[1], true);
 
     requestAnimationFrame(this.firstFrame.bind(this));
+  }
+
+  private createHero(hero: BattleHeroInfo, mirror: boolean) {
+    const settings = heroesClasses[hero.options.class];
+    const spriteKey = mirror ? 'mirror' : 'normal';
+
+    const sprite = this.spriteRepository.get<AnimatedSprite>(settings.animation.sprites[spriteKey]);
+    this.heroSprites.push({ sprite, frameY: settings.animation.frame.y });
   }
 
   private firstFrame(timeStamp: DOMHighResTimeStamp) {
@@ -51,30 +61,34 @@ class UnitsCanvas extends Canvas<CanvasOptions> {
     this.animationStart = timeStamp;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.animate();
+    this.animateHeroes();
+
     requestAnimationFrame(this.animationStep);
   }
 
-  private animate() {
-    this.heroSprites[0].drawFrame(this.ctx, 0, 0, 175, 200);
-    this.heroSprites[0].currentFrame++;
-    this.heroSprites[0].nextAnimation = 'active';
+  private animateHeroes() {
+    const offsetY = -30;
+    const offsetStartX = -15;
+    const offsetEndX = this.options.size.width - 130;
 
-    this.heroSprites[1].drawFrame(
-      this.ctx,
-      parseInt(this.canvas.style.width, 10) - 175,
-      0,
-      175,
-      200
-    );
-    this.heroSprites[1].currentFrame++;
-    // if (Math.random() < 0.01) this.heroSprites[1].nextAnimation = 'active';
+    this.animateFirstHero({ top: offsetY, left: offsetStartX });
+    this.animateSecondHero({ top: offsetY, left: offsetEndX });
+  }
 
-    this.unitSprites.forEach(({ sprite, hex }, index) => {
-      const pixel = this.layout.hexToPixel(hex);
-      sprite.drawFrame(this.ctx, pixel.x - 70 / 2, pixel.y - 100, 70, 115);
-      sprite.currentFrame++;
-    });
+  private animateFirstHero({ top, left }: { top: number; left: number }) {
+    const { width, height } = heroAnimationSize;
+    const { sprite, frameY } = this.heroSprites[0];
+
+    sprite.drawFrame(this.ctx, frameY, left, top, width, height);
+    sprite.currentFrame++;
+  }
+
+  private animateSecondHero({ top, left }: { top: number; left: number }) {
+    const { width, height } = heroAnimationSize;
+    const { sprite, frameY } = this.heroSprites[1];
+
+    sprite.drawFrame(this.ctx, frameY, left, top, width, height);
+    sprite.currentFrame++;
   }
 }
 

@@ -38,11 +38,18 @@ class AnimatedSprite extends Sprite<IAnimatedSpriteOptions> {
     this._nextAnimation = mode;
   }
 
-  public drawFrame(ctx: CanvasRenderingContext2D, dx: number, dy: number, dw: number, dh: number) {
+  public drawFrame(
+    ctx: CanvasRenderingContext2D,
+    fy: number,
+    dx: number,
+    dy: number,
+    dw: number,
+    dh: number
+  ) {
     ctx.drawImage(
       this.image,
       this._animationSteps[this._currentFrame] * this.options.width,
-      0 * this.options.height,
+      fy * this.options.height,
       this.options.width,
       this.options.height,
       dx,

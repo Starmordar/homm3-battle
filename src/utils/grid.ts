@@ -9,7 +9,7 @@ interface Dimensions {
 export function buildGridLayout({ width, height }: Dimensions): Layout {
   const pointSize = Math.min(height, width) / hexagonCount;
 
-  const originPoint = new Point((width - pointSize) / 2, height / 2 + height / 10);
+  const originPoint = new Point((width - pointSize) / 2, height / 2);
   const sizePoint = new Point(pointSize, pointSize);
 
   return new Layout(Layout.pointyOnTop, sizePoint, originPoint);

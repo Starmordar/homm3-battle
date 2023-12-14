@@ -64,6 +64,9 @@ export enum SPRITE {
   panel_bg = 'panel_bg',
   battle_bg_01 = 'battle_bg_01',
 
+  heroes_animation = 'heroes_animation',
+  heroes_animation_mirror = 'heroes_animation_mirror',
+
   heroes_undead = 'heroes_undead',
   heroes_undead_mirror = 'heroes_undead_mirror',
 
@@ -80,8 +83,8 @@ export const animatedSprites = {
     },
   },
 
-  [SPRITE.heroes_undead]: {
-    url: '/src/assets/heroes/undead.png',
+  [SPRITE.heroes_animation]: {
+    url: '/src/assets/heroes/hero-sprites.png',
     width: 150,
     height: 175,
     animations: {
@@ -90,8 +93,8 @@ export const animatedSprites = {
     },
   },
 
-  [SPRITE.heroes_undead_mirror]: {
-    url: '/src/assets/heroes/undead-mirror.png',
+  [SPRITE.heroes_animation_mirror]: {
+    url: '/src/assets/heroes/hero-sprites-mirror.png',
     width: 150,
     height: 175,
     animations: {

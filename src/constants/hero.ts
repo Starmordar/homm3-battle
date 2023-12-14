@@ -1,3 +1,5 @@
+import { SPRITE } from './sprites';
+
 export interface HeroOptions {
   sprite: [number, number];
   male: boolean;
@@ -90,14 +92,25 @@ export const heroesOptions: Record<string, HeroOptions> = {
 export const heroesClasses = {
   deathknight: {
     commander: 'powerLich',
-    animation: { battle: { male: 'CH08.DEF', female: 'CH09.DEF' } },
+    animation: {
+      sprites: { normal: SPRITE.heroes_animation, mirror: SPRITE.heroes_animation_mirror },
+      frame: { x: 0, y: 8 },
+    },
     primarySkills: { attack: 1, defense: 3, spellPower: 1, knowledge: 1 },
     details: { morale: 1, luck: 1 },
   },
   necromancer: {
     commander: 'powerLich',
-    animation: { battle: { male: 'CH08.DEF', female: 'CH09.DEF' } },
+    animation: {
+      sprites: { normal: SPRITE.heroes_animation, mirror: SPRITE.heroes_animation_mirror },
+      frame: { x: 0, y: 9 },
+    },
     primarySkills: { attack: 1, defense: 1, spellPower: 2, knowledge: 2 },
     details: { morale: 1, luck: 0 },
   },
+};
+
+export const heroAnimationSize = {
+  width: 150,
+  height: 180,
 };
