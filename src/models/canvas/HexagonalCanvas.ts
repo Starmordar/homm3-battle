@@ -10,6 +10,8 @@ import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
 import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../../utils/grid';
+import { EventKey, eventBus } from '@/controllers/EventBus';
+import { updateCursorStyle } from '@/utils/common';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hexagon>;
@@ -31,7 +33,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.layout = layout;
   }
 
-  public setup() {
+  public display() {
     this.computeReachableHexes();
 
     this.drawHexagonalGrid();
@@ -114,7 +116,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private setHexHoverEvent() {
-    this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
+    eventBus.on(EventKey.hoverHex, async (evt: MouseEvent) => {
       const rect = (evt.target as HTMLElement).getBoundingClientRect();
       const x = evt.clientX - rect.left;
       const y = evt.clientY - rect.top;
@@ -161,8 +163,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     const newCursor = moveNotAllowed ? 'cursor-stop' : 'cursor-move';
     const oldCursor = moveNotAllowed ? 'cursor-move' : 'cursor-stop';
 
-    this.canvas.classList.add(newCursor);
-    this.canvas.classList.remove(oldCursor);
+    updateCursorStyle(oldCursor, newCursor);
   }
 
   private setOnClickEvent() {

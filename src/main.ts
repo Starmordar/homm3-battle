@@ -42,6 +42,15 @@ const uiCanvasOptions = {
 const uiCanvas = new UICanvas(spriteRepository, uiCanvasOptions);
 uiCanvas.display();
 
+const hexCanvasOptions = {
+  classNames: ['grid-canvas'],
+  size: { width: battleWidth, height: battleHeight - 90 },
+  obstacles: hexObstacles,
+};
+
+const hexagonCanvas = new HexagonalCanvas(layout, hexCanvasOptions);
+hexagonCanvas.display();
+
 const unitsCanvasOptions = {
   classNames: ['units-canvas'],
   size: { width: battleWidth, height: battleHeight - 90 },
@@ -50,12 +59,3 @@ const unitsCanvasOptions = {
 
 const unitsCanvas = new UnitsCanvas(spriteRepository, layout, unitsCanvasOptions);
 unitsCanvas.setup();
-
-const hexCanvasOptions = {
-  classNames: ['grid-canvas'],
-  size: { width: battleWidth, height: battleHeight - 90 },
-  obstacles: hexObstacles,
-};
-
-const hexagonCanvas = new HexagonalCanvas(layout, hexCanvasOptions);
-hexagonCanvas.setup();

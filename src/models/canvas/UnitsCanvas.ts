@@ -8,6 +8,7 @@ import { Layout } from '../../models/grid';
 import { type SpriteAnimation } from '../../constants/sprites';
 import { Creature, heroArmy } from '../../constants/units';
 import { heroAnimationSize, heroesClasses } from '@/constants/hero';
+import { EventKey, eventBus } from '@/controllers/EventBus';
 
 export interface UnitsCanvasOptions extends CanvasOptions {
   heroes: Array<BattleHeroInfo>;
@@ -42,6 +43,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     this.createHeroAnimation(heroes[1], true);
 
     this.createCreaturesAnimation();
+    this.listenHoverEvent();
 
     requestAnimationFrame(this.firstFrame.bind(this));
   }
@@ -128,6 +130,12 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
     sprite.drawFrame(this.ctx, 0, x, y, width, height);
     sprite.currentFrame++;
+  }
+
+  private listenHoverEvent() {
+    this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
+      eventBus.emit(EventKey.hoverHex, evt);
+    });
   }
 }
 
