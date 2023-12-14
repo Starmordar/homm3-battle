@@ -61,6 +61,7 @@ export enum SPRITE {
   heroes_undead_mirror = 'heroes_undead_mirror',
 
   wraith = 'wraith',
+  wraith_mirror = 'wraith_mirror',
 }
 
 export const animatedSprites = {
@@ -70,6 +71,15 @@ export const animatedSprites = {
     height: 106,
     animations: {
       idle: [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 3, 3, 2, 2, 1, 1],
+    },
+  },
+
+  [SPRITE.wraith_mirror]: {
+    url: '/src/assets/wraith/standing-mirror.png',
+    width: 62,
+    height: 106,
+    animations: {
+      idle: [4, 4, 3, 3, 2, 2, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3],
     },
   },
 

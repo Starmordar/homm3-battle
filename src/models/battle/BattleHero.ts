@@ -1,3 +1,5 @@
+import type { Creature } from '@/constants/units';
+
 interface PrimarySkills {
   attack: number;
   defense: number;
@@ -20,9 +22,11 @@ export interface Details {
 
 class BattleHero {
   public readonly details: Details;
+  public readonly army: Array<Creature>;
 
-  constructor(details: Details) {
+  constructor(details: Details, army: Array<Creature>) {
     this.details = details;
+    this.army = army;
   }
 }
 

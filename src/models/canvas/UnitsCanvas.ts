@@ -42,7 +42,6 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     this.createHeroAnimation(heroes[0], false);
     this.createHeroAnimation(heroes[1], true);
 
-    this.createCreaturesAnimation();
     this.listenHoverEvent();
 
     requestAnimationFrame(this.firstFrame.bind(this));
@@ -54,10 +53,12 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
     const sprite = this.spriteRepository.get<AnimatedSprite>(settings.animation.sprites[spriteKey]);
     this.heroSprites.push({ sprite, frameY: settings.animation.frame.y });
+
+    this.createCreaturesAnimation(hero.army);
   }
 
-  private createCreaturesAnimation() {
-    heroArmy.forEach((creature) => {
+  private createCreaturesAnimation(army: Array<Creature>) {
+    army.forEach((creature) => {
       const sprite = this.spriteRepository.get<AnimatedSprite>(creature.sprite);
       this.unitSprites.push({ sprite, creature });
     });

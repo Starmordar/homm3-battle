@@ -28,6 +28,10 @@ class BattleHeroInfo {
   get options() {
     return heroesOptions[this.battleHero.details.name];
   }
+
+  get army() {
+    return this.battleHero.army;
+  }
 }
 
 export default BattleHeroInfo;
