@@ -1,12 +1,13 @@
-import type { HeroOptions } from '@/constants/hero';
-import { SPRITE } from '../../constants/sprites';
-import { battlePanelHeight, summaryWidth } from '../../constants/ui';
 import SpriteRepository from '../sprites/SpriteRepository';
+import Canvas, { CanvasOptions } from './Canvas';
+
 import BattlePanel from '../ui/BattlePanel';
+import BattleHeroInfo from '../battle/BattleHeroInfo';
 import HeroSummary from '../ui/HeroSummary';
 import Stroke from '../ui/Stroke';
-import Canvas, { CanvasOptions } from './Canvas';
-import BattleHeroInfo from '../battle/BattleHeroInfo';
+
+import { SPRITE } from '../../constants/sprites';
+import { battlePanelHeight, summaryWidth } from '../../constants/ui';
 
 export interface UICanvasOptions extends CanvasOptions {
   heroes: Array<BattleHeroInfo>;
