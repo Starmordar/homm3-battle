@@ -1,16 +1,16 @@
 import Sprite from '@/models/sprites/Sprite';
-import type { IAnimatedSpriteOptions, ISpriteAnimation } from '@/constants/sprites';
+import type { AnimatedSpriteOptions, SpriteAnimation } from '@/constants/sprites';
 
-const defaultAnimation: keyof ISpriteAnimation = 'idle';
+const defaultAnimation: keyof SpriteAnimation = 'idle';
 
-class AnimatedSprite extends Sprite<IAnimatedSpriteOptions> {
+class AnimatedSprite extends Sprite<AnimatedSpriteOptions> {
   private _currentFrame = 0;
 
-  private _nextAnimation: keyof ISpriteAnimation = defaultAnimation;
-  private _currentAnimation: keyof ISpriteAnimation = defaultAnimation;
+  private _nextAnimation: keyof SpriteAnimation = defaultAnimation;
+  private _currentAnimation: keyof SpriteAnimation = defaultAnimation;
   private _animationSteps: Array<number> = [];
 
-  constructor(options: IAnimatedSpriteOptions) {
+  constructor(options: AnimatedSpriteOptions) {
     super(options);
 
     this._animationSteps = this.options.animations[this._currentAnimation] as Array<number>;
@@ -32,7 +32,7 @@ class AnimatedSprite extends Sprite<IAnimatedSpriteOptions> {
     }
   }
 
-  set nextAnimation(mode: keyof ISpriteAnimation) {
+  set nextAnimation(mode: keyof SpriteAnimation) {
     if (!this.options.animations[mode]) return;
 
     this._nextAnimation = mode;

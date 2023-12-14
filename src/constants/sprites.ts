@@ -1,29 +1,19 @@
-export const wrathSprite: IAnimatedSpriteOptions = {
-  url: '/src/assets/wraith.png',
-  width: 155,
-  height: 138,
-  animations: {
-    idle: [0, 1, 2, 3],
-    // idle: [1, 2, 3, 4, 3, 2, 1],
-  },
-};
-
-export interface ISpriteOptions {
+export interface SpriteOptions {
   url: string;
   width: number;
   height: number;
 
-  animations?: ISpriteAnimation;
+  animations?: SpriteAnimation;
 }
 
-export interface ISpriteAnimation {
+export interface SpriteAnimation {
   idle: Array<number>;
   active?: Array<number>;
   attack?: Array<number>;
 }
 
-export interface IAnimatedSpriteOptions extends ISpriteOptions {
-  animations: ISpriteAnimation;
+export interface AnimatedSpriteOptions extends SpriteOptions {
+  animations: SpriteAnimation;
 }
 
 export enum SPRITE {

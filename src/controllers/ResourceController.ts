@@ -1,4 +1,4 @@
-import { uiSprites, animatedSprites, type ISpriteOptions } from '../constants/sprites';
+import { uiSprites, animatedSprites, type SpriteOptions } from '../constants/sprites';
 import Sprite from '../models/sprites/Sprite';
 import SpriteFactory from '../models/sprites/SpriteFactory';
 import SpriteRepository from '../models/sprites/SpriteRepository';
@@ -16,7 +16,7 @@ class ResourceController {
     return Promise.all([this.loadSprites(uiSprites), this.loadSprites(animatedSprites)]);
   }
 
-  private async loadSprites(options: Record<string, ISpriteOptions>): Promise<Array<Sprite>> {
+  private async loadSprites(options: Record<string, SpriteOptions>): Promise<Array<Sprite>> {
     const promises = Object.keys(options).map((key) => {
       const sprite = this.spriteFactory.create(options[key as keyof typeof options]);
 

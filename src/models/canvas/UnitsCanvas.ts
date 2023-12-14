@@ -1,4 +1,4 @@
-import { SPRITE } from '../../constants/sprites';
+import { SpriteAnimation, SPRITE } from '../../constants/sprites';
 import { units } from '../../constants/units';
 import AnimatedSprite from '../sprites/AnimatedSprite';
 import { Hexagon, Layout } from '../../models/grid';
@@ -81,6 +81,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
     sprite.drawFrame(this.ctx, frameY, left, top, width, height);
     sprite.currentFrame++;
+    sprite.nextAnimation = this.nextHeroAnimation();
   }
 
   private animateSecondHero({ top, left }: { top: number; left: number }) {
@@ -89,6 +90,11 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
     sprite.drawFrame(this.ctx, frameY, left, top, width, height);
     sprite.currentFrame++;
+    sprite.nextAnimation = this.nextHeroAnimation();
+  }
+
+  private nextHeroAnimation(): keyof SpriteAnimation {
+    return Math.random() < 0.05 ? 'active' : 'idle';
   }
 }
 

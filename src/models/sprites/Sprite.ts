@@ -1,6 +1,6 @@
-import type { ISpriteOptions } from '@/constants/sprites';
+import type { SpriteOptions } from '@/constants/sprites';
 
-abstract class Sprite<Options extends ISpriteOptions = ISpriteOptions> {
+abstract class Sprite<Options extends SpriteOptions = SpriteOptions> {
   public readonly options: Options;
 
   public image: HTMLImageElement = new Image();
