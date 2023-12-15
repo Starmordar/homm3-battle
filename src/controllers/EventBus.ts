@@ -5,6 +5,7 @@ export enum EventKey {
   hoverHex = 'hoverHex',
   clickHex = 'clickHex',
 
+  refreshCanvas = 'refreshCanvas',
   unitWait = 'unitWait',
   unitDefense = 'skipTurn',
 }

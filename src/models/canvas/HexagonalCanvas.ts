@@ -42,8 +42,10 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.drawHexagonalGrid();
     this.drawReachableHexes();
     this.drawActiveUnitHex();
+
     this.setHexHoverEvent();
     this.setOnClickEvent();
+    this.attachEvent();
   }
 
   private setReachableHexes() {
@@ -234,6 +236,17 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.drawHexagonalGrid();
     this.drawReachableHexes();
     this.drawActiveUnitHex();
+  }
+
+  private attachEvent() {
+    eventBus.on(EventKey.refreshCanvas, () => {
+      this.setReachableHexes();
+
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.drawHexagonalGrid();
+      this.drawReachableHexes();
+      this.drawActiveUnitHex();
+    });
   }
 }
 

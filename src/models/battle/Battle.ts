@@ -63,6 +63,7 @@ class Battle {
   private attachEvents() {
     eventBus.on(EventKey.unitWait, () => {
       this.queue.wait();
+      eventBus.emit(EventKey.refreshCanvas);
     });
   }
 

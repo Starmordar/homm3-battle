@@ -33,8 +33,7 @@ class BattleQueue {
   }
 
   wait() {
-    // this.queue.unshift(this.activeUnit);
-
+    this.queue.unshift(this.activeUnit);
     this.endTurn();
   }
 
