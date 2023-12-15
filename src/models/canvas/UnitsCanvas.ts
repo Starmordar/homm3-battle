@@ -1,12 +1,12 @@
 import SpriteRepository from '../sprites/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
+import BattleMonster from '../battle/BattleMonster';
 import BattleHeroInfo from '../battle/BattleHeroInfo';
 import AnimatedSprite from '../sprites/AnimatedSprite';
 import { Layout } from '../../models/grid';
 
 import { type SpriteAnimation } from '../../constants/sprites';
-import { Creature, heroArmy } from '../../constants/units';
 import { heroAnimationSize, heroesClasses } from '@/constants/hero';
 import { EventKey, eventBus } from '@/controllers/EventBus';
 
@@ -16,7 +16,7 @@ export interface UnitsCanvasOptions extends CanvasOptions {
 
 export interface AnimatedUnit {
   sprite: AnimatedSprite;
-  creature: Creature;
+  monster: BattleMonster;
 }
 
 class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
@@ -57,10 +57,10 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     this.createCreaturesAnimation(hero.army);
   }
 
-  private createCreaturesAnimation(army: Array<Creature>) {
-    army.forEach((creature) => {
-      const sprite = this.spriteRepository.get<AnimatedSprite>(creature.sprite);
-      this.unitSprites.push({ sprite, creature });
+  private createCreaturesAnimation(army: Array<BattleMonster>) {
+    army.forEach((monster) => {
+      const sprite = this.spriteRepository.get<AnimatedSprite>(monster.animation.sprite);
+      this.unitSprites.push({ sprite, monster });
     });
   }
 
@@ -122,10 +122,10 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   }
 
   private animateCreature(animatedUnit: AnimatedUnit) {
-    const { creature, sprite } = animatedUnit;
-    const { width, height, offsetY } = creature.size;
+    const { monster: creature, sprite } = animatedUnit;
+    const { width, height, offsetY } = creature.animation.size;
 
-    const pixel = this.layout.hexToPixel(creature.hex);
+    const pixel = this.layout.hexToPixel(creature.position);
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 

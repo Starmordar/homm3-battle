@@ -4,25 +4,37 @@ import { randomValueOf } from '@/utils/common';
 import { type HeroOptions, heroesOptions, heroesClasses } from '@/constants/hero';
 import { Creature, enemyArmy, heroArmy } from '@/constants/units';
 import { Hexagon } from '../grid';
+import BattleQueue from './BattleQueue';
+import BattleMonster from './BattleMonster';
 
 type RandomHeroOptions = HeroOptions & { name: string };
 
 class Battle {
+  private readonly queue: BattleQueue;
   public heroes: Array<BattleHero> = [];
-  public activeUnit: Creature;
 
   constructor() {
     this.initializeHeroes();
-
-    this.activeUnit = heroArmy[0];
+    this.queue = new BattleQueue(this.heroes[0], this.heroes[1]);
   }
 
   private initializeHeroes() {
-    this.createRandomHero(heroArmy);
-    this.createRandomHero(enemyArmy);
+    const ownMonsters = this.createBattleMonsters(heroArmy, true);
+    this.createRandomHero(ownMonsters);
+
+    const aiMonsters = this.createBattleMonsters(enemyArmy, false);
+    this.createRandomHero(aiMonsters);
   }
 
-  private createRandomHero(army: Array<Creature>) {
+  private createBattleMonsters(army: Array<Creature>, controllable: boolean): Array<BattleMonster> {
+    const monsters = army.map((unit) => {
+      return new BattleMonster({ ...unit, controllable, quantity: 10 });
+    });
+
+    return monsters;
+  }
+
+  private createRandomHero(monsters: Array<BattleMonster>) {
     const heroOptions = randomValueOf<RandomHeroOptions>(heroesOptions);
     const classOptions = heroesClasses[heroOptions.class];
     const primarySkills = classOptions.primarySkills;
@@ -39,18 +51,20 @@ class Battle {
         mana: primarySkills.knowledge * 10,
         manaLimit: primarySkills.knowledge * 10,
       },
-      army
+      monsters
     );
 
     this.heroes.push(hero);
   }
 
-  public moveActiveUnit(newHex: Hexagon) {
-    this.activeUnit.hex = newHex;
-    console.log('heroes :>> ', this.heroes);
+  public moveActiveUnit(newPosition: Hexagon) {
+    this.activeUnit.position = newPosition;
+    this.queue.endTurn();
   }
 
-  private getHextActive() {}
+  get activeUnit() {
+    return this.queue.activeUnit;
+  }
 }
 
 export default Battle;

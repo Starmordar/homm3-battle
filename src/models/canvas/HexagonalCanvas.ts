@@ -10,12 +10,7 @@ import Battle from '../battle/Battle';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
-import {
-  getAngle,
-  getLayoutHexes,
-  getReachableHexes,
-  isPointInsideHexCorners,
-} from '../../utils/grid';
+import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../../utils/grid';
 import { EventKey, eventBus } from '@/controllers/EventBus';
 import { updateCursorStyle } from '@/utils/common';
 
@@ -52,16 +47,16 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private setReachableHexes() {
-    const { hex } = this.battle.activeUnit;
+    const { position } = this.battle.activeUnit;
     const obstacles = this.computeObstacles();
 
     // TODO: Get units initiative
-    this.reachableHexes = getReachableHexes(hex, obstacles, 6);
+    this.reachableHexes = getReachableHexes(position, obstacles, 6);
   }
 
   private computeObstacles(): Array<Hexagon> {
     const terrain = this.options.obstacles;
-    const units = this.battle.heroes.flatMap((hero) => hero.army.map((unit) => unit.hex));
+    const units = this.battle.heroes.flatMap((hero) => hero.army.map((unit) => unit.position));
 
     return [...terrain, ...units];
   }
@@ -89,9 +84,9 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private drawActiveUnitHex() {
-    const { hex } = this.battle.activeUnit;
+    const { position } = this.battle.activeUnit;
 
-    const corners = this.layout.hexToCorners(hex);
+    const corners = this.layout.hexToCorners(position);
 
     this.ctx.beginPath();
     this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
