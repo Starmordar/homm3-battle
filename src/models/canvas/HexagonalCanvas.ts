@@ -181,29 +181,30 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
 
     this.setMoveCursor(hoveredHex);
 
-    if (hoveredHex && this.updateEnemyCursor(hoveredHex, hoveredPoint)) {
-      // console.log('enemy hex');
-      // this.highlightAttackCursor()
+    if (hoveredHex) {
+      const cursorAngle = this.cursorAngle(hoveredHex, hoveredPoint);
+      if (cursorAngle !== -1) this.updateEnemyCursor(cursorAngle);
     }
   }
 
-  private updateEnemyCursor(hex: Hexagon, point: Point): boolean {
+  private cursorAngle(hex: Hexagon, point: Point): number {
     const isEnemyHex = this.battle.heroes[1].army.some((unit) =>
       Hexagon.isEqual(unit.position, hex)
     );
 
-    if (!isEnemyHex) return false;
+    if (!isEnemyHex) return -1;
 
     const corners = this.layout.hexToCorners(hex);
     const angle = getAngle(point, corners, this.layout.hexToPixel(hex));
-    console.log('angle :>> ', angle);
 
     const notAllowMove = this.moveNotAllowed(hex.neighbor(angle));
-    if (notAllowMove) return false;
+    if (notAllowMove) return -1;
 
+    return angle;
+  }
+
+  private updateEnemyCursor(angle: number) {
     updateCursorStyle('any', `melee_attack_${angle}`);
-
-    return true;
   }
 
   private highlightHex(hex: Hexagon) {
@@ -235,12 +236,24 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
       const x = evt.clientX - rect.left;
       const y = evt.clientY - rect.top;
 
+      const hexes = getLayoutHexes(battleGridSize);
+
+      const clickedHex = hexes.find((hex) =>
+        isPointInsideHexCorners(new Point(x, y), this.layout.hexToCorners(hex))
+      );
+
+      if (clickedHex) {
+        const cursorAngle = this.cursorAngle(clickedHex, new Point(x, y));
+        if (cursorAngle !== -1) return this.animate([clickedHex.neighbor(cursorAngle)]);
+      }
+
       let lastHex = this.reachableHexes.fringes
         .flat()
         .find((reachable) =>
           isPointInsideHexCorners(new Point(x, y), this.layout.hexToCorners(reachable))
         );
 
+      console.log(lastHex);
       if (!lastHex) return;
 
       const animationPath: Array<Hexagon> = [];
