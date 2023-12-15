@@ -10,7 +10,12 @@ import Battle from '../battle/Battle';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
-import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../../utils/grid';
+import {
+  getAngle,
+  getLayoutHexes,
+  getReachableHexes,
+  isPointInsideHexCorners,
+} from '../../utils/grid';
 import { EventKey, eventBus } from '@/controllers/EventBus';
 import { updateCursorStyle } from '@/utils/common';
 
@@ -28,6 +33,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   private readonly battle: Battle;
 
   private reachableHexes: IReachableHexes = { fringes: [], path: {} };
+  // private availableForAtta
 
   constructor(layout: Layout, battle: Battle, options: HexagonalCanvasOptions) {
     super(options);
@@ -171,14 +177,18 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     );
 
     if (hoveredHex && !this.moveNotAllowed(hoveredHex)) {
-      this.highlightHex(hoveredHex);
+      this.highlightHex(hoveredHex, hoveredPoint);
     }
 
     this.setMoveCursor(hoveredHex);
   }
 
-  private highlightHex(hex: Hexagon) {
+  private highlightHex(hex: Hexagon, point: Point) {
     const corners = this.layout.hexToCorners(hex);
+
+    // const testHex = new Hexagon(-3, 0, 3);
+    const angle = getAngle(point, corners, this.layout.hexToPixel(hex));
+    console.log(angle);
 
     this.ctx.beginPath();
     this.ctx.fillStyle = activeHexStyles.fillStyle;

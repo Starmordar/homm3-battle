@@ -130,7 +130,31 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     const y = pixel.y - height + offsetY;
 
     sprite.drawFrame(this.ctx, 0, x, y, width, height);
+    this.drawCreatureQuantityCounter(animatedUnit);
+
     sprite.currentFrame++;
+  }
+
+  private drawCreatureQuantityCounter(animatedUnit: AnimatedUnit) {
+    const { monster: creature } = animatedUnit;
+    const { offsetY } = creature.animation.size;
+
+    const pixel = this.layout.hexToPixel(creature.position);
+
+    const x = pixel.x;
+    const y = pixel.y + offsetY;
+
+    this.ctx.strokeStyle = '#998c38';
+    this.ctx.fillStyle = '#4F2982';
+    this.ctx.fillRect(x - 15, y - 10, 30, 13);
+    this.ctx.strokeRect(x - 14.5, y - 9.5, 29, 12);
+
+    this.ctx.textAlign = 'center';
+    this.ctx.fillStyle = 'white';
+    this.ctx.font = '12px sans-serif';
+    this.ctx.textBaseline = 'bottom';
+
+    this.ctx.fillText(creature.quantity.toString(), x, y + 4);
   }
 
   private attachMouseEvents() {

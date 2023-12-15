@@ -107,3 +107,12 @@ export function getReachableHexes(activeHex: Hexagon, obstacles: Array<Hexagon>,
 
   return { fringes, path };
 }
+
+export function getAngle({ x, y }: Point, corners: Array<Point>, center: Point) {
+  for (let i = 1; i < 6; i++) {
+    const isInside = isPointInsideHexCorners({ x, y }, [center, corners[i - 1], corners[i]]);
+    if (isInside) return i - 1;
+  }
+
+  return 5;
+}
