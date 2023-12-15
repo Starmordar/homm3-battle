@@ -33,7 +33,6 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   private readonly battle: Battle;
 
   private reachableHexes: IReachableHexes = { fringes: [], path: {} };
-  // private availableForAtta
 
   constructor(layout: Layout, battle: Battle, options: HexagonalCanvasOptions) {
     super(options);
@@ -177,18 +176,38 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     );
 
     if (hoveredHex && !this.moveNotAllowed(hoveredHex)) {
-      this.highlightHex(hoveredHex, hoveredPoint);
+      this.highlightHex(hoveredHex);
     }
 
     this.setMoveCursor(hoveredHex);
+
+    if (hoveredHex && this.updateEnemyCursor(hoveredHex, hoveredPoint)) {
+      // console.log('enemy hex');
+      // this.highlightAttackCursor()
+    }
   }
 
-  private highlightHex(hex: Hexagon, point: Point) {
-    const corners = this.layout.hexToCorners(hex);
+  private updateEnemyCursor(hex: Hexagon, point: Point): boolean {
+    const isEnemyHex = this.battle.heroes[1].army.some((unit) =>
+      Hexagon.isEqual(unit.position, hex)
+    );
 
-    // const testHex = new Hexagon(-3, 0, 3);
+    if (!isEnemyHex) return false;
+
+    const corners = this.layout.hexToCorners(hex);
     const angle = getAngle(point, corners, this.layout.hexToPixel(hex));
-    console.log(angle);
+    console.log('angle :>> ', angle);
+
+    const notAllowMove = this.moveNotAllowed(hex.neighbor(angle));
+    if (notAllowMove) return false;
+
+    updateCursorStyle('any', `melee_attack_${angle}`);
+
+    return true;
+  }
+
+  private highlightHex(hex: Hexagon) {
+    const corners = this.layout.hexToCorners(hex);
 
     this.ctx.beginPath();
     this.ctx.fillStyle = activeHexStyles.fillStyle;

@@ -10,6 +10,7 @@ export function randomValueOf<T extends {}>(object: Record<string, any>): T {
 export function updateCursorStyle(toRemove: string, toAdd: string) {
   const root = document.getElementById('root')!;
 
-  root.classList.remove(toRemove);
+  console.log(toRemove);
+  root.classList.remove(...root.classList);
   root.classList.add(toAdd);
 }

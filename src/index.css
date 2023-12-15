@@ -6,6 +6,25 @@ body {
   overflow: hidden;
 }
 
+.melee_attack_0 {
+  cursor: url('./assets/cursor/melee_attack_0.png') 0 0, default;
+}
+.melee_attack_1 {
+  cursor: url('./assets/cursor/melee_attack_1.png') 0 12, default;
+}
+.melee_attack_2 {
+  cursor: url('./assets/cursor/melee_attack_2.png') 12 12, default;
+}
+.melee_attack_3 {
+  cursor: url('./assets/cursor/melee_attack_3.png') 16 0, default;
+}
+.melee_attack_4 {
+  cursor: url('./assets/cursor/melee_attack_4.png') 12 0, default;
+}
+.melee_attack_5 {
+  cursor: url('./assets/cursor/melee_attack_5.png') 0 0, default;
+}
+
 .cursor-default {
   cursor: url('./assets/cursor/default.png') 0 0, default;
 }
