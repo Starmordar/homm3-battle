@@ -48,7 +48,7 @@ const hexCanvasOptions = {
   obstacles: hexObstacles,
 };
 
-const hexagonCanvas = new HexagonalCanvas(layout, hexCanvasOptions);
+const hexagonCanvas = new HexagonalCanvas(layout, battle, hexCanvasOptions);
 hexagonCanvas.display();
 
 const unitsCanvasOptions = {

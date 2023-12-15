@@ -10,19 +10,19 @@ export interface Creature {
 
 export const heroArmy: Array<Creature> = [
   {
-    index: 1,
+    index: 61,
     hex: new Hexagon(-7, 0, 7),
     sprite: SPRITE.wraith,
     size: { width: 70, height: 110, offsetY: 20 },
   },
   {
-    index: 2,
+    index: 61,
     hex: new Hexagon(-5, -4, 9),
     sprite: SPRITE.wraith,
     size: { width: 70, height: 110, offsetY: 20 },
   },
   {
-    index: 3,
+    index: 61,
     hex: new Hexagon(-9, 4, 5),
     sprite: SPRITE.wraith,
     size: { width: 70, height: 110, offsetY: 20 },
@@ -31,7 +31,7 @@ export const heroArmy: Array<Creature> = [
 
 export const enemyArmy: Array<Creature> = [
   {
-    index: 1,
+    index: 61,
     hex: new Hexagon(-3, 0, 3),
     sprite: SPRITE.wraith_mirror,
     size: { width: 70, height: 110, offsetY: 20 },

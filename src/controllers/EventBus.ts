@@ -3,6 +3,7 @@ type Bus = Record<string, EventHandler[]>;
 
 export enum EventKey {
   hoverHex = 'hoverHex',
+  clickHex = 'clickHex',
 }
 
 class EventBus {

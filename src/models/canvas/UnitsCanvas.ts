@@ -42,7 +42,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     this.createHeroAnimation(heroes[0], false);
     this.createHeroAnimation(heroes[1], true);
 
-    this.listenHoverEvent();
+    this.attachMouseEvents();
 
     requestAnimationFrame(this.firstFrame.bind(this));
   }
@@ -70,7 +70,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   }
 
   private animationStep(timeStamp: DOMHighResTimeStamp) {
-    const delta = (timeStamp - this.animationStart) / 250;
+    const delta = (timeStamp - this.animationStart) / 150;
 
     if (delta < 1) {
       requestAnimationFrame(this.animationStep);
@@ -133,9 +133,13 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     sprite.currentFrame++;
   }
 
-  private listenHoverEvent() {
+  private attachMouseEvents() {
     this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
       eventBus.emit(EventKey.hoverHex, evt);
+    });
+
+    this.canvas.addEventListener('click', async (evt: MouseEvent) => {
+      eventBus.emit(EventKey.clickHex, evt);
     });
   }
 }

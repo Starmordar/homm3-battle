@@ -6,10 +6,16 @@ import {
   activeHexStyles,
 } from '../../constants/hex';
 
+import Battle from '../battle/Battle';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
-import { getLayoutHexes, getReachableHexes, isPointInsideHexCorners } from '../../utils/grid';
+import {
+  getAngle,
+  getLayoutHexes,
+  getReachableHexes,
+  isPointInsideHexCorners,
+} from '../../utils/grid';
 import { EventKey, eventBus } from '@/controllers/EventBus';
 import { updateCursorStyle } from '@/utils/common';
 
@@ -23,33 +29,47 @@ interface IReachableHexes {
 }
 
 class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
-  readonly layout: Layout;
-  private activeHex = new Hexagon(-7, 0, 7);
+  private readonly layout: Layout;
+  private readonly battle: Battle;
+
   private reachableHexes: IReachableHexes = { fringes: [], path: {} };
 
-  constructor(layout: Layout, options: HexagonalCanvasOptions) {
+  constructor(layout: Layout, battle: Battle, options: HexagonalCanvasOptions) {
     super(options);
 
     this.layout = layout;
+    this.battle = battle;
   }
 
   public display() {
-    this.computeReachableHexes();
+    this.setReachableHexes();
 
     this.drawHexagonalGrid();
     this.drawReachableHexes();
+    this.drawActiveUnitHex();
     this.setHexHoverEvent();
     this.setOnClickEvent();
+  }
+
+  private setReachableHexes() {
+    const { hex } = this.battle.activeUnit;
+    const obstacles = this.computeObstacles();
+
+    // TODO: Get units initiative
+    this.reachableHexes = getReachableHexes(hex, obstacles, 6);
+  }
+
+  private computeObstacles(): Array<Hexagon> {
+    const terrain = this.options.obstacles;
+    const units = this.battle.heroes.flatMap((hero) => hero.army.map((unit) => unit.hex));
+
+    return [...terrain, ...units];
   }
 
   private moveNotAllowed(hex: Hexagon) {
     return !this.reachableHexes.fringes
       .flat()
       .find((reachableHex) => Hexagon.isEqual(reachableHex, hex));
-  }
-
-  private computeReachableHexes() {
-    this.reachableHexes = getReachableHexes(this.activeHex, this.options.obstacles, 4);
   }
 
   private drawReachableHexes() {
@@ -66,6 +86,22 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
 
       this.ctx.fill();
     });
+  }
+
+  private drawActiveUnitHex() {
+    const { hex } = this.battle.activeUnit;
+
+    const corners = this.layout.hexToCorners(hex);
+
+    this.ctx.beginPath();
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+
+    this.ctx.moveTo(corners[5].x, corners[5].y);
+    for (let i = 0; i < 6; i++) {
+      this.ctx.lineTo(corners[i].x, corners[i].y);
+    }
+
+    this.ctx.fill();
   }
 
   private drawHexagonalGrid() {
@@ -125,6 +161,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
 
       this.drawHexagonalGrid();
       this.drawReachableHexes();
+      this.drawActiveUnitHex();
       this.highlightHoveredHex(new Point(x, y));
     });
   }
@@ -167,7 +204,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private setOnClickEvent() {
-    this.canvas.addEventListener('click', (evt: MouseEvent) => {
+    eventBus.on(EventKey.clickHex, (evt: MouseEvent) => {
       const rect = (evt.target as HTMLElement).getBoundingClientRect();
       const x = evt.clientX - rect.left;
       const y = evt.clientY - rect.top;
@@ -193,6 +230,15 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
 
   private animate(path: Array<Hexagon>) {
     console.log(path);
+
+    this.battle.moveActiveUnit(path[0]);
+
+    this.setReachableHexes();
+
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawHexagonalGrid();
+    this.drawReachableHexes();
+    this.drawActiveUnitHex();
   }
 }
 
