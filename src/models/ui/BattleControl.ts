@@ -5,6 +5,7 @@ import { mousePosition, isMouseInsideRect } from '@/utils/canvas';
 
 import type { BattleControlConfig } from '@/constants/ui';
 import type { Renderable } from '@/types';
+import { eventBus } from '@/controllers/EventBus';
 
 class BattleControl implements Renderable {
   private readonly spriteRepository: SpriteRepository;
@@ -41,11 +42,13 @@ class BattleControl implements Renderable {
       if (!isClicked) return;
 
       evt.stopImmediatePropagation();
-      this.handleClickEvent(ctx);
+
+      eventBus.emit(this.settings.event);
+      this.drawClickAnimation(ctx);
     });
   }
 
-  private handleClickEvent(ctx: CanvasRenderingContext2D) {
+  private drawClickAnimation(ctx: CanvasRenderingContext2D) {
     const { x, y, width, height, sprite } = this.settings;
 
     const activeSprite = this.spriteRepository.get(sprite.active);

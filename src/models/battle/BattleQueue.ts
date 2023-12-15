@@ -32,6 +32,12 @@ class BattleQueue {
     return item;
   }
 
+  wait() {
+    // this.queue.unshift(this.activeUnit);
+
+    this.endTurn();
+  }
+
   startTurn(nextUnit: BattleMonster) {
     this.activeUnit = nextUnit;
 

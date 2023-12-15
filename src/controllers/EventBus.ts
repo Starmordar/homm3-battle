@@ -31,7 +31,7 @@ class EventBus {
     if (handlerIndex > -1) this.eventBus[key].splice(handlerIndex, 1);
   }
 
-  public emit(key: string, payload: any) {
+  public emit(key: string, payload?: any) {
     this.eventBus[key].forEach((handler) => handler(payload));
   }
 }

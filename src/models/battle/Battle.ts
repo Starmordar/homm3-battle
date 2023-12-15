@@ -6,6 +6,7 @@ import { Creature, enemyArmy, heroArmy } from '@/constants/units';
 import { Hexagon } from '../grid';
 import BattleQueue from './BattleQueue';
 import BattleMonster from './BattleMonster';
+import { EventKey, eventBus } from '@/controllers/EventBus';
 
 type RandomHeroOptions = HeroOptions & { name: string };
 
@@ -16,6 +17,8 @@ class Battle {
   constructor() {
     this.initializeHeroes();
     this.queue = new BattleQueue(this.heroes[0], this.heroes[1]);
+
+    this.attachEvents();
   }
 
   private initializeHeroes() {
@@ -55,6 +58,12 @@ class Battle {
     );
 
     this.heroes.push(hero);
+  }
+
+  private attachEvents() {
+    eventBus.on(EventKey.unitWait, () => {
+      this.queue.wait();
+    });
   }
 
   public moveActiveUnit(newPosition: Hexagon) {
