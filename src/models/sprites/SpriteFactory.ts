@@ -1,4 +1,4 @@
-import Sprite from '@/models/sprites/Sprite';
+import Sprite from '@/view/sprites/Sprite';
 import AnimatedSprite from '@/models/sprites/AnimatedSprite';
 import UISprite from '@/models/sprites/UISprite';
 

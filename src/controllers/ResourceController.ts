@@ -1,5 +1,5 @@
 import { uiSprites, animatedSprites, type SpriteOptions } from '../constants/sprites';
-import Sprite from '../models/sprites/Sprite';
+import Sprite from '../view/sprites/Sprite';
 import SpriteFactory from '../models/sprites/SpriteFactory';
 import SpriteRepository from '../models/sprites/SpriteRepository';
 

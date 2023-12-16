@@ -10,9 +10,9 @@ interface Rect {
   y: number;
 }
 
-export function mousePosition(cavans: HTMLCanvasElement, event: MouseEvent): MousePosition {
+export function mousePosition(cavans: HTMLCanvasElement, evt: MouseEvent): MousePosition {
   const rect = cavans.getBoundingClientRect();
-  return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
 }
 
 export function isMouseInsideRect(position: MousePosition, rect: Rect) {

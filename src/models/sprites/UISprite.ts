@@ -1,4 +1,4 @@
-import Sprite from '@/models/sprites/Sprite';
+import Sprite from '@/view/sprites/Sprite';
 import type { SpriteOptions } from '@/constants/sprites';
 
 class UISprite extends Sprite {

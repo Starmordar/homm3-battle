@@ -1,42 +1,33 @@
 import { EventKey } from '@/controllers/EventBus';
 import { SPRITE } from './sprites';
+import { Rect } from '@/types';
 
-interface BattleControlSprite {
+interface BattleControlSprites {
   idle: string;
   active: string;
   disabled: string;
 }
 
-export interface BattleControlConfig {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-
+export interface ControlButtonOptions extends Rect {
   disabled: boolean;
-  sprite: BattleControlSprite;
+  sprites: BattleControlSprites;
   event: string;
 }
 
-export interface BattleInfoConfig {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-
+export interface ConsoleOptions extends Rect {
   sprite: string;
 }
 
 export const battlePanelHeight = 47;
 
 const defaultControlSettings = { width: 60, height: battlePanelHeight };
-export const battleControlsConfig = (panelWidth: number): Array<BattleControlConfig> => [
+export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOptions> => [
   {
     ...defaultControlSettings,
     x: 0,
     y: 0,
 
-    sprite: {
+    sprites: {
       idle: SPRITE.settings_btn,
       active: SPRITE.settings_btn_active,
       disabled: SPRITE.settings_btn_disabled,
@@ -49,7 +40,7 @@ export const battleControlsConfig = (panelWidth: number): Array<BattleControlCon
     x: defaultControlSettings.width,
     y: 0,
 
-    sprite: {
+    sprites: {
       idle: SPRITE.surrender_btn,
       active: SPRITE.surrender_btn_active,
       disabled: SPRITE.surrender_btn_disabled,
@@ -62,7 +53,7 @@ export const battleControlsConfig = (panelWidth: number): Array<BattleControlCon
     x: defaultControlSettings.width * 2,
     y: 0,
 
-    sprite: {
+    sprites: {
       idle: SPRITE.flee_btn,
       active: SPRITE.flee_btn_active,
       disabled: SPRITE.flee_btn_disabled,
@@ -75,7 +66,7 @@ export const battleControlsConfig = (panelWidth: number): Array<BattleControlCon
     x: defaultControlSettings.width * 3,
     y: 0,
 
-    sprite: {
+    sprites: {
       idle: SPRITE.magic_btn,
       active: SPRITE.magic_btn_active,
       disabled: SPRITE.magic_btn_disabled,
@@ -89,7 +80,7 @@ export const battleControlsConfig = (panelWidth: number): Array<BattleControlCon
     x: panelWidth - defaultControlSettings.width,
     y: 0,
 
-    sprite: {
+    sprites: {
       idle: SPRITE.shield_btn,
       active: SPRITE.shield_btn_active,
       disabled: SPRITE.shield_btn_disabled,
@@ -102,7 +93,7 @@ export const battleControlsConfig = (panelWidth: number): Array<BattleControlCon
     x: panelWidth - defaultControlSettings.width * 2,
     y: 0,
 
-    sprite: {
+    sprites: {
       idle: SPRITE.pass_btn,
       active: SPRITE.pass_btn_active,
       disabled: SPRITE.pass_btn_disabled,
@@ -115,7 +106,7 @@ export const battleControlsConfig = (panelWidth: number): Array<BattleControlCon
     x: panelWidth - defaultControlSettings.width * 3,
     y: 0,
 
-    sprite: {
+    sprites: {
       idle: SPRITE.auto_btn,
       active: SPRITE.auto_btn_active,
       disabled: SPRITE.auto_btn_disabled,
@@ -125,7 +116,7 @@ export const battleControlsConfig = (panelWidth: number): Array<BattleControlCon
   },
 ];
 
-export const battlePanelConfig = (panelWidth: number): BattleInfoConfig => {
+export const battleConsoleOptions = (panelWidth: number): ConsoleOptions => {
   return {
     x: defaultControlSettings.width * 4,
     y: 0,
@@ -146,7 +137,7 @@ export interface SummaryConfig {
 
 export const summaryWidth = 90;
 
-export const heroSummaryConfig = {
+export const defaultSummaryOptions = {
   avatar: {
     x: 0,
     y: 0,
@@ -177,4 +168,21 @@ export const heroSummaryConfig = {
     left: 8,
     right: summaryWidth - 8,
   },
+};
+
+export const defaultTextOptions = {
+  font: '12px sans-serif',
+  fillStyle: 'white',
+  baseline: 'bottom' as CanvasTextBaseline,
+};
+
+export const defaultStrokeOptions = {
+  lineWidth: 1,
+  strokeStyle: '#e7ce8c',
+};
+
+export const defaultPanelOptions = {
+  borderSize: 4,
+  lightShadowColor: 'rgba(255, 255, 255, 0.4)',
+  darkShadowColor: 'rgba(0, 0, 0, 0.4)',
 };

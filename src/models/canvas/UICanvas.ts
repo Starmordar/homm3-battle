@@ -1,10 +1,10 @@
 import SpriteRepository from '../sprites/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
-import BattlePanel from '../ui/BattlePanel';
+import BattlePanel from '../../view/battle/BattlePanel';
 import BattleHeroInfo from '../battle/BattleHeroInfo';
-import HeroSummary from '../ui/HeroSummary';
-import Stroke from '../ui/Stroke';
+import HeroSummary from '../../view/battle/HeroSummary';
+import Stroke from '../../view/common/Stroke';
 
 import { SPRITE } from '../../constants/sprites';
 import { battlePanelHeight, summaryWidth } from '../../constants/ui';

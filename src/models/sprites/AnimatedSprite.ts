@@ -1,4 +1,4 @@
-import Sprite from '@/models/sprites/Sprite';
+import Sprite from '@/view/sprites/Sprite';
 import type { AnimatedSpriteOptions, SpriteAnimation } from '@/constants/sprites';
 
 const defaultAnimation: keyof SpriteAnimation = 'idle';

@@ -1,4 +1,4 @@
-import Sprite from '../sprites/Sprite';
+import Sprite from '../../view/sprites/Sprite';
 
 export interface CanvasOptions {
   classNames: Array<string>;

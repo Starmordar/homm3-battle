@@ -1,4 +1,4 @@
-import Sprite from '@/models/sprites/Sprite';
+import Sprite from '@/view/sprites/Sprite';
 
 class SpriteRepository {
   private repository: Map<string, Sprite> = new Map();
