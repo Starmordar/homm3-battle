@@ -1,4 +1,4 @@
-import SpriteRepository from '@/models/sprites/SpriteRepository';
+import SpriteRepository from '@/services/SpriteRepository';
 import Panel from '@/view/common/Panel';
 import Stroke from '@/view/common/Stroke';
 import BattleHeroInfo from '../../models/battle/BattleHeroInfo';

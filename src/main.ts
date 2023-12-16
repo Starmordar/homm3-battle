@@ -1,7 +1,7 @@
 import './index.css';
 
-import SpriteFactory from './models/sprites/SpriteFactory';
-import SpriteRepository from './models/sprites/SpriteRepository';
+import SpriteFactory from './services/SpriteFactory';
+import SpriteRepository from './services/SpriteRepository';
 import ResourceController from './controllers/ResourceController';
 
 import UICanvas from './models/canvas/UICanvas';

@@ -1,4 +1,4 @@
-import SpriteRepository from '@/models/sprites/SpriteRepository';
+import SpriteRepository from '@/services/SpriteRepository';
 import Stroke from '@/view/common/Stroke';
 
 import { SPRITE } from '@/constants/sprites';

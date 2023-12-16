@@ -1,7 +1,7 @@
 import { uiSprites, animatedSprites, type SpriteOptions } from '../constants/sprites';
 import Sprite from '../view/sprites/Sprite';
-import SpriteFactory from '../models/sprites/SpriteFactory';
-import SpriteRepository from '../models/sprites/SpriteRepository';
+import SpriteFactory from '../services/SpriteFactory';
+import SpriteRepository from '../services/SpriteRepository';
 
 class ResourceController {
   private readonly spriteRegistry: SpriteRepository;
@@ -21,7 +21,7 @@ class ResourceController {
       const sprite = this.spriteFactory.create(options[key as keyof typeof options]);
 
       this.spriteRegistry.register(key, sprite);
-      return sprite.loadPromise;
+      return sprite.load;
     });
 
     return Promise.all(promises);

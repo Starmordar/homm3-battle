@@ -1,9 +1,9 @@
-import SpriteRepository from '../sprites/SpriteRepository';
+import SpriteRepository from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import BattleMonster from '../battle/BattleMonster';
 import BattleHeroInfo from '../battle/BattleHeroInfo';
-import AnimatedSprite from '../sprites/AnimatedSprite';
+import AnimatedSprite from '../../view/sprites/AnimatedSprite';
 import { Layout } from '../../models/grid';
 
 import { type SpriteAnimation } from '../../constants/sprites';

@@ -40,7 +40,7 @@ class AnimatedSprite extends Sprite<AnimatedSpriteOptions> {
 
   public drawFrame(
     ctx: CanvasRenderingContext2D,
-    fy: number,
+    frameY: number,
     dx: number,
     dy: number,
     dw: number,
@@ -49,7 +49,7 @@ class AnimatedSprite extends Sprite<AnimatedSpriteOptions> {
     ctx.drawImage(
       this.image,
       this._animationSteps[this._currentFrame] * this.options.width,
-      fy * this.options.height,
+      frameY * this.options.height,
       this.options.width,
       this.options.height,
       dx,

@@ -1,4 +1,4 @@
-import SpriteRepository from '../sprites/SpriteRepository';
+import SpriteRepository from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import BattlePanel from '../../view/battle/BattlePanel';

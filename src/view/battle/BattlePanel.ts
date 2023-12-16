@@ -1,4 +1,4 @@
-import SpriteRepository from '@/models/sprites/SpriteRepository';
+import SpriteRepository from '@/services/SpriteRepository';
 import ControlButton from '@/view/battle/ControlButton';
 import ConsolePanel from '@/view/battle/ConsolePanel';
 

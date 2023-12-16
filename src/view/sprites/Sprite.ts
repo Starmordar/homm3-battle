@@ -1,15 +1,14 @@
 import type { SpriteOptions } from '@/constants/sprites';
 
-abstract class Sprite<Options extends SpriteOptions = SpriteOptions> {
-  public readonly options: Options;
+abstract class Sprite<T extends SpriteOptions = SpriteOptions> {
+  public readonly options: T;
 
   public image: HTMLImageElement = new Image();
-  public loadPromise: Promise<this>;
+  public load: Promise<this>;
 
-  constructor(options: Options) {
+  constructor(options: T) {
     this.options = options;
-
-    this.loadPromise = this.loadImage(options.url);
+    this.load = this.loadImage(options.url);
   }
 
   private loadImage(url: string): Promise<this> {
