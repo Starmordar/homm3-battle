@@ -7,10 +7,9 @@ export function randomValueOf<T extends {}>(object: Record<string, any>): T {
   return { name: randomKey, ...object[randomKey] };
 }
 
-export function updateCursorStyle(toRemove: string, toAdd: string) {
+export function setCursorStyle(toAdd: string) {
   const root = document.getElementById('root')!;
 
-  console.log(toRemove);
   root.classList.remove(...root.classList);
   root.classList.add(toAdd);
 }

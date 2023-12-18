@@ -5,7 +5,7 @@ import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
 import { EventKey, eventBus } from '@/controllers/EventBus';
-import { updateCursorStyle } from '@/utils/common';
+import { setCursorStyle } from '@/utils/common';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hexagon>;
@@ -53,30 +53,35 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
 
   private setHexHoverEvent() {
     eventBus.on(EventKey.hoverHex, async (evt: MouseEvent) => {
-      const rect = (evt.target as HTMLElement).getBoundingClientRect();
-      const x = evt.clientX - rect.left;
-      const y = evt.clientY - rect.top;
+      const point = this.mouseEventPoint(evt);
 
       this.gridView.refresh(this.ctx, this.canvas);
       this.drawActiveUnitHex();
 
-      this.highlightHoveredHex(new Point(x, y));
+      this.highlightHoveredHex(point);
     });
   }
 
-  private highlightHoveredHex(hoveredPoint: Point) {
-    const hexUnderPoint = this.graph.hexUnderPoint(hoveredPoint);
+  private highlightHoveredHex(point: Point) {
+    const hexUnderPoint = this.graph.hexUnderPoint(point);
 
     if (hexUnderPoint && this.graph.isPositionReachable(hexUnderPoint)) {
       this.gridView.drawHighlightedHex(this.ctx, hexUnderPoint);
     }
 
-    this.setMoveCursor(hexUnderPoint);
+    this.updateCursor(hexUnderPoint, point);
+  }
 
-    if (hexUnderPoint) {
-      const cursorAngle = this.cursorAngle(hexUnderPoint, hoveredPoint);
-      if (cursorAngle !== -1) this.updateEnemyCursor(cursorAngle);
-    }
+  private updateCursor(hex: Hexagon | undefined, point: Point) {
+    if (!hex) return setCursorStyle('cursor-stop');
+
+    const cursorAngle = this.cursorAngle(hex, point);
+    if (cursorAngle !== -1) return setCursorStyle(`melee_attack_${cursorAngle}`);
+
+    const isReachableHex = this.graph.isPositionReachable(hex);
+    const newCursor = isReachableHex ? 'cursor-move' : 'cursor-stop';
+
+    setCursorStyle(newCursor);
   }
 
   private cursorAngle(hex: Hexagon, point: Point): number {
@@ -89,33 +94,17 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     return this.graph.hexAngleUnderPoint(hex, point);
   }
 
-  private updateEnemyCursor(angle: number) {
-    updateCursorStyle('any', `melee_attack_${angle}`);
-  }
-
-  private setMoveCursor(hex: Hexagon | undefined) {
-    const moveNotAllowed = !hex || !this.graph.isPositionReachable(hex);
-
-    const newCursor = moveNotAllowed ? 'cursor-stop' : 'cursor-move';
-    const oldCursor = moveNotAllowed ? 'cursor-move' : 'cursor-stop';
-
-    updateCursorStyle(oldCursor, newCursor);
-  }
-
   private setOnClickEvent() {
     eventBus.on(EventKey.clickHex, (evt: MouseEvent) => {
-      const rect = (evt.target as HTMLElement).getBoundingClientRect();
-      const x = evt.clientX - rect.left;
-      const y = evt.clientY - rect.top;
+      const point = this.mouseEventPoint(evt);
+      const hexUnderPoint = this.graph.hexUnderPoint(point);
 
-      const clickedHex = this.graph.hexUnderPoint(new Point(x, y));
-
-      if (clickedHex) {
-        const cursorAngle = this.cursorAngle(clickedHex, new Point(x, y));
-        if (cursorAngle !== -1) return this.animate(clickedHex.neighbor(cursorAngle));
+      if (hexUnderPoint) {
+        const cursorAngle = this.cursorAngle(hexUnderPoint, point);
+        if (cursorAngle !== -1) return this.animate(hexUnderPoint.neighbor(cursorAngle));
       }
 
-      let lastHex = this.graph.reachableHexUnderPoint(new Point(x, y));
+      let lastHex = this.graph.reachableHexUnderPoint(point);
 
       if (!lastHex) return;
       this.animate(lastHex);
@@ -138,6 +127,14 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
       this.gridView.refresh(this.ctx, this.canvas);
       this.drawActiveUnitHex();
     });
+  }
+
+  private mouseEventPoint(evt: MouseEvent): Point {
+    const rect = (evt.target as HTMLElement).getBoundingClientRect();
+    const x = evt.clientX - rect.left;
+    const y = evt.clientY - rect.top;
+
+    return new Point(x, y);
   }
 }
 
