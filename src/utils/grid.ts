@@ -35,7 +35,7 @@ export function getLayoutHexes({ width, height }: Dimensions): Array<Hexagon> {
   return hexes;
 }
 
-export function isPointInsideHexCorners({ x, y }: Point, corners: Array<Point>): boolean {
+export function isPointInsideHex({ x, y }: Point, corners: Array<Point>): boolean {
   let isInside = false;
 
   for (let i = 0, j = corners.length - 1; i < corners.length; j = i++) {
@@ -56,7 +56,7 @@ function isObstacle(hex: Hexagon, obstacles: Array<Hexagon>): boolean {
   return obstacles.some((obstacle) => Hexagon.isEqual(hex, obstacle));
 }
 
-function isOutsideHexLayout(hex: Hexagon, size: { width: number; height: number }): boolean {
+function isOutside(hex: Hexagon, size: { width: number; height: number }): boolean {
   const heightBorder = Math.floor(size.height / 2);
 
   if (hex.r < -heightBorder || hex.r > heightBorder) return true;
@@ -72,47 +72,41 @@ function isOutsideHexLayout(hex: Hexagon, size: { width: number; height: number 
   return false;
 }
 
-export function getReachableHexes(activeHex: Hexagon, obstacles: Array<Hexagon>, range: number) {
+export function getAngle({ x, y }: Point, corners: Array<Point>, center: Point) {
+  for (let i = 1; i < 6; i++) {
+    const isInside = isPointInsideHex({ x, y }, [center, corners[i - 1], corners[i]]);
+    if (isInside) return i - 1;
+  }
+
+  return 5;
+}
+
+export function getHexReachables(
+  startPosition: Hexagon,
+  obstacles: Array<Hexagon>,
+  range: number
+): Array<Hexagon> {
+  const visited: Set<string> = new Set();
+  visited.add(startPosition.toString());
+
   const fringes: Array<Array<Hexagon>> = [];
-
-  const costSoFar: Record<string, number> = {};
-  const path: Record<string, null | Hexagon> = {};
-
-  costSoFar[activeHex.toString()] = 0;
-  path[activeHex.toString()] = null;
-
-  fringes.push([activeHex]);
+  fringes.push([startPosition]);
 
   for (let i = 1; i <= range; i++) {
     fringes.push([]);
 
     fringes[i - 1].forEach((hex) => {
-      for (let j = 0; j < 6; j++) {
-        const neighbor = hex.neighbor(j);
+      for (let direction = 0; direction < 6; direction++) {
+        const neighbor = hex.neighbor(direction);
+        const isBlocked = isObstacle(neighbor, obstacles) || isOutside(neighbor, battleGridSize);
 
-        if (
-          isObstacle(neighbor, obstacles) ||
-          isOutsideHexLayout(neighbor, battleGridSize) ||
-          costSoFar[neighbor.toString()] !== undefined
-        ) {
-          continue;
-        }
+        if (isBlocked || visited.has(neighbor.toString())) continue;
 
-        costSoFar[neighbor.toString()] = i;
-        path[neighbor.toString()] = hex;
+        visited.add(neighbor.toString());
         fringes[i].push(neighbor);
       }
     });
   }
 
-  return { fringes, path };
-}
-
-export function getAngle({ x, y }: Point, corners: Array<Point>, center: Point) {
-  for (let i = 1; i < 6; i++) {
-    const isInside = isPointInsideHexCorners({ x, y }, [center, corners[i - 1], corners[i]]);
-    if (isInside) return i - 1;
-  }
-
-  return 5;
+  return fringes.flat();
 }

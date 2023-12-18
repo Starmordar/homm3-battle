@@ -11,10 +11,20 @@ export const hexLabelColors = {
   other: 'hsl(0, 0%, 50%)',
 };
 
-export const hexStyles = {
+export interface HexOutlineStyle {
+  strokeStyle: string;
+  lineWidth: number;
+}
+
+export const hexOutlineStyle: HexOutlineStyle = {
   strokeStyle: '#7ACE0F80',
   lineWidth: 1,
-} as const;
+};
+
+export const reachableHexOutlineStyle: HexOutlineStyle = {
+  strokeStyle: 'rgba(0, 0, 0, 0.4)',
+  lineWidth: 1,
+};
 
 export const hexLabelStyles = {
   font: '16px sans-serif',
