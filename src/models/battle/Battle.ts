@@ -5,8 +5,10 @@ import { type HeroOptions, heroesOptions, heroesClasses } from '@/constants/hero
 import { Creature, enemyArmy, heroArmy } from '@/constants/units';
 import { Hexagon } from '../grid';
 import BattleQueue from './BattleQueue';
-import BattleMonster from './BattleMonster';
 import { EventKey, eventBus } from '@/controllers/EventBus';
+
+import BattleMonsterModel from '@/models/objects/BattleMonsterModel';
+import BattleMonster from '@/controllers/objects/BattleMonster';
 
 type RandomHeroOptions = HeroOptions & { name: string };
 
@@ -31,7 +33,8 @@ class Battle {
 
   private createBattleMonsters(army: Array<Creature>, controllable: boolean): Array<BattleMonster> {
     const monsters = army.map((unit) => {
-      return new BattleMonster({ ...unit, controllable, quantity: 10 });
+      const model = new BattleMonsterModel({ ...unit, controllable, quantity: 10 });
+      return new BattleMonster(model);
     });
 
     return monsters;
@@ -68,8 +71,24 @@ class Battle {
   }
 
   public moveActiveUnit(newPosition: Hexagon) {
-    this.activeUnit.position = newPosition;
+    this.activeUnit.updatePosition(newPosition);
+
     this.queue.endTurn();
+  }
+
+  public attackUnit(attackingHex: Hexagon, attackedHex: Hexagon) {
+    const monsters = this.heroes.flatMap((hero) => hero.army);
+
+    const attackingUnit = monsters.find((monster) =>
+      Hexagon.isEqual(monster.model.position, attackingHex)
+    );
+
+    const attackedUnit = monsters.find((monster) =>
+      Hexagon.isEqual(monster.model.position, attackedHex)
+    );
+
+    attackedUnit?.getHit(2);
+    attackingUnit?.getHit(2);
   }
 
   get activeUnit() {

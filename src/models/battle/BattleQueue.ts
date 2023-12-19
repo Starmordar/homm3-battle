@@ -1,5 +1,5 @@
+import BattleMonster from '@/controllers/objects/BattleMonster';
 import BattleHero from './BattleHero';
-import BattleMonster from './BattleMonster';
 
 class BattleQueue {
   private readonly ownHero: BattleHero;
@@ -20,7 +20,7 @@ class BattleQueue {
 
   private createQueue(): Array<BattleMonster> {
     const monsters = [...this.ownHero.army, ...this.aiHero.army];
-    monsters.sort((a, b) => a.data.damage.speed - b.data.damage.speed);
+    monsters.sort((a, b) => a.model.data.damage.speed - b.model.data.damage.speed);
 
     return monsters;
   }
@@ -40,7 +40,7 @@ class BattleQueue {
   startTurn(nextUnit: BattleMonster) {
     this.activeUnit = nextUnit;
 
-    if (!nextUnit.controllable) {
+    if (!nextUnit.model.controllable) {
       this.endTurn();
     }
   }

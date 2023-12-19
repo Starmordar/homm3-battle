@@ -1,4 +1,4 @@
-import BattleMonster from './BattleMonster';
+import BattleMonster from '@/controllers/objects/BattleMonster';
 
 interface PrimarySkills {
   attack: number;

@@ -1,14 +1,15 @@
 import SpriteRepository from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
-import BattleMonster from '../battle/BattleMonster';
 import BattleHeroInfo from '../battle/BattleHeroInfo';
 import AnimatedSprite from '../../view/sprites/AnimatedSprite';
-import { Layout } from '../../models/grid';
 
 import { type SpriteAnimation } from '../../constants/sprites';
 import { heroAnimationSize, heroesClasses } from '@/constants/hero';
 import { EventKey, eventBus } from '@/controllers/EventBus';
+
+import BattleMonster from '@/controllers/objects/BattleMonster';
+import BattleMonsterView from '@/view/objects/BattleMonster';
 
 export interface UnitsCanvasOptions extends CanvasOptions {
   heroes: Array<BattleHeroInfo>;
@@ -20,19 +21,17 @@ export interface AnimatedUnit {
 }
 
 class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
-  private readonly layout: Layout;
   private readonly spriteRepository: SpriteRepository;
 
   private animationStart: number = 0;
   private heroSprites: Array<{ sprite: AnimatedSprite; frameY: number }> = [];
-  private unitSprites: Array<AnimatedUnit> = [];
 
-  constructor(spriteRepository: SpriteRepository, layout: Layout, options: UnitsCanvasOptions) {
+  private monsters: Array<BattleMonsterView> = [];
+
+  constructor(spriteRepository: SpriteRepository, options: UnitsCanvasOptions) {
     super(options);
 
-    this.layout = layout;
     this.spriteRepository = spriteRepository;
-
     this.animationStep = this.animationStep.bind(this);
   }
 
@@ -59,8 +58,10 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
   private createCreaturesAnimation(army: Array<BattleMonster>) {
     army.forEach((monster) => {
-      const sprite = this.spriteRepository.get<AnimatedSprite>(monster.animation.sprite);
-      this.unitSprites.push({ sprite, monster });
+      const sprite = this.spriteRepository.get<AnimatedSprite>(monster.model.animation.sprite);
+
+      const monsterView = new BattleMonsterView(monster, this.ctx, sprite);
+      this.monsters.push(monsterView);
     });
   }
 
@@ -118,43 +119,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   }
 
   private animateCreatures() {
-    this.unitSprites.forEach((animatedUnit) => this.animateCreature(animatedUnit));
-  }
-
-  private animateCreature(animatedUnit: AnimatedUnit) {
-    const { monster: creature, sprite } = animatedUnit;
-    const { width, height, offsetY } = creature.animation.size;
-
-    const pixel = this.layout.hexToPixel(creature.position);
-    const x = pixel.x - width / 2;
-    const y = pixel.y - height + offsetY;
-
-    sprite.drawFrame(this.ctx, 0, x, y, width, height);
-    this.drawCreatureQuantityCounter(animatedUnit);
-
-    sprite.currentFrame++;
-  }
-
-  private drawCreatureQuantityCounter(animatedUnit: AnimatedUnit) {
-    const { monster: creature } = animatedUnit;
-    const { offsetY } = creature.animation.size;
-
-    const pixel = this.layout.hexToPixel(creature.position);
-
-    const x = pixel.x;
-    const y = pixel.y + offsetY;
-
-    this.ctx.strokeStyle = '#998c38';
-    this.ctx.fillStyle = '#4F2982';
-    this.ctx.fillRect(x - 15, y - 10, 30, 13);
-    this.ctx.strokeRect(x - 14.5, y - 9.5, 29, 12);
-
-    this.ctx.textAlign = 'center';
-    this.ctx.fillStyle = 'white';
-    this.ctx.font = '12px sans-serif';
-    this.ctx.textBaseline = 'bottom';
-
-    this.ctx.fillText(creature.quantity.toString(), x, y + 4);
+    this.monsters.forEach((monster) => monster.draw());
   }
 
   private attachMouseEvents() {

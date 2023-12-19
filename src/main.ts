@@ -12,8 +12,7 @@ import BattleHeroInfo from './models/battle/BattleHeroInfo';
 import Battle from './models/battle/Battle';
 
 import { SPRITE } from './constants/sprites';
-import { hexObstacles } from './constants/hex';
-import { buildGridLayout } from './utils/grid';
+import { gridLayout, hexObstacles } from './constants/hex';
 
 const spriteRepository = new SpriteRepository();
 const spriteFactory = new SpriteFactory();
@@ -23,8 +22,6 @@ await resources.load();
 
 const battleWidth = 950;
 const battleHeight = 650;
-
-const layout = buildGridLayout({ width: battleWidth, height: battleHeight });
 
 const battle = new Battle();
 const heroes = battle.heroes.map((hero) => new BattleHeroInfo(hero));
@@ -48,7 +45,7 @@ const hexCanvasOptions = {
   obstacles: hexObstacles,
 };
 
-const hexagonCanvas = new HexagonalCanvas(layout, battle, hexCanvasOptions);
+const hexagonCanvas = new HexagonalCanvas(gridLayout, battle, hexCanvasOptions);
 hexagonCanvas.display();
 
 const unitsCanvasOptions = {
@@ -57,5 +54,5 @@ const unitsCanvasOptions = {
   heroes,
 };
 
-const unitsCanvas = new UnitsCanvas(spriteRepository, layout, unitsCanvasOptions);
+const unitsCanvas = new UnitsCanvas(spriteRepository, unitsCanvasOptions);
 unitsCanvas.setup();

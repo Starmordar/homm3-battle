@@ -1,6 +1,6 @@
-import Subject from '@/services/Observer';
-import { Hexagon } from '../grid';
 import { monsters, type Monster } from '@/constants/monsters';
+import { Hexagon } from '@/models/grid';
+import Subject from '@/services/Observer';
 
 interface Animation {
   sprite: string;
@@ -16,7 +16,7 @@ interface Options {
   quantity: number;
 }
 
-class BattleMonster extends Subject {
+class BattleMonsterModel extends Subject {
   monsterId: number;
   data: Monster;
   controllable: boolean;
@@ -44,4 +44,4 @@ class BattleMonster extends Subject {
   }
 }
 
-export default BattleMonster;
+export default BattleMonsterModel;
