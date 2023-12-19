@@ -85,12 +85,18 @@ export function getHexReachables(
   startPosition: Hexagon,
   obstacles: Array<Hexagon>,
   range: number
-): Array<Hexagon> {
+): {
+  fringes: Array<Hexagon>;
+  path: Map<string, Hexagon | null>;
+} {
   const visited: Set<string> = new Set();
   visited.add(startPosition.toString());
 
   const fringes: Array<Array<Hexagon>> = [];
+  const path: Map<string, Hexagon | null> = new Map();
+
   fringes.push([startPosition]);
+  path.set(startPosition.toString(), null);
 
   for (let i = 1; i <= range; i++) {
     fringes.push([]);
@@ -104,9 +110,10 @@ export function getHexReachables(
 
         visited.add(neighbor.toString());
         fringes[i].push(neighbor);
+        path.set(neighbor.toString(), hex);
       }
     });
   }
 
-  return fringes.flat();
+  return { fringes: fringes.flat(), path };
 }

@@ -3,11 +3,14 @@ import BattleMonster from '@/controllers/objects/BattleMonster';
 import { Observer } from '@/services/Observer';
 import AnimatedSprite from '../sprites/AnimatedSprite';
 import { gridLayout } from '@/constants/hex';
+import { Point } from '@/models/grid';
 
 class BattleMonsterView implements Observer {
   private readonly controller: BattleMonster;
   private readonly ctx: CanvasRenderingContext2D;
   public sprite: AnimatedSprite;
+
+  private animationIndex: number = 0;
 
   constructor(controller: BattleMonster, ctx: CanvasRenderingContext2D, sprite: AnimatedSprite) {
     this.ctx = ctx;
@@ -18,6 +21,29 @@ class BattleMonsterView implements Observer {
   }
 
   public draw() {
+    const { animationPath } = this.controller.model;
+
+    if (animationPath === null) this.drawStandingSprite();
+    else this.drawMovableSprite(animationPath);
+  }
+
+  private drawMovableSprite(animationPath: Array<Point>) {
+    const { animation } = this.controller.model;
+    const { width, height, offsetY } = animation.size;
+
+    const pixel = animationPath[this.animationIndex];
+    if (!pixel) return this.endAnimation();
+
+    const x = pixel.x - width / 2;
+    const y = pixel.y - height + offsetY;
+
+    this.sprite.drawFrame(this.ctx, 0, x, y, width, height);
+    this.sprite.currentFrame++;
+
+    this.animationIndex++;
+  }
+
+  private drawStandingSprite() {
     const { animation, position } = this.controller.model;
     const { width, height, offsetY } = animation.size;
 
@@ -51,6 +77,11 @@ class BattleMonsterView implements Observer {
     this.ctx.textBaseline = 'bottom';
 
     this.ctx.fillText(quantity.toString(), x, y + 4);
+  }
+
+  private endAnimation() {
+    this.controller.endMoveAnimation();
+    this.animationIndex = 0;
   }
 
   update() {

@@ -14,11 +14,14 @@ type RandomHeroOptions = HeroOptions & { name: string };
 
 class Battle {
   private readonly queue: BattleQueue;
+
+  public pending: boolean;
   public heroes: Array<BattleHero> = [];
 
   constructor() {
     this.initializeHeroes();
     this.queue = new BattleQueue(this.heroes[0], this.heroes[1]);
+    this.pending = false;
 
     this.attachEvents();
   }
@@ -70,29 +73,38 @@ class Battle {
     });
   }
 
-  public moveActiveUnit(newPosition: Hexagon) {
-    this.activeUnit.updatePosition(newPosition);
+  public async moveActiveUnit(path: Array<Hexagon>): Promise<void> {
+    await this.activeUnit.animateMove(path);
+    this.queue.endTurn();
+  }
+
+  public async attackUnit(attackingHex: Hexagon, attackedHex: Hexagon, path: Array<Hexagon>) {
+    await this.activeUnit.animateMove(path);
+
+    const monsters = this.heroes.flatMap((hero) => hero.army);
+
+    const attackingUnit = monsters.find(({ model }) =>
+      Hexagon.isEqual(model.position, attackingHex)
+    );
+
+    const attackedUnit = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackedHex));
+
+    attackedUnit?.getHit(2);
+    attackingUnit?.getHit(2);
 
     this.queue.endTurn();
   }
 
-  public attackUnit(attackingHex: Hexagon, attackedHex: Hexagon) {
-    const monsters = this.heroes.flatMap((hero) => hero.army);
-
-    const attackingUnit = monsters.find((monster) =>
-      Hexagon.isEqual(monster.model.position, attackingHex)
-    );
-
-    const attackedUnit = monsters.find((monster) =>
-      Hexagon.isEqual(monster.model.position, attackedHex)
-    );
-
-    attackedUnit?.getHit(2);
-    attackingUnit?.getHit(2);
+  public isEnemyByPosition(hex: Hexagon) {
+    return this.heroes[1].army.some((unit) => Hexagon.isEqual(unit.model.position, hex));
   }
 
   get activeUnit() {
     return this.queue.activeUnit;
+  }
+
+  get enemyUnitsPosition() {
+    return this.heroes.flatMap((hero) => hero.army.map((unit) => unit.model.position));
   }
 }
 

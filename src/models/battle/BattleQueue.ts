@@ -32,15 +32,16 @@ class BattleQueue {
     return item;
   }
 
-  wait() {
+  public wait() {
     this.queue.unshift(this.activeUnit);
     this.endTurn();
   }
 
-  startTurn(nextUnit: BattleMonster) {
+  public startTurn(nextUnit: BattleMonster) {
     this.activeUnit = nextUnit;
 
     if (!nextUnit.model.controllable) {
+      // AI here
       this.endTurn();
     }
   }

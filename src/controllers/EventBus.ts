@@ -9,6 +9,8 @@ export enum EventKey {
   refreshCanvas = 'refreshCanvas',
   unitWait = 'unitWait',
   unitDefense = 'skipTurn',
+
+  moveEnd = 'moveEnd',
 }
 
 class EventBus {

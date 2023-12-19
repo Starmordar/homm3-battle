@@ -46,7 +46,7 @@ const hexCanvasOptions = {
 };
 
 const hexagonCanvas = new HexagonalCanvas(gridLayout, battle, hexCanvasOptions);
-hexagonCanvas.display();
+hexagonCanvas.draw();
 
 const unitsCanvasOptions = {
   classNames: ['units-canvas'],

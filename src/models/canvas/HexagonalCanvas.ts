@@ -6,6 +6,7 @@ import Canvas, { CanvasOptions } from './Canvas';
 import { Point, Hexagon, Layout } from '../grid';
 import { EventKey, eventBus } from '@/controllers/EventBus';
 import { setCursorStyle } from '@/utils/common';
+import { mousePointFromEvent } from '@/utils/canvas';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hexagon>;
@@ -26,43 +27,55 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.battle = battle;
   }
 
-  public display() {
+  public draw() {
     this.computeHexReachables();
 
-    this.gridView.draw(this.ctx);
-    this.drawActiveUnitHex();
-
-    this.setHexHoverEvent();
-    this.setOnClickEvent();
-    this.attachEvent();
+    this.refreshGridView();
+    this.attachEvents();
   }
 
   private computeHexReachables() {
-    const { position } = this.battle.activeUnit.model;
-    const unitObstacles = this.battle.heroes.flatMap((hero) =>
-      hero.army.map((unit) => unit.model.position)
-    );
+    const { enemyUnitsPosition, activeUnit } = this.battle;
+    const { position, data } = activeUnit.model;
 
-    this.graph.computeHexReachables(position, unitObstacles, 6);
+    this.graph.computeHexReachables(position, enemyUnitsPosition, data.damage.speed);
   }
 
-  private drawActiveUnitHex() {
-    const { position } = this.battle.activeUnit.model;
-    this.gridView.drawActiveHex(this.ctx, position);
+  private refreshGridView() {
+    this.gridView.clear(this.ctx, this.canvas);
+    this.gridView.draw(this.ctx);
+
+    if (!this.battle.pending) {
+      const { position } = this.battle.activeUnit.model;
+      this.gridView.drawActiveHex(this.ctx, position);
+    }
   }
 
-  private setHexHoverEvent() {
-    eventBus.on(EventKey.hoverHex, async (evt: MouseEvent) => {
-      const point = this.mouseEventPoint(evt);
+  private refreshIdleGridView() {
+    this.graph.resetHexReachables();
 
-      this.gridView.refresh(this.ctx, this.canvas);
-      this.drawActiveUnitHex();
-
-      this.highlightHoveredHex(point);
-    });
+    this.gridView.clear(this.ctx, this.canvas);
+    this.gridView.draw(this.ctx);
   }
 
-  private highlightHoveredHex(point: Point) {
+  private attachEvents() {
+    this.attachHoverEvent();
+    this.attachClickEvent();
+    this.attachRefreshEvent();
+  }
+
+  private attachHoverEvent() {
+    eventBus.on(EventKey.hoverHex, (evt) => this.triggerHighlightHovered(evt));
+  }
+
+  private triggerHighlightHovered(evt: MouseEvent) {
+    const point = mousePointFromEvent(evt);
+
+    this.refreshGridView();
+    this.highlightHovered(point);
+  }
+
+  private highlightHovered(point: Point) {
     const hexUnderPoint = this.graph.hexUnderPoint(point);
 
     if (hexUnderPoint && this.graph.isPositionReachable(hexUnderPoint)) {
@@ -79,63 +92,69 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     if (cursorAngle !== -1) return setCursorStyle(`melee_attack_${cursorAngle}`);
 
     const isReachableHex = this.graph.isPositionReachable(hex);
-    const newCursor = isReachableHex ? 'cursor-move' : 'cursor-stop';
+    const cursor = isReachableHex ? 'cursor-move' : 'cursor-stop';
 
-    setCursorStyle(newCursor);
+    setCursorStyle(cursor);
   }
 
   private cursorAngle(hex: Hexagon, point: Point): number {
-    const isEnemyHex = this.battle.heroes[1].army.some((unit) =>
-      Hexagon.isEqual(unit.model.position, hex)
-    );
-
+    const isEnemyHex = this.battle.isEnemyByPosition(hex);
     if (!isEnemyHex) return -1;
 
     return this.graph.hexAngleUnderPoint(hex, point);
   }
 
-  private setOnClickEvent() {
-    eventBus.on(EventKey.clickHex, (evt: MouseEvent) => {
-      const point = this.mouseEventPoint(evt);
-      const hexUnderPoint = this.graph.hexUnderPoint(point);
+  private attachClickEvent() {
+    eventBus.on(EventKey.clickHex, (evt) => this.triggerActionOnClick(evt));
+  }
 
-      if (hexUnderPoint) {
-        const cursorAngle = this.cursorAngle(hexUnderPoint, point);
-        if (cursorAngle !== -1) {
-          this.battle.attackUnit(hexUnderPoint, hexUnderPoint.neighbor(cursorAngle));
-          return this.animate(hexUnderPoint.neighbor(cursorAngle));
-        }
+  private triggerActionOnClick(evt: MouseEvent) {
+    const point = mousePointFromEvent(evt);
+    const hexUnderPoint = this.graph.hexUnderPoint(point);
+
+    if (hexUnderPoint) {
+      const { position } = this.battle.activeUnit.model;
+      const cursorAngle = this.cursorAngle(hexUnderPoint, point);
+
+      if (cursorAngle !== -1) {
+        const path = this.graph.getPath(position, hexUnderPoint.neighbor(cursorAngle));
+        return this.attackUnit(hexUnderPoint.neighbor(cursorAngle), hexUnderPoint, path);
       }
+    }
 
-      let lastHex = this.graph.reachableHexUnderPoint(point);
+    let lastHex = this.graph.reachableHexUnderPoint(point);
+    if (!lastHex) return;
 
-      if (!lastHex) return;
-      this.animate(lastHex);
-    });
+    const { position } = this.battle.activeUnit.model;
+    const path = this.graph.getPath(position, lastHex);
+
+    this.animate(path);
   }
 
-  private animate(lastHex: Hexagon) {
-    this.battle.moveActiveUnit(lastHex);
-    this.refreshCanvas();
-  }
+  private async attackUnit(attacking: Hexagon, attacked: Hexagon, path: Array<Hexagon>) {
+    this.battle.pending = true;
 
-  private attachEvent() {
-    eventBus.on(EventKey.refreshCanvas, this.refreshCanvas.bind(this));
-  }
+    this.refreshIdleGridView();
+    await this.battle.attackUnit(attacking, attacked, path);
 
-  private refreshCanvas() {
+    this.battle.pending = false;
     this.computeHexReachables();
-
-    this.gridView.refresh(this.ctx, this.canvas);
-    this.drawActiveUnitHex();
+    this.refreshGridView();
   }
 
-  private mouseEventPoint(evt: MouseEvent): Point {
-    const rect = (evt.target as HTMLElement).getBoundingClientRect();
-    const x = evt.clientX - rect.left;
-    const y = evt.clientY - rect.top;
+  private async animate(path: Array<Hexagon>) {
+    this.battle.pending = true;
 
-    return new Point(x, y);
+    this.refreshIdleGridView();
+    await this.battle.moveActiveUnit(path);
+
+    this.battle.pending = false;
+    this.computeHexReachables();
+    this.refreshGridView();
+  }
+
+  private attachRefreshEvent() {
+    eventBus.on(EventKey.refreshCanvas, () => this.refreshGridView());
   }
 }
 

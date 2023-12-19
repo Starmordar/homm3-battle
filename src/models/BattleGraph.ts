@@ -8,7 +8,9 @@ class BattleGraph {
 
   public hexes: Array<Hexagon>;
   public hexCornersMap: Map<Hexagon, Array<Point>>;
+
   public hexReachables: Array<Hexagon> = [];
+  public hexPathMap: Map<string, Hexagon | null> = new Map();
 
   constructor(layout: Layout, obstacles: Array<Hexagon>) {
     this.layout = layout;
@@ -20,7 +22,15 @@ class BattleGraph {
 
   public computeHexReachables(position: Hexagon, unitObstacles: Array<Hexagon>, range: number) {
     const obstacles = [...this.terrainObstacles, ...unitObstacles];
-    this.hexReachables = getHexReachables(position, obstacles, range);
+    const { fringes, path } = getHexReachables(position, obstacles, range);
+
+    this.hexReachables = fringes;
+    this.hexPathMap = path;
+  }
+
+  public resetHexReachables() {
+    this.hexReachables = [];
+    this.hexPathMap = new Map();
   }
 
   public isPositionReachable(position: Hexagon): boolean {
@@ -41,6 +51,18 @@ class BattleGraph {
 
   public reachableHexUnderPoint(point: Point): Hexagon | undefined {
     return this.hexReachables.find((hex) => isPointInsideHex(point, this.layout.hexToCorners(hex)));
+  }
+
+  public getPath(startPosition: Hexagon, endPosition: Hexagon) {
+    const path = [endPosition];
+    let tempPosition = endPosition;
+
+    while (!Hexagon.isEqual(tempPosition, startPosition)) {
+      tempPosition = this.hexPathMap.get(tempPosition.toString())!;
+      path.push(tempPosition);
+    }
+
+    return path.reverse();
   }
 
   private getHexCornersMap(): Map<Hexagon, Array<Point>> {

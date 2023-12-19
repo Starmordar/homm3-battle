@@ -23,9 +23,8 @@ class BattleGrid implements Renderable {
     this.drawReachableHexes(ctx);
   }
 
-  public refresh(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
+  public clear(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.draw(ctx);
   }
 
   public drawActiveHex(ctx: CanvasRenderingContext2D, hex: Hexagon) {
@@ -44,7 +43,7 @@ class BattleGrid implements Renderable {
     ctx.fill();
   }
 
-  private drawHexes(ctx: CanvasRenderingContext2D) {
+  public drawHexes(ctx: CanvasRenderingContext2D) {
     for (const [hex, corners] of this.graph.hexCornersMap) {
       this.drawOutline(ctx, corners);
       this.drawLabel(ctx, hex);
