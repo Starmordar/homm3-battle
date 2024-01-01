@@ -33,11 +33,10 @@ const uiCanvasOptions = {
   battleHeight,
   battleWidth,
   backgroundSprite: SPRITE.battle_bg_01,
-  heroes: battle.heroes,
 };
 
-const uiCanvas = new UICanvas(spriteRepository, uiCanvasOptions);
-uiCanvas.display();
+const uiCanvas = new UICanvas(spriteRepository, battle, uiCanvasOptions);
+uiCanvas.draw();
 
 const hexCanvasOptions = {
   classNames: ['grid-canvas'],

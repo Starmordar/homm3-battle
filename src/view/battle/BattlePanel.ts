@@ -1,6 +1,7 @@
 import SpriteRepository from '@/services/SpriteRepository';
 import ControlButton from '@/view/battle/ControlButton';
 import ConsolePanel from '@/view/battle/ConsolePanel';
+import Battle from '@/models/battle/Battle';
 
 import { ControlButtonOptions, battleControlsOptions, battleConsoleOptions } from '@/constants/ui';
 import type { Rect, Renderable } from '@/types';
@@ -10,10 +11,12 @@ interface BattlePanelOptions extends Omit<Rect, 'height'> {}
 class BattlePanel implements Renderable {
   private readonly options: BattlePanelOptions;
   private readonly spriteRepository: SpriteRepository;
+  private readonly battle: Battle;
 
-  constructor(spriteRepository: SpriteRepository, options: BattlePanelOptions) {
+  constructor(spriteRepository: SpriteRepository, battle: Battle, options: BattlePanelOptions) {
     this.spriteRepository = spriteRepository;
 
+    this.battle = battle;
     this.options = options;
   }
 
@@ -32,7 +35,7 @@ class BattlePanel implements Renderable {
     canvas: HTMLCanvasElement,
     controlOptions: ControlButtonOptions
   ) {
-    const battleControl = new ControlButton(this.spriteRepository, {
+    const battleControl = new ControlButton(this.spriteRepository, this.battle, {
       ...controlOptions,
       x: this.options.x + controlOptions.x,
       y: this.options.y + controlOptions.y,

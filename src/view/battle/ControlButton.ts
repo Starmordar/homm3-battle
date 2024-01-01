@@ -1,19 +1,25 @@
 import SpriteRepository from '@/services/SpriteRepository';
 import Stroke from '@/view/common/Stroke';
 
-import { eventBus } from '@/services/EventBus';
+import { globalEvents } from '@/services/EventBus';
 import { mousePosition, isMouseInsideRect } from '@/utils/canvas';
 
 import type { ControlButtonOptions } from '@/constants/ui';
 import type { Renderable } from '@/types';
+import Battle from '@/models/battle/Battle';
 
 class ControlButton implements Renderable {
   private readonly spriteRepository: SpriteRepository;
   private options: ControlButtonOptions;
 
-  constructor(spriteRepository: SpriteRepository, options: ControlButtonOptions) {
+  private disabled: boolean;
+
+  constructor(spriteRepository: SpriteRepository, battle: Battle, options: ControlButtonOptions) {
     this.spriteRepository = spriteRepository;
     this.options = options;
+
+    this.disabled = this.options.disabled(battle);
+    console.log('this.disabled :>> ', this.disabled);
   }
 
   public draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
@@ -27,25 +33,36 @@ class ControlButton implements Renderable {
   }
 
   private buttonSprite() {
-    const { sprites, disabled } = this.options;
-    const sprite = disabled ? sprites.disabled : sprites.idle;
+    console.log('buttonSprite,this.disabled :>> ', this.disabled);
+    const { sprites } = this.options;
+    const sprite = this.disabled ? sprites.disabled : sprites.idle;
 
     return this.spriteRepository.get(sprite);
   }
 
   private attachButtonClickEvent(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
-    canvas.addEventListener('click', (evt: MouseEvent) => {
-      if (this.options.disabled) return;
+    const handler = (evt: MouseEvent) => this.triggerControl(evt, ctx, canvas);
 
-      const position = mousePosition(canvas, evt);
-      const isClicked = isMouseInsideRect(position, this.options);
-      if (!isClicked) return;
+    canvas.removeEventListener('click', handler);
+    canvas.addEventListener('click', handler);
+  }
 
-      evt.stopImmediatePropagation();
+  private triggerControl(
+    evt: MouseEvent,
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement
+  ) {
+    if (this.disabled) return;
 
-      eventBus.emit(this.options.event);
-      this.drawClickAnimation(ctx);
-    });
+    const position = mousePosition(canvas, evt);
+    const isClicked = isMouseInsideRect(position, this.options);
+    if (!isClicked) return;
+
+    evt.stopImmediatePropagation();
+
+    console.log('click event, this.disabled :>> ', this.disabled);
+    globalEvents.emit(this.options.event);
+    this.drawClickAnimation(ctx);
   }
 
   private drawClickAnimation(ctx: CanvasRenderingContext2D) {
@@ -55,7 +72,8 @@ class ControlButton implements Renderable {
     sprite.drawFrame(ctx, 0, 0, x, y, width, height);
 
     setTimeout(() => {
-      const sprite = this.spriteRepository.get(sprites.idle);
+      console.log('setTimeout, this.disabled :>> ', this.disabled);
+      const sprite = this.buttonSprite();
       sprite.drawFrame(ctx, 0, 0, x, y, width, height);
 
       this.strokeButton(ctx);

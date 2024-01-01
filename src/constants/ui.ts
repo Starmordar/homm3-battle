@@ -1,6 +1,8 @@
 import { EventKey } from '@/services/EventBus';
 import { SPRITE } from './sprites';
 import { Rect } from '@/types';
+import Battle from '@/models/battle/Battle';
+import { isWaitDisabled } from '@/utils/battle';
 
 interface BattleControlSprites {
   idle: string;
@@ -9,7 +11,7 @@ interface BattleControlSprites {
 }
 
 export interface ControlButtonOptions extends Rect {
-  disabled: boolean;
+  disabled: (battle: Battle) => boolean;
   sprites: BattleControlSprites;
   event: string;
 }
@@ -32,7 +34,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       active: SPRITE.settings_btn_active,
       disabled: SPRITE.settings_btn_disabled,
     },
-    disabled: true,
+    disabled: () => true,
     event: EventKey.unitWait,
   },
   {
@@ -45,7 +47,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       active: SPRITE.surrender_btn_active,
       disabled: SPRITE.surrender_btn_disabled,
     },
-    disabled: true,
+    disabled: () => true,
     event: EventKey.unitWait,
   },
   {
@@ -58,7 +60,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       active: SPRITE.flee_btn_active,
       disabled: SPRITE.flee_btn_disabled,
     },
-    disabled: true,
+    disabled: () => true,
     event: EventKey.unitWait,
   },
   {
@@ -71,7 +73,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       active: SPRITE.magic_btn_active,
       disabled: SPRITE.magic_btn_disabled,
     },
-    disabled: true,
+    disabled: () => true,
     event: EventKey.unitWait,
   },
 
@@ -85,7 +87,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       active: SPRITE.shield_btn_active,
       disabled: SPRITE.shield_btn_disabled,
     },
-    disabled: true,
+    disabled: () => true,
     event: EventKey.unitWait,
   },
   {
@@ -98,7 +100,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       active: SPRITE.pass_btn_active,
       disabled: SPRITE.pass_btn_disabled,
     },
-    disabled: false,
+    disabled: isWaitDisabled,
     event: EventKey.unitWait,
   },
   {
@@ -111,7 +113,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       active: SPRITE.auto_btn_active,
       disabled: SPRITE.auto_btn_disabled,
     },
-    disabled: true,
+    disabled: () => true,
     event: EventKey.unitWait,
   },
 ];

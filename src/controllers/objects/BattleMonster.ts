@@ -36,6 +36,10 @@ class BattleMonster {
     this.events.emit(Event.moveEnd);
   }
 
+  waitTurn() {
+    this.model.hadTurn = true;
+  }
+
   updatePosition(newPosition: Hexagon) {
     this.model.position = newPosition;
     this.model.notify();

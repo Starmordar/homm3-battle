@@ -5,7 +5,7 @@ import AnimatedSprite from '../../view/sprites/AnimatedSprite';
 
 import { type SpriteAnimation } from '../../constants/sprites';
 import { heroAnimationSize, heroesClasses } from '@/constants/hero';
-import { EventKey, eventBus } from '@/services/EventBus';
+import { EventKey, globalEvents } from '@/services/EventBus';
 
 import BattleMonster from '@/controllers/objects/BattleMonster';
 import BattleMonsterView from '@/view/objects/BattleMonster';
@@ -124,11 +124,11 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
   private attachMouseEvents() {
     this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
-      eventBus.emit(EventKey.hoverHex, evt);
+      globalEvents.emit(EventKey.hoverHex, evt);
     });
 
     this.canvas.addEventListener('click', async (evt: MouseEvent) => {
-      eventBus.emit(EventKey.clickHex, evt);
+      globalEvents.emit(EventKey.clickHex, evt);
     });
   }
 }

@@ -11,6 +11,8 @@ export enum EventKey {
   unitDefense = 'skipTurn',
 
   moveEnd = 'moveEnd',
+
+  nextTurn = 'nextTurn',
 }
 
 class EventBus {
@@ -36,9 +38,9 @@ class EventBus {
   }
 
   public emit(key: string, payload?: any) {
-    this.eventBus[key].forEach((handler) => handler(payload));
+    this.eventBus[key]?.forEach((handler) => handler(payload));
   }
 }
 
-export const eventBus = new EventBus();
+export const globalEvents = new EventBus();
 export default EventBus;

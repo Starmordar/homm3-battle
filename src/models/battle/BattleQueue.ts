@@ -1,6 +1,7 @@
 import BattleMonster from '@/controllers/objects/BattleMonster';
 import BattleHero from '@/controllers/objects/BattleHero';
 import Queue from '@/services/Queue';
+import { EventKey, globalEvents } from '@/services/EventBus';
 
 class BattleQueue {
   private readonly leftHero: BattleHero;
@@ -22,6 +23,7 @@ class BattleQueue {
 
   public startTurn(nextMonster: BattleMonster) {
     this.activeMonster = nextMonster;
+    globalEvents.emit(EventKey.nextTurn);
 
     if (!nextMonster.model.controllable) {
       // AI here
@@ -39,7 +41,9 @@ class BattleQueue {
   }
 
   public waitTurn() {
+    this.activeMonster.waitTurn();
     this.queue.enqueue(this.activeMonster);
+
     this.endTurn();
   }
 

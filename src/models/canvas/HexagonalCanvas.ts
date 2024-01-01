@@ -4,7 +4,7 @@ import Battle from '../battle/Battle';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
-import { EventKey, eventBus } from '@/services/EventBus';
+import { EventKey, globalEvents } from '@/services/EventBus';
 import { setCursorStyle } from '@/utils/common';
 import { mousePointFromEvent } from '@/utils/canvas';
 
@@ -65,7 +65,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private attachHoverEvent() {
-    eventBus.on(EventKey.hoverHex, (evt) => this.triggerHighlightHovered(evt));
+    globalEvents.on(EventKey.hoverHex, (evt) => this.triggerHighlightHovered(evt));
   }
 
   private triggerHighlightHovered(evt: MouseEvent) {
@@ -105,7 +105,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private attachClickEvent() {
-    eventBus.on(EventKey.clickHex, (evt) => this.triggerActionOnClick(evt));
+    globalEvents.on(EventKey.clickHex, (evt) => this.triggerActionOnClick(evt));
   }
 
   private triggerActionOnClick(evt: MouseEvent) {
@@ -154,7 +154,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private attachRefreshEvent() {
-    eventBus.on(EventKey.refreshCanvas, () => this.refreshGridView());
+    globalEvents.on(EventKey.nextTurn, () => this.refreshGridView());
   }
 }
 

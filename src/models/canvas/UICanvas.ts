@@ -7,11 +7,10 @@ import Stroke from '../../view/common/Stroke';
 
 import { SPRITE } from '../../constants/sprites';
 import { battlePanelHeight, summaryWidth } from '../../constants/ui';
-import BattleHero from '@/controllers/objects/BattleHero';
+import { EventKey, globalEvents } from '@/services/EventBus';
+import Battle from '../battle/Battle';
 
 export interface UICanvasOptions extends CanvasOptions {
-  heroes: Array<BattleHero>;
-
   backgroundSprite: string;
   battleWidth: number;
   battleHeight: number;
@@ -20,19 +19,21 @@ export interface UICanvasOptions extends CanvasOptions {
 class UICanvas extends Canvas<UICanvasOptions> {
   private readonly battleCanvasOffset: { x: number; y: number };
   private readonly spriteRepository: SpriteRepository;
+  private readonly battle: Battle;
 
-  constructor(spriteRepository: SpriteRepository, options: UICanvasOptions) {
+  constructor(spriteRepository: SpriteRepository, battle: Battle, options: UICanvasOptions) {
     super(options);
 
     this.spriteRepository = spriteRepository;
 
+    this.battle = battle;
     this.battleCanvasOffset = {
       x: (this.options.size.width - this.options.battleWidth) / 2,
       y: (this.options.size.height - this.options.battleHeight) / 2,
     };
   }
 
-  public display() {
+  public draw() {
     const patternSprite = this.spriteRepository.get(SPRITE.edge_pattern);
     this.createCanvasPattern(patternSprite);
 
@@ -42,6 +43,8 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
     this.drawBattleBackground();
     this.drawBattleControls();
+
+    globalEvents.on(EventKey.nextTurn, this.drawBattleControls.bind(this));
   }
 
   private drawBorders() {
@@ -80,23 +83,24 @@ class UICanvas extends Canvas<UICanvasOptions> {
   }
 
   private drawHeroPortraits() {
-    const { size, battleWidth, battleHeight, heroes } = this.options;
+    const { size, battleWidth, battleHeight } = this.options;
+    const [leftHero, rightHero] = this.battle.heroes;
 
     const battleOffset = 5;
 
-    const yourHero = new HeroSummary(this.spriteRepository, {
-      hero: heroes[0],
+    const leftHeroSummary = new HeroSummary(this.spriteRepository, {
+      hero: leftHero,
       x: (size.width - battleWidth) / 2 - summaryWidth - battleOffset,
       y: (size.height - battleHeight) / 2,
     });
-    yourHero.draw(this.ctx);
+    leftHeroSummary.draw(this.ctx);
 
-    const enemyHero = new HeroSummary(this.spriteRepository, {
-      hero: heroes[1],
+    const rightHeroSummary = new HeroSummary(this.spriteRepository, {
+      hero: rightHero,
       x: (size.width + battleWidth) / 2 + battleOffset,
       y: (size.height - battleHeight) / 2,
     });
-    enemyHero.draw(this.ctx);
+    rightHeroSummary.draw(this.ctx);
   }
 
   private drawBattleBackground() {
@@ -126,7 +130,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
     const { size, battleWidth, battleHeight } = this.options;
 
     const border = 2;
-    const battlePanel = new BattlePanel(this.spriteRepository, {
+    const battlePanel = new BattlePanel(this.spriteRepository, this.battle, {
       width: battleWidth - border,
       x: (size.width - battleWidth + border) / 2,
       y: (size.height + battleHeight) / 2 - battlePanelHeight,

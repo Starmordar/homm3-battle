@@ -3,7 +3,7 @@ import { type HeroOptions, heroesOptions, heroesClasses } from '@/constants/hero
 import { Creature, rightHeroArmy, leftHeroArmy } from '@/constants/units';
 import { Hexagon } from '../grid';
 import BattleQueue from './BattleQueue';
-import { EventKey, eventBus } from '@/services/EventBus';
+import { EventKey, globalEvents as globalEvents } from '@/services/EventBus';
 
 import BattleMonsterModel from '@/models/objects/BattleMonsterModel';
 import BattleMonster from '@/controllers/objects/BattleMonster';
@@ -72,9 +72,9 @@ class Battle {
   }
 
   private attachEvents() {
-    eventBus.on(EventKey.unitWait, () => {
+    globalEvents.on(EventKey.unitWait, () => {
       this.queue.waitTurn();
-      eventBus.emit(EventKey.refreshCanvas);
+      globalEvents.emit(EventKey.refreshCanvas);
     });
   }
 
