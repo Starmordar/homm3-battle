@@ -5,7 +5,7 @@ import Stroke from '@/view/common/Stroke';
 import { SPRITE } from '@/constants/sprites';
 import { SummaryConfig, defaultSummaryOptions } from '@/constants/ui';
 import type { Rect, Renderable } from '@/types';
-import BattleHero from '@/controllers/objects/BattleHero';
+import BattleHero from '@/controllers/BattleHero';
 
 interface HeroSummaryOptions extends Omit<Rect, 'width' | 'height'> {
   hero: BattleHero;

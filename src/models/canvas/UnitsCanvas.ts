@@ -7,9 +7,9 @@ import { type SpriteAnimation } from '../../constants/sprites';
 import { heroAnimationSize, heroesClasses } from '@/constants/hero';
 import { EventKey, globalEvents } from '@/services/EventBus';
 
-import BattleMonster from '@/controllers/objects/BattleMonster';
+import BattleMonster from '@/controllers/BattleMonster';
 import BattleMonsterView from '@/view/objects/BattleMonster';
-import BattleHero from '@/controllers/objects/BattleHero';
+import BattleHero from '@/controllers/BattleHero';
 
 export interface UnitsCanvasOptions extends CanvasOptions {
   heroes: Array<BattleHero>;

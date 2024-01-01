@@ -1,6 +1,6 @@
 import { Observer } from '@/services/Observer';
 import AnimatedSprite from '../sprites/AnimatedSprite';
-import BattleHero from '@/controllers/objects/BattleHero';
+import BattleHero from '@/controllers/BattleHero';
 
 class BattleHeroView implements Observer {
   private readonly controller: BattleHero;

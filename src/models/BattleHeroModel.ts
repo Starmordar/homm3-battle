@@ -1,5 +1,5 @@
 import { heroesOptions } from '@/constants/hero';
-import BattleMonster from '@/controllers/objects/BattleMonster';
+import BattleMonster from '@/controllers/BattleMonster';
 import Subject from '@/services/Observer';
 
 interface PrimarySkills {

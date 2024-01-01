@@ -1,4 +1,4 @@
-import BattleHeroModel from '@/models/objects/BattleHeroModel';
+import BattleHeroModel from '@/models/BattleHeroModel';
 
 class BattleHero {
   public readonly model: BattleHeroModel;

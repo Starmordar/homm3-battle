@@ -1,5 +1,6 @@
-import BattleMonster from '@/controllers/objects/BattleMonster';
-import BattleHero from '@/controllers/objects/BattleHero';
+import BattleMonster from '@/controllers/BattleMonster';
+import BattleHero from '@/controllers/BattleHero';
+
 import Queue from '@/services/Queue';
 import { EventKey, globalEvents } from '@/services/EventBus';
 
@@ -26,7 +27,7 @@ class BattleQueue {
     globalEvents.emit(EventKey.nextTurn);
 
     if (!nextMonster.model.controllable) {
-      // AI here
+      // TODO: AI here
       this.endTurn();
     }
   }

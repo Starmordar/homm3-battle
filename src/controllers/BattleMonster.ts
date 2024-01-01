@@ -1,14 +1,14 @@
 import { Hexagon } from '@/models/grid';
-import BattleMonsterModel from '../../models/objects/BattleMonsterModel';
-import EventBus from '../../services/EventBus';
+import BattleMonsterModel from '../models/BattleMonsterModel';
+import EventBus from '../services/EventBus';
 
 enum Event {
-  moveEnd = 'moveEnd',
+  endMoveAnimation = 'endMoveAnimation',
 }
 
 class BattleMonster {
-  public readonly model: BattleMonsterModel;
   private readonly events: EventBus;
+  public readonly model: BattleMonsterModel;
 
   constructor(model: BattleMonsterModel) {
     this.model = model;
@@ -20,7 +20,7 @@ class BattleMonster {
       this.model.setAnimationBreakpoints(path);
       this.model.notify();
 
-      this.events.on(Event.moveEnd, resolve);
+      this.events.on(Event.endMoveAnimation, resolve);
     });
   }
 
@@ -33,7 +33,7 @@ class BattleMonster {
     this.model.setAnimationBreakpoints(null);
     this.model.notify();
 
-    this.events.emit(Event.moveEnd);
+    this.events.emit(Event.endMoveAnimation);
   }
 
   waitTurn() {

@@ -1,7 +1,7 @@
 import { uiSprites, animatedSprites, type SpriteOptions } from '../constants/sprites';
 import Sprite from '../view/sprites/Sprite';
-import SpriteFactory from '../services/SpriteFactory';
-import SpriteRepository from '../services/SpriteRepository';
+import SpriteFactory from './SpriteFactory';
+import SpriteRepository from './SpriteRepository';
 
 class ResourceController {
   private readonly spriteRegistry: SpriteRepository;

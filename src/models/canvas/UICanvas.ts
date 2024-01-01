@@ -8,7 +8,7 @@ import Stroke from '../../view/common/Stroke';
 import { SPRITE } from '../../constants/sprites';
 import { battlePanelHeight, summaryWidth } from '../../constants/ui';
 import { EventKey, globalEvents } from '@/services/EventBus';
-import Battle from '../battle/Battle';
+import Battle from '@/controllers/Battle';
 
 export interface UICanvasOptions extends CanvasOptions {
   backgroundSprite: string;
@@ -20,6 +20,8 @@ class UICanvas extends Canvas<UICanvasOptions> {
   private readonly battleCanvasOffset: { x: number; y: number };
   private readonly spriteRepository: SpriteRepository;
   private readonly battle: Battle;
+
+  private battlePanel?: BattlePanel;
 
   constructor(spriteRepository: SpriteRepository, battle: Battle, options: UICanvasOptions) {
     super(options);
@@ -84,7 +86,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
   private drawHeroPortraits() {
     const { size, battleWidth, battleHeight } = this.options;
-    const [leftHero, rightHero] = this.battle.heroes;
+    const [leftHero, rightHero] = this.battle.model.heroes;
 
     const battleOffset = 5;
 
@@ -129,14 +131,16 @@ class UICanvas extends Canvas<UICanvasOptions> {
   private drawBattleControls() {
     const { size, battleWidth, battleHeight } = this.options;
 
+    if (this.battlePanel) this.battlePanel.clear(this.canvas);
+
     const border = 2;
-    const battlePanel = new BattlePanel(this.spriteRepository, this.battle, {
+    this.battlePanel = new BattlePanel(this.spriteRepository, this.battle, {
       width: battleWidth - border,
       x: (size.width - battleWidth + border) / 2,
       y: (size.height + battleHeight) / 2 - battlePanelHeight,
     });
 
-    battlePanel.draw(this.ctx, this.canvas);
+    this.battlePanel.draw(this.ctx, this.canvas);
   }
 }
 

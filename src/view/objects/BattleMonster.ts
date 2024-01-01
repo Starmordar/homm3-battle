@@ -1,4 +1,4 @@
-import BattleMonster from '@/controllers/objects/BattleMonster';
+import BattleMonster from '@/controllers/BattleMonster';
 
 import { Observer } from '@/services/Observer';
 import AnimatedSprite from '../sprites/AnimatedSprite';

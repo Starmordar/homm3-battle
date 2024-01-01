@@ -7,12 +7,12 @@ export enum EventKey {
 
   hitUnit = 'hitUnit',
   refreshCanvas = 'refreshCanvas',
-  unitWait = 'unitWait',
   unitDefense = 'skipTurn',
 
   moveEnd = 'moveEnd',
 
   nextTurn = 'nextTurn',
+  waitTurn = 'waitTurn',
 }
 
 class EventBus {

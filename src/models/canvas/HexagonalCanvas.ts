@@ -1,6 +1,7 @@
 import BattleGrid from '@/view/battle/BattleGrid';
+import Battle from '@/controllers/Battle';
+
 import BattleGraph from '../BattleGraph';
-import Battle from '../battle/Battle';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
@@ -35,7 +36,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private computeHexReachables() {
-    const { enemyUnitsPosition, activeUnit } = this.battle;
+    const { enemyUnitsPosition, activeUnit } = this.battle.model;
     const { position, data } = activeUnit.model;
 
     this.graph.computeHexReachables(position, enemyUnitsPosition, data.damage.speed);
@@ -45,8 +46,8 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.gridView.clear(this.ctx, this.canvas);
     this.gridView.draw(this.ctx);
 
-    if (!this.battle.animationPending) {
-      const { position } = this.battle.activeUnit.model;
+    if (!this.battle.model.animationPending) {
+      const { position } = this.battle.model.activeUnit.model;
       this.gridView.drawActiveHex(this.ctx, position);
     }
   }
@@ -113,7 +114,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     const hexUnderPoint = this.graph.hexUnderPoint(point);
 
     if (hexUnderPoint) {
-      const { position } = this.battle.activeUnit.model;
+      const { position } = this.battle.model.activeUnit.model;
       const cursorAngle = this.cursorAngle(hexUnderPoint, point);
 
       if (cursorAngle !== -1) {
@@ -125,30 +126,30 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     let lastHex = this.graph.reachableHexUnderPoint(point);
     if (!lastHex) return;
 
-    const { position } = this.battle.activeUnit.model;
+    const { position } = this.battle.model.activeUnit.model;
     const path = this.graph.getPath(position, lastHex);
 
     this.animate(path);
   }
 
   private async attackUnit(attacking: Hexagon, attacked: Hexagon, path: Array<Hexagon>) {
-    this.battle.animationPending = true;
+    this.battle.model.animationPending = true;
 
     this.refreshIdleGridView();
     await this.battle.attackUnit(attacking, attacked, path);
 
-    this.battle.animationPending = false;
+    this.battle.model.animationPending = false;
     this.computeHexReachables();
     this.refreshGridView();
   }
 
   private async animate(path: Array<Hexagon>) {
-    this.battle.animationPending = true;
+    this.battle.model.animationPending = true;
 
     this.refreshIdleGridView();
     await this.battle.moveActiveUnit(path);
 
-    this.battle.animationPending = false;
+    this.battle.model.animationPending = false;
     this.computeHexReachables();
     this.refreshGridView();
   }

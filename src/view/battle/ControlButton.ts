@@ -1,17 +1,18 @@
 import SpriteRepository from '@/services/SpriteRepository';
 import Stroke from '@/view/common/Stroke';
+import Battle from '@/controllers/Battle';
 
 import { globalEvents } from '@/services/EventBus';
 import { mousePosition, isMouseInsideRect } from '@/utils/canvas';
 
 import type { ControlButtonOptions } from '@/constants/ui';
 import type { Renderable } from '@/types';
-import Battle from '@/models/battle/Battle';
 
 class ControlButton implements Renderable {
   private readonly spriteRepository: SpriteRepository;
   private options: ControlButtonOptions;
 
+  private clickEffect?: (evt: MouseEvent) => void;
   private disabled: boolean;
 
   constructor(spriteRepository: SpriteRepository, battle: Battle, options: ControlButtonOptions) {
@@ -19,7 +20,6 @@ class ControlButton implements Renderable {
     this.options = options;
 
     this.disabled = this.options.disabled(battle);
-    console.log('this.disabled :>> ', this.disabled);
   }
 
   public draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
@@ -32,19 +32,24 @@ class ControlButton implements Renderable {
     this.attachButtonClickEvent(ctx, canvas);
   }
 
+  public clear(canvas: HTMLCanvasElement) {
+    if (typeof this.clickEffect === 'function') {
+      canvas.removeEventListener('click', this.clickEffect);
+    }
+  }
+
   private buttonSprite() {
-    console.log('buttonSprite,this.disabled :>> ', this.disabled);
     const { sprites } = this.options;
+    console.log('this.disabled :>> ', this.disabled);
     const sprite = this.disabled ? sprites.disabled : sprites.idle;
 
     return this.spriteRepository.get(sprite);
   }
 
   private attachButtonClickEvent(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
-    const handler = (evt: MouseEvent) => this.triggerControl(evt, ctx, canvas);
+    this.clickEffect = (evt: MouseEvent) => this.triggerControl(evt, ctx, canvas);
 
-    canvas.removeEventListener('click', handler);
-    canvas.addEventListener('click', handler);
+    canvas.addEventListener('click', this.clickEffect);
   }
 
   private triggerControl(
@@ -60,8 +65,6 @@ class ControlButton implements Renderable {
 
     evt.stopImmediatePropagation();
 
-    console.log('click event, this.disabled :>> ', this.disabled);
-    globalEvents.emit(this.options.event);
     this.drawClickAnimation(ctx);
   }
 
@@ -72,11 +75,11 @@ class ControlButton implements Renderable {
     sprite.drawFrame(ctx, 0, 0, x, y, width, height);
 
     setTimeout(() => {
-      console.log('setTimeout, this.disabled :>> ', this.disabled);
       const sprite = this.buttonSprite();
       sprite.drawFrame(ctx, 0, 0, x, y, width, height);
 
       this.strokeButton(ctx);
+      globalEvents.emit(this.options.event);
     }, 200);
   }
 

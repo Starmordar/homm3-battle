@@ -1,8 +1,8 @@
 import { EventKey } from '@/services/EventBus';
 import { SPRITE } from './sprites';
 import { Rect } from '@/types';
-import Battle from '@/models/battle/Battle';
 import { isWaitDisabled } from '@/utils/battle';
+import Battle from '@/controllers/Battle';
 
 interface BattleControlSprites {
   idle: string;
@@ -35,7 +35,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       disabled: SPRITE.settings_btn_disabled,
     },
     disabled: () => true,
-    event: EventKey.unitWait,
+    event: EventKey.waitTurn,
   },
   {
     ...defaultControlSettings,
@@ -48,7 +48,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       disabled: SPRITE.surrender_btn_disabled,
     },
     disabled: () => true,
-    event: EventKey.unitWait,
+    event: EventKey.waitTurn,
   },
   {
     ...defaultControlSettings,
@@ -61,7 +61,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       disabled: SPRITE.flee_btn_disabled,
     },
     disabled: () => true,
-    event: EventKey.unitWait,
+    event: EventKey.waitTurn,
   },
   {
     ...defaultControlSettings,
@@ -74,7 +74,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       disabled: SPRITE.magic_btn_disabled,
     },
     disabled: () => true,
-    event: EventKey.unitWait,
+    event: EventKey.waitTurn,
   },
 
   {
@@ -88,7 +88,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       disabled: SPRITE.shield_btn_disabled,
     },
     disabled: () => true,
-    event: EventKey.unitWait,
+    event: EventKey.waitTurn,
   },
   {
     ...defaultControlSettings,
@@ -101,7 +101,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       disabled: SPRITE.pass_btn_disabled,
     },
     disabled: isWaitDisabled,
-    event: EventKey.unitWait,
+    event: EventKey.waitTurn,
   },
   {
     ...defaultControlSettings,
@@ -114,7 +114,7 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
       disabled: SPRITE.auto_btn_disabled,
     },
     disabled: () => true,
-    event: EventKey.unitWait,
+    event: EventKey.waitTurn,
   },
 ];
 

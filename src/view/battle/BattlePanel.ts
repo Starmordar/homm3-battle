@@ -1,7 +1,7 @@
 import SpriteRepository from '@/services/SpriteRepository';
 import ControlButton from '@/view/battle/ControlButton';
 import ConsolePanel from '@/view/battle/ConsolePanel';
-import Battle from '@/models/battle/Battle';
+import Battle from '@/controllers/Battle';
 
 import { ControlButtonOptions, battleControlsOptions, battleConsoleOptions } from '@/constants/ui';
 import type { Rect, Renderable } from '@/types';
@@ -12,6 +12,8 @@ class BattlePanel implements Renderable {
   private readonly options: BattlePanelOptions;
   private readonly spriteRepository: SpriteRepository;
   private readonly battle: Battle;
+
+  private battleControls: Array<ControlButton> = [];
 
   constructor(spriteRepository: SpriteRepository, battle: Battle, options: BattlePanelOptions) {
     this.spriteRepository = spriteRepository;
@@ -25,9 +27,13 @@ class BattlePanel implements Renderable {
     this.drawConsolePanel(ctx);
   }
 
+  public clear(canvas: HTMLCanvasElement) {
+    this.battleControls.forEach((control) => control.clear(canvas));
+  }
+
   private drawControls(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
     const controlsOptions = battleControlsOptions(this.options.width);
-    controlsOptions.forEach((options) => this.drawControl(ctx, canvas, options));
+    this.battleControls = controlsOptions.map((options) => this.drawControl(ctx, canvas, options));
   }
 
   private drawControl(
@@ -42,6 +48,7 @@ class BattlePanel implements Renderable {
     });
 
     battleControl.draw(ctx, canvas);
+    return battleControl;
   }
 
   private drawConsolePanel(ctx: CanvasRenderingContext2D) {
