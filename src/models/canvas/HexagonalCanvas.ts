@@ -45,7 +45,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.gridView.clear(this.ctx, this.canvas);
     this.gridView.draw(this.ctx);
 
-    if (!this.battle.pending) {
+    if (!this.battle.animationPending) {
       const { position } = this.battle.activeUnit.model;
       this.gridView.drawActiveHex(this.ctx, position);
     }
@@ -132,23 +132,23 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private async attackUnit(attacking: Hexagon, attacked: Hexagon, path: Array<Hexagon>) {
-    this.battle.pending = true;
+    this.battle.animationPending = true;
 
     this.refreshIdleGridView();
     await this.battle.attackUnit(attacking, attacked, path);
 
-    this.battle.pending = false;
+    this.battle.animationPending = false;
     this.computeHexReachables();
     this.refreshGridView();
   }
 
   private async animate(path: Array<Hexagon>) {
-    this.battle.pending = true;
+    this.battle.animationPending = true;
 
     this.refreshIdleGridView();
     await this.battle.moveActiveUnit(path);
 
-    this.battle.pending = false;
+    this.battle.animationPending = false;
     this.computeHexReachables();
     this.refreshGridView();
   }

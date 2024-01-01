@@ -12,6 +12,7 @@ import Battle from './models/battle/Battle';
 
 import { SPRITE } from './constants/sprites';
 import { gridLayout, hexObstacles } from './constants/hex';
+import { BATTLE_SIDE } from './constants/common';
 
 const spriteRepository = new SpriteRepository();
 const spriteFactory = new SpriteFactory();
@@ -22,7 +23,8 @@ await resources.load();
 const battleWidth = 950;
 const battleHeight = 650;
 
-const battle = new Battle();
+const side = BATTLE_SIDE.right;
+const battle = new Battle(side);
 
 const uiCanvasOptions = {
   classNames: ['ui-canvas', 'cursor-default'],

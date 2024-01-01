@@ -1,6 +1,6 @@
 import { randomValueOf } from '@/utils/common';
 import { type HeroOptions, heroesOptions, heroesClasses } from '@/constants/hero';
-import { Creature, enemyArmy, heroArmy } from '@/constants/units';
+import { Creature, rightHeroArmy, leftHeroArmy } from '@/constants/units';
 import { Hexagon } from '../grid';
 import BattleQueue from './BattleQueue';
 import { EventKey, eventBus } from '@/services/EventBus';
@@ -10,34 +10,41 @@ import BattleMonster from '@/controllers/objects/BattleMonster';
 
 import BattleHero from '@/controllers/objects/BattleHero';
 import BattleHeroModel from '@/models/objects/BattleHeroModel';
+import { BATTLE_SIDE } from '@/constants/common';
 
 type HeroGeneralDetails = HeroOptions & { name: string };
 
 class Battle {
   private readonly queue: BattleQueue;
+  private readonly battleSide: BATTLE_SIDE;
 
-  public pending: boolean;
+  public animationPending: boolean;
   public heroes: Array<BattleHero> = [];
 
-  constructor() {
+  constructor(battleSide: BATTLE_SIDE) {
+    this.battleSide = battleSide;
+    this.animationPending = false;
+
     this.initializeHeroes();
-    this.queue = new BattleQueue(this.heroes[0], this.heroes[1]);
-    this.pending = false;
+    const [leftHero, rightHero] = this.heroes;
+    this.queue = new BattleQueue(leftHero, rightHero);
 
     this.attachEvents();
   }
 
   private initializeHeroes() {
-    const ownMonsters = this.createBattleMonsters(heroArmy, true);
-    this.createRandomHero(ownMonsters);
+    const leftMonsters = this.createBattleMonsters(leftHeroArmy, BATTLE_SIDE.left);
+    this.createRandomHero(leftMonsters);
 
-    const aiMonsters = this.createBattleMonsters(enemyArmy, false);
-    this.createRandomHero(aiMonsters);
+    const rightMonsters = this.createBattleMonsters(rightHeroArmy, BATTLE_SIDE.right);
+    this.createRandomHero(rightMonsters);
   }
 
-  private createBattleMonsters(army: Array<Creature>, controllable: boolean): Array<BattleMonster> {
-    const monsters = army.map((unit) => {
-      const model = new BattleMonsterModel({ ...unit, controllable, quantity: 10 });
+  private createBattleMonsters(army: Array<Creature>, side: BATTLE_SIDE): Array<BattleMonster> {
+    const controllable = side === this.battleSide;
+
+    const monsters = army.map((monster) => {
+      const model = new BattleMonsterModel({ ...monster, controllable });
       return new BattleMonster(model);
     });
 
@@ -66,7 +73,7 @@ class Battle {
 
   private attachEvents() {
     eventBus.on(EventKey.unitWait, () => {
-      this.queue.wait();
+      this.queue.waitTurn();
       eventBus.emit(EventKey.refreshCanvas);
     });
   }
@@ -94,7 +101,10 @@ class Battle {
   }
 
   public isEnemyByPosition(hex: Hexagon) {
-    return this.heroes[1].model.army.some((unit) => Hexagon.isEqual(unit.model.position, hex));
+    const [leftHero, rightHero] = this.heroes;
+    const enemyHero = this.battleSide === BATTLE_SIDE.left ? rightHero : leftHero;
+
+    return enemyHero.model.army.some((unit) => Hexagon.isEqual(unit.model.position, hex));
   }
 
   get activeUnit() {
