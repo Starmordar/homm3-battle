@@ -23,7 +23,7 @@ await resources.load();
 const battleWidth = 950;
 const battleHeight = 650;
 
-const side = BATTLE_SIDE.right;
+const side = BATTLE_SIDE.left;
 const battle = new Battle(side);
 
 const uiCanvasOptions = {

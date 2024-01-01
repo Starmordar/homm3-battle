@@ -256,3 +256,19 @@ export const uiSprites = {
     height: 556,
   },
 };
+
+// TODO: Remove after tests
+for (const key in animatedSprites) {
+  const sprite = animatedSprites[key as keyof typeof animatedSprites];
+
+  for (const animationKey in sprite.animations) {
+    const typedKey = animationKey as keyof typeof sprite.animations;
+    const animation = sprite.animations[typedKey];
+
+    sprite.animations[typedKey] = slowFrame(animation);
+  }
+}
+
+function slowFrame(frames: Array<number>, factor = 8) {
+  return frames.flatMap((frame) => new Array(factor).fill(frame));
+}

@@ -71,7 +71,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   }
 
   private animationStep(timeStamp: DOMHighResTimeStamp) {
-    const delta = (timeStamp - this.animationStart) / 150;
+    const delta = (timeStamp - this.animationStart) / 20;
 
     if (delta < 1) {
       requestAnimationFrame(this.animationStep);

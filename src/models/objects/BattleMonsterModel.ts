@@ -76,7 +76,8 @@ class BattleMonsterModel extends Subject {
 
       const diff = { x: endPixel.x - startPixel.x, y: endPixel.y - startPixel.y };
 
-      const splitCount = 2;
+      // TODO: Update split count based on animation frames
+      const splitCount = 6;
       for (let splitIndex = 0; splitIndex < splitCount; splitIndex++) {
         animationPath.push({
           x: startPixel.x + (diff.x * splitIndex) / splitCount,
