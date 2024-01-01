@@ -1,18 +1,18 @@
 import { Hexagon } from '@/models/grid';
 import BattleMonsterModel from '../../models/objects/BattleMonsterModel';
-import EventBus from '../EventBus';
+import EventBus from '../../services/EventBus';
 
 enum Event {
   moveEnd = 'moveEnd',
 }
 
-class BattleMonster extends EventBus {
+class BattleMonster {
   public readonly model: BattleMonsterModel;
+  private readonly events: EventBus;
 
   constructor(model: BattleMonsterModel) {
-    super();
-
     this.model = model;
+    this.events = new EventBus();
   }
 
   public animateMove(path: Array<Hexagon>) {
@@ -20,7 +20,7 @@ class BattleMonster extends EventBus {
       this.model.setAnimationBreakpoints(path);
       this.model.notify();
 
-      this.on(Event.moveEnd, resolve);
+      this.events.on(Event.moveEnd, resolve);
     });
   }
 
@@ -33,7 +33,7 @@ class BattleMonster extends EventBus {
     this.model.setAnimationBreakpoints(null);
     this.model.notify();
 
-    this.emit(Event.moveEnd);
+    this.events.emit(Event.moveEnd);
   }
 
   updatePosition(newPosition: Hexagon) {

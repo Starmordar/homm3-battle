@@ -1,4 +1,4 @@
-import { EventKey } from '@/controllers/EventBus';
+import { EventKey } from '@/services/EventBus';
 import { SPRITE } from './sprites';
 import { Rect } from '@/types';
 

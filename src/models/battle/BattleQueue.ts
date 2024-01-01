@@ -1,46 +1,48 @@
 import BattleMonster from '@/controllers/objects/BattleMonster';
-import BattleHero from './BattleHero';
+import BattleHero from '@/controllers/objects/BattleHero';
+import Queue from '@/services/Queue';
 
 class BattleQueue {
   private readonly ownHero: BattleHero;
   private readonly aiHero: BattleHero;
 
-  private queue: Array<BattleMonster> = [];
-  public activeUnit!: BattleMonster;
+  private queue: Queue<BattleMonster>;
+  public activeMonster!: BattleMonster;
 
   constructor(ownHero: BattleHero, aiHero: BattleHero) {
     this.ownHero = ownHero;
     this.aiHero = aiHero;
 
-    this.queue = this.createQueue();
+    this.queue = new Queue();
+    this.roundStartEnqueue();
 
-    const nextUnit = this.peekNextUnit();
-    this.startTurn(nextUnit);
+    const nextMonster = this.deque();
+    this.startTurn(nextMonster);
   }
 
-  private createQueue(): Array<BattleMonster> {
-    const monsters = [...this.ownHero.army, ...this.aiHero.army];
+  private roundStartEnqueue() {
+    const monsters = [...this.ownHero.model.army, ...this.aiHero.model.army];
     monsters.sort((a, b) => a.model.data.damage.speed - b.model.data.damage.speed);
 
-    return monsters;
+    monsters.forEach((monster) => {
+      this.queue.enqueue(monster);
+    });
   }
 
-  private peekNextUnit(): BattleMonster {
-    const item = this.queue[this.queue.length - 1];
-    this.queue.pop();
-
-    return item;
+  private deque(): BattleMonster {
+    const monster = this.queue.deque() as BattleMonster;
+    return monster;
   }
 
   public wait() {
-    this.queue.unshift(this.activeUnit);
+    this.queue.enqueue(this.activeMonster);
     this.endTurn();
   }
 
-  public startTurn(nextUnit: BattleMonster) {
-    this.activeUnit = nextUnit;
+  public startTurn(nextMonster: BattleMonster) {
+    this.activeMonster = nextMonster;
 
-    if (!nextUnit.model.controllable) {
+    if (!nextMonster.model.controllable) {
       // AI here
       this.endTurn();
     }
@@ -48,11 +50,11 @@ class BattleQueue {
 
   public endTurn() {
     if (this.queue.length === 0) {
-      this.queue = this.createQueue();
+      this.roundStartEnqueue();
     }
 
-    const nextUnit = this.peekNextUnit();
-    this.startTurn(nextUnit);
+    const nextMonster = this.deque();
+    this.startTurn(nextMonster);
   }
 }
 

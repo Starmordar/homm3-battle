@@ -1,18 +1,18 @@
 import SpriteRepository from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
-import BattleHeroInfo from '../battle/BattleHeroInfo';
 import AnimatedSprite from '../../view/sprites/AnimatedSprite';
 
 import { type SpriteAnimation } from '../../constants/sprites';
 import { heroAnimationSize, heroesClasses } from '@/constants/hero';
-import { EventKey, eventBus } from '@/controllers/EventBus';
+import { EventKey, eventBus } from '@/services/EventBus';
 
 import BattleMonster from '@/controllers/objects/BattleMonster';
 import BattleMonsterView from '@/view/objects/BattleMonster';
+import BattleHero from '@/controllers/objects/BattleHero';
 
 export interface UnitsCanvasOptions extends CanvasOptions {
-  heroes: Array<BattleHeroInfo>;
+  heroes: Array<BattleHero>;
 }
 
 export interface AnimatedUnit {
@@ -46,14 +46,14 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     requestAnimationFrame(this.firstFrame.bind(this));
   }
 
-  private createHeroAnimation(hero: BattleHeroInfo, mirror: boolean) {
-    const settings = heroesClasses[hero.options.class];
+  private createHeroAnimation(hero: BattleHero, mirror: boolean) {
+    const settings = heroesClasses[hero.model.class];
     const spriteKey = mirror ? 'mirror' : 'normal';
 
     const sprite = this.spriteRepository.get<AnimatedSprite>(settings.animation.sprites[spriteKey]);
     this.heroSprites.push({ sprite, frameY: settings.animation.frame.y });
 
-    this.createCreaturesAnimation(hero.army);
+    this.createCreaturesAnimation(hero.model.army);
   }
 
   private createCreaturesAnimation(army: Array<BattleMonster>) {

@@ -1,16 +1,17 @@
-import BattleHero from './BattleHero';
-
 import { randomValueOf } from '@/utils/common';
 import { type HeroOptions, heroesOptions, heroesClasses } from '@/constants/hero';
 import { Creature, enemyArmy, heroArmy } from '@/constants/units';
 import { Hexagon } from '../grid';
 import BattleQueue from './BattleQueue';
-import { EventKey, eventBus } from '@/controllers/EventBus';
+import { EventKey, eventBus } from '@/services/EventBus';
 
 import BattleMonsterModel from '@/models/objects/BattleMonsterModel';
 import BattleMonster from '@/controllers/objects/BattleMonster';
 
-type RandomHeroOptions = HeroOptions & { name: string };
+import BattleHero from '@/controllers/objects/BattleHero';
+import BattleHeroModel from '@/models/objects/BattleHeroModel';
+
+type HeroGeneralDetails = HeroOptions & { name: string };
 
 class Battle {
   private readonly queue: BattleQueue;
@@ -44,25 +45,22 @@ class Battle {
   }
 
   private createRandomHero(monsters: Array<BattleMonster>) {
-    const heroOptions = randomValueOf<RandomHeroOptions>(heroesOptions);
-    const classOptions = heroesClasses[heroOptions.class];
-    const primarySkills = classOptions.primarySkills;
+    const generalDetails = randomValueOf<HeroGeneralDetails>(heroesOptions);
+    const classDetails = heroesClasses[generalDetails.class];
 
-    const hero = new BattleHero(
+    const model = new BattleHeroModel(
       {
-        name: heroOptions.name,
-        class: heroOptions.class,
+        name: generalDetails.name,
+        class: generalDetails.class,
 
-        primarySkills,
-        morale: classOptions.details.morale,
-        luck: classOptions.details.luck,
-
-        mana: primarySkills.knowledge * 10,
-        manaLimit: primarySkills.knowledge * 10,
+        primarySkills: classDetails.primarySkills,
+        morale: classDetails.details.morale,
+        luck: classDetails.details.luck,
       },
       monsters
     );
 
+    const hero = new BattleHero(model);
     this.heroes.push(hero);
   }
 
@@ -81,7 +79,7 @@ class Battle {
   public async attackUnit(attackingHex: Hexagon, attackedHex: Hexagon, path: Array<Hexagon>) {
     await this.activeUnit.animateMove(path);
 
-    const monsters = this.heroes.flatMap((hero) => hero.army);
+    const monsters = this.heroes.flatMap((hero) => hero.model.army);
 
     const attackingUnit = monsters.find(({ model }) =>
       Hexagon.isEqual(model.position, attackingHex)
@@ -96,15 +94,15 @@ class Battle {
   }
 
   public isEnemyByPosition(hex: Hexagon) {
-    return this.heroes[1].army.some((unit) => Hexagon.isEqual(unit.model.position, hex));
+    return this.heroes[1].model.army.some((unit) => Hexagon.isEqual(unit.model.position, hex));
   }
 
   get activeUnit() {
-    return this.queue.activeUnit;
+    return this.queue.activeMonster;
   }
 
   get enemyUnitsPosition() {
-    return this.heroes.flatMap((hero) => hero.army.map((unit) => unit.model.position));
+    return this.heroes.flatMap((hero) => hero.model.army.map((unit) => unit.model.position));
   }
 }
 

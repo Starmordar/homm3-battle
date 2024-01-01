@@ -1,7 +1,7 @@
 import SpriteRepository from '@/services/SpriteRepository';
 import Stroke from '@/view/common/Stroke';
 
-import { eventBus } from '@/controllers/EventBus';
+import { eventBus } from '@/services/EventBus';
 import { mousePosition, isMouseInsideRect } from '@/utils/canvas';
 
 import type { ControlButtonOptions } from '@/constants/ui';

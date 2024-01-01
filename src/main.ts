@@ -8,7 +8,6 @@ import UICanvas from './models/canvas/UICanvas';
 import UnitsCanvas from './models/canvas/UnitsCanvas';
 import HexagonalCanvas from './models/canvas/HexagonalCanvas';
 
-import BattleHeroInfo from './models/battle/BattleHeroInfo';
 import Battle from './models/battle/Battle';
 
 import { SPRITE } from './constants/sprites';
@@ -24,7 +23,6 @@ const battleWidth = 950;
 const battleHeight = 650;
 
 const battle = new Battle();
-const heroes = battle.heroes.map((hero) => new BattleHeroInfo(hero));
 
 const uiCanvasOptions = {
   classNames: ['ui-canvas', 'cursor-default'],
@@ -33,7 +31,7 @@ const uiCanvasOptions = {
   battleHeight,
   battleWidth,
   backgroundSprite: SPRITE.battle_bg_01,
-  heroes,
+  heroes: battle.heroes,
 };
 
 const uiCanvas = new UICanvas(spriteRepository, uiCanvasOptions);
@@ -51,7 +49,7 @@ hexagonCanvas.draw();
 const unitsCanvasOptions = {
   classNames: ['units-canvas'],
   size: { width: battleWidth, height: battleHeight - 90 },
-  heroes,
+  heroes: battle.heroes,
 };
 
 const unitsCanvas = new UnitsCanvas(spriteRepository, unitsCanvasOptions);

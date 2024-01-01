@@ -2,15 +2,15 @@ import SpriteRepository from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import BattlePanel from '../../view/battle/BattlePanel';
-import BattleHeroInfo from '../battle/BattleHeroInfo';
 import HeroSummary from '../../view/battle/HeroSummary';
 import Stroke from '../../view/common/Stroke';
 
 import { SPRITE } from '../../constants/sprites';
 import { battlePanelHeight, summaryWidth } from '../../constants/ui';
+import BattleHero from '@/controllers/objects/BattleHero';
 
 export interface UICanvasOptions extends CanvasOptions {
-  heroes: Array<BattleHeroInfo>;
+  heroes: Array<BattleHero>;
 
   backgroundSprite: string;
   battleWidth: number;

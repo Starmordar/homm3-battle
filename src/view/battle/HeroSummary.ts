@@ -1,20 +1,20 @@
 import SpriteRepository from '@/services/SpriteRepository';
 import Panel from '@/view/common/Panel';
 import Stroke from '@/view/common/Stroke';
-import BattleHeroInfo from '../../models/battle/BattleHeroInfo';
 
 import { SPRITE } from '@/constants/sprites';
 import { SummaryConfig, defaultSummaryOptions } from '@/constants/ui';
 import type { Rect, Renderable } from '@/types';
+import BattleHero from '@/controllers/objects/BattleHero';
 
 interface HeroSummaryOptions extends Omit<Rect, 'width' | 'height'> {
-  hero: BattleHeroInfo;
+  hero: BattleHero;
 }
 
 class HeroSummary implements Renderable {
   private readonly spriteRepository: SpriteRepository;
   private readonly options: HeroSummaryOptions;
-  private readonly heroInfo: BattleHeroInfo;
+  private readonly heroInfo: BattleHero;
 
   constructor(spriteRepository: SpriteRepository, options: HeroSummaryOptions) {
     this.spriteRepository = spriteRepository;
@@ -30,7 +30,7 @@ class HeroSummary implements Renderable {
 
   private drawAvatar(ctx: CanvasRenderingContext2D) {
     const { avatar } = defaultSummaryOptions;
-    const [frameX, frameY] = this.heroInfo.options.sprite;
+    const [frameX, frameY] = this.heroInfo.model.options.sprite;
 
     const portraitSprite = this.spriteRepository.get(SPRITE.hero_avatar_lg);
     portraitSprite.drawFrame(
@@ -94,7 +94,7 @@ class HeroSummary implements Renderable {
   private drawStatisticPanelText(ctx: CanvasRenderingContext2D) {
     const { text, statistic } = defaultSummaryOptions;
     const { top, left, right } = this.textOffset(statistic);
-    const { attack, defense, spellPower, knowledge } = this.heroInfo.primarySkills;
+    const { attack, defense, spellPower, knowledge } = this.heroInfo.model.primarySkills;
 
     ctx.textAlign = 'start';
     ctx.fillText('Att:', left, top + text.lineHeight);
@@ -112,7 +112,7 @@ class HeroSummary implements Renderable {
   private drawMoralePanelText(ctx: CanvasRenderingContext2D) {
     const { text, morale: moraleConfig } = defaultSummaryOptions;
     const { top, left, right } = this.textOffset(moraleConfig);
-    const { morale, luck } = this.heroInfo;
+    const { morale, luck } = this.heroInfo.model;
 
     ctx.textAlign = 'start';
     ctx.fillText('Morale:', left, top + text.lineHeight);
@@ -126,11 +126,11 @@ class HeroSummary implements Renderable {
   private drawManaPanelText(ctx: CanvasRenderingContext2D) {
     const { text, mana: manaConfig } = defaultSummaryOptions;
     const { top, middle } = this.textOffset(manaConfig);
-    const { mana } = this.heroInfo;
+    const { mana, manaLimit } = this.heroInfo.model;
 
     ctx.textAlign = 'center';
     ctx.fillText('Spell Points', middle, top + text.lineHeight);
-    ctx.fillText(`${mana.mana}/${mana.manaLimit}`, middle, top + text.lineHeight * 2);
+    ctx.fillText(`${mana}/${manaLimit}`, middle, top + text.lineHeight * 2);
   }
 }
 

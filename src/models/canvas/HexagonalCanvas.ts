@@ -4,7 +4,7 @@ import Battle from '../battle/Battle';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import { Point, Hexagon, Layout } from '../grid';
-import { EventKey, eventBus } from '@/controllers/EventBus';
+import { EventKey, eventBus } from '@/services/EventBus';
 import { setCursorStyle } from '@/utils/common';
 import { mousePointFromEvent } from '@/utils/canvas';
 
