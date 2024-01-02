@@ -22,7 +22,7 @@ class Battle {
   }
 
   public async moveActiveUnit(path: Array<Hexagon>): Promise<void> {
-    await this.model.activeUnit.animateMove(path);
+    if (path.length > 1) await this.model.activeUnit.animateMove(path);
     this.model.queue.endTurn();
   }
 
@@ -32,7 +32,8 @@ class Battle {
     path: Array<Hexagon>,
     angle: number
   ) {
-    await this.model.activeUnit.animateMove(path);
+    // TODO: Fix
+    if (path.length > 1) await this.model.activeUnit.animateMove(path);
 
     const monsters = this.model.heroes.flatMap((hero) => hero.model.aliveMonsters);
     const attacking = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackingHex));

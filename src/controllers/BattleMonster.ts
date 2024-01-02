@@ -79,6 +79,10 @@ class BattleMonster {
     this.model.hasResponse = false;
     this.model.notify();
   }
+
+  resetBeforeRound() {
+    this.model.hasResponse = true;
+  }
 }
 
 export default BattleMonster;

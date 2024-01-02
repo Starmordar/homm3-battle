@@ -49,7 +49,9 @@ class BattleQueue {
   }
 
   private roundStartEnqueue() {
+    // TODO: Reset monster (hasResponse) before round start
     const monsters = [...this.leftHero.model.aliveMonsters, ...this.rightHero.model.aliveMonsters];
+    monsters.forEach((monster) => monster.resetBeforeRound());
     monsters.sort((a, b) => a.model.data.damage.speed - b.model.data.damage.speed);
 
     monsters.forEach((monster) => {
