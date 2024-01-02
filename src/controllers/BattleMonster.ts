@@ -67,6 +67,11 @@ class BattleMonster {
     this.model.quantity = this.model.quantity - hitBy;
     this.model.notify();
   }
+
+  attackEnemy() {
+    this.model.hasResponse = false;
+    this.model.notify();
+  }
 }
 
 export default BattleMonster;

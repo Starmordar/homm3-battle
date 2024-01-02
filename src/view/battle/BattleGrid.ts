@@ -31,7 +31,7 @@ class BattleGrid implements Renderable {
     const corners = this.layout.hexToCorners(hex);
     this.buildHexagonPath(ctx, corners);
 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
     ctx.fill();
   }
 

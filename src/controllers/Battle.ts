@@ -49,10 +49,14 @@ class Battle {
     attacked.getHit(2);
 
     await attacked.animateStep(MONSTER_SPRITES.getHit);
-    await attacked.animateStep(attackAnimationByAngle({ angle, response: true }));
 
-    attacking.getHit(2);
+    if (!attacked.model.hasResponse) return;
+
+    await attacked.animateStep(attackAnimationByAngle({ angle, response: true }));
+    attacked.attackEnemy();
+
     await attacking.animateStep(MONSTER_SPRITES.getHit);
+    attacking.getHit(2);
   }
 
   public isEnemyByPosition(hex: Hexagon) {

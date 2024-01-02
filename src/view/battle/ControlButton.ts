@@ -40,7 +40,6 @@ class ControlButton implements Renderable {
 
   private buttonSprite() {
     const { sprites } = this.options;
-    console.log('this.disabled :>> ', this.disabled);
     const sprite = this.disabled ? sprites.disabled : sprites.idle;
 
     return this.spriteRepository.get(sprite);
