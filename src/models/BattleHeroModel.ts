@@ -50,6 +50,10 @@ class BattleHeroModel extends Subject {
   get options() {
     return heroesOptions[this.name];
   }
+
+  get aliveMonsters() {
+    return this.army.filter(({ model }) => !model.isDead);
+  }
 }
 
 export default BattleHeroModel;

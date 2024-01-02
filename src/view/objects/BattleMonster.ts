@@ -22,8 +22,9 @@ class BattleMonsterView implements Observer {
   }
 
   public draw() {
-    const { animationPath, activeAnimation } = this.controller.model;
+    const { animationPath, activeAnimation, isDead } = this.controller.model;
 
+    if (isDead) return this.drawDeadSprite();
     if (activeAnimation) return this.drawActiveAnimation();
 
     if (animationPath === null) this.drawStandingSprite();
@@ -91,21 +92,33 @@ class BattleMonsterView implements Observer {
     const { animation, activeAnimation, position } = this.controller.model;
     const { width, height, offsetY } = animation.size;
 
+    if (this.sprite.currentAnimation !== activeAnimation) {
+      this.sprite.setAnimation(activeAnimation as MONSTER_SPRITES);
+    }
     if (this.sprite.isLastFrame) return this.endActiveAnimation();
 
     const pixel = gridLayout.hexToPixel(position);
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 
-    if (this.sprite.currentAnimation !== activeAnimation) {
-      this.sprite.setAnimation(activeAnimation as MONSTER_SPRITES);
-    }
     this.sprite.drawFrame(this.ctx, x, y, width, height);
     this.sprite.setNextFrame();
   }
 
   private endActiveAnimation() {
     this.controller.endStepAnimation();
+  }
+
+  private drawDeadSprite() {
+    const { animation, position } = this.controller.model;
+    const { width, height, offsetY } = animation.size;
+
+    const pixel = gridLayout.hexToPixel(position);
+    const x = pixel.x - width / 2;
+    const y = pixel.y - height + offsetY;
+
+    this.sprite.setAnimation(MONSTER_SPRITES.dead);
+    this.sprite.drawFrame(this.ctx, x, y, width, height);
   }
 
   update() {

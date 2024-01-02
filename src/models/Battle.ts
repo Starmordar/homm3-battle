@@ -75,7 +75,9 @@ class BattleModel extends Subject {
   }
 
   get enemyUnitsPosition() {
-    return this.heroes.flatMap((hero) => hero.model.army.map((unit) => unit.model.position));
+    return this.heroes.flatMap((hero) =>
+      hero.model.aliveMonsters.map((unit) => unit.model.position)
+    );
   }
 }
 

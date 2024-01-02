@@ -35,6 +35,7 @@ class BattleMonsterModel extends Subject {
 
   hadTurn: boolean;
   hasResponse: boolean;
+  isDead: boolean;
 
   constructor(options: Options) {
     super();
@@ -54,6 +55,7 @@ class BattleMonsterModel extends Subject {
 
     this.hadTurn = false;
     this.hasResponse = true;
+    this.isDead = false;
   }
 
   private monsterData(monsterId: number): Monster {

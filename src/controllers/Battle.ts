@@ -4,8 +4,7 @@ import { BATTLE_SIDE } from '@/constants/common';
 import BattleModel from '@/models/Battle';
 import { Hexagon } from '@/models/grid';
 import BattleMonster from './BattleMonster';
-import { MONSTER_SPRITES } from '@/constants/textures';
-import { attackAnimationByAngle } from '@/utils/textures';
+import { attackAnimationByAngle, attackedAnimation } from '@/utils/textures';
 
 class Battle {
   public readonly model: BattleModel;
@@ -35,7 +34,7 @@ class Battle {
   ) {
     await this.model.activeUnit.animateMove(path);
 
-    const monsters = this.model.heroes.flatMap((hero) => hero.model.army);
+    const monsters = this.model.heroes.flatMap((hero) => hero.model.aliveMonsters);
     const attacking = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackingHex));
     const attacked = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackedHex));
     if (!attacking || !attacked) return;
@@ -46,16 +45,15 @@ class Battle {
 
   private async hitEnemyMonster(attacking: BattleMonster, attacked: BattleMonster, angle: number) {
     await attacking.animateStep(attackAnimationByAngle({ angle, response: false }));
+
+    await attacked.animateStep(attackedAnimation(attacked, 2));
     attacked.getHit(2);
 
-    await attacked.animateStep(MONSTER_SPRITES.getHit);
-
     if (!attacked.model.hasResponse) return;
-
     await attacked.animateStep(attackAnimationByAngle({ angle, response: true }));
     attacked.attackEnemy();
 
-    await attacking.animateStep(MONSTER_SPRITES.getHit);
+    await attacking.animateStep(attackedAnimation(attacking, 2));
     attacking.getHit(2);
   }
 
@@ -63,7 +61,7 @@ class Battle {
     const [leftHero, rightHero] = this.model.heroes;
     const enemyHero = this.model.battleSide === BATTLE_SIDE.left ? rightHero : leftHero;
 
-    return enemyHero.model.army.some((unit) => Hexagon.isEqual(unit.model.position, hex));
+    return enemyHero.model.aliveMonsters.some((unit) => Hexagon.isEqual(unit.model.position, hex));
   }
 
   get monsters() {

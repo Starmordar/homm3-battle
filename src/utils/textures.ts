@@ -1,4 +1,5 @@
 import { MONSTER_SPRITES, TEXTURES } from '@/constants/textures';
+import BattleMonster from '@/controllers/BattleMonster';
 import type { Texture, TextureMap } from '@/types';
 
 export function slowFrames(textureMap: TextureMap, factor: number): TextureMap {
@@ -56,4 +57,11 @@ export function attackAnimationByAngle({ angle, response }: { angle: number; res
   if (downAngles.includes(angle)) return MONSTER_SPRITES.attackDown;
 
   return MONSTER_SPRITES.attackUp;
+}
+
+export function attackedAnimation(attacked: BattleMonster, hitBy: number) {
+  if (attacked.isDeadAfterHit(hitBy)) return MONSTER_SPRITES.death;
+
+  // TODO: Shield animation
+  return MONSTER_SPRITES.getHit;
 }

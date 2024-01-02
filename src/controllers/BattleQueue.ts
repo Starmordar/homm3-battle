@@ -18,7 +18,7 @@ class BattleQueue {
     this.queue = new Queue();
     this.roundStartEnqueue();
 
-    const nextMonster = this.deque();
+    const nextMonster = this.nextAlive();
     this.startTurn(nextMonster);
   }
 
@@ -37,7 +37,7 @@ class BattleQueue {
       this.roundStartEnqueue();
     }
 
-    const nextMonster = this.deque();
+    const nextMonster = this.nextAlive();
     this.startTurn(nextMonster);
   }
 
@@ -49,7 +49,7 @@ class BattleQueue {
   }
 
   private roundStartEnqueue() {
-    const monsters = [...this.leftHero.model.army, ...this.rightHero.model.army];
+    const monsters = [...this.leftHero.model.aliveMonsters, ...this.rightHero.model.aliveMonsters];
     monsters.sort((a, b) => a.model.data.damage.speed - b.model.data.damage.speed);
 
     monsters.forEach((monster) => {
@@ -59,6 +59,17 @@ class BattleQueue {
 
   private deque(): BattleMonster {
     const monster = this.queue.deque() as BattleMonster;
+    return monster;
+  }
+
+  private nextAlive(): BattleMonster {
+    let monster = this.deque() as BattleMonster;
+    while (this.queue.length > 0) {
+      if (monster.model.isDead) monster = this.deque() as BattleMonster;
+      else return monster;
+    }
+
+    if (!monster) throw Error('All monsters are dead');
     return monster;
   }
 }

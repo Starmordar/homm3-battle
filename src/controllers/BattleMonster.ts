@@ -63,8 +63,15 @@ class BattleMonster {
     this.model.notify();
   }
 
+  isDeadAfterHit(hitBy: number) {
+    return this.model.quantity - hitBy <= 0;
+  }
+
   getHit(hitBy: number) {
-    this.model.quantity = this.model.quantity - hitBy;
+    const quantityAfterHit = Math.max(0, this.model.quantity - hitBy);
+    if (quantityAfterHit <= 0) this.model.isDead = true;
+
+    this.model.quantity = quantityAfterHit;
     this.model.notify();
   }
 

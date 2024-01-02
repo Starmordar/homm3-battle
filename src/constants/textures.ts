@@ -17,6 +17,7 @@ export enum MONSTER_SPRITES {
   getHit = 'getHit',
   defend = 'defend',
   death = 'death',
+  dead = 'dead',
 }
 
 const frames: Partial<TextureFrames> = {
@@ -31,6 +32,7 @@ const frames: Partial<TextureFrames> = {
     [MONSTER_SPRITES.getHit]: { y: 4, x: [0, 1, 2, 3, 4, 5] },
     [MONSTER_SPRITES.defend]: { y: 5, x: [0, 1, 2, 3] },
     [MONSTER_SPRITES.death]: { y: 3, x: [0, 1, 2, 3, 4, 5, 6, 7] },
+    [MONSTER_SPRITES.dead]: { y: 3, x: [7] },
   },
 };
 
