@@ -115,7 +115,12 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
 
       if (cursorAngle !== -1) {
         const path = this.graph.getPath(position, hexUnderPoint.neighbor(cursorAngle));
-        return this.attackUnit(hexUnderPoint.neighbor(cursorAngle), hexUnderPoint, path);
+        return this.attackUnit(
+          hexUnderPoint.neighbor(cursorAngle),
+          hexUnderPoint,
+          path,
+          cursorAngle
+        );
       }
     }
 
@@ -128,11 +133,16 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.animate(path);
   }
 
-  private async attackUnit(attacking: Hexagon, attacked: Hexagon, path: Array<Hexagon>) {
+  private async attackUnit(
+    attacking: Hexagon,
+    attacked: Hexagon,
+    path: Array<Hexagon>,
+    cursorAngle: number
+  ) {
     this.battle.model.animationPending = true;
 
     this.refreshIdleGridView();
-    await this.battle.attackUnit(attacking, attacked, path);
+    await this.battle.attackUnit(attacking, attacked, path, cursorAngle);
 
     this.battle.model.animationPending = false;
     this.computeHexReachables();

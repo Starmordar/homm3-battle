@@ -5,6 +5,7 @@ import BattleModel from '@/models/Battle';
 import { Hexagon } from '@/models/grid';
 import BattleMonster from './BattleMonster';
 import { MONSTER_SPRITES } from '@/constants/textures';
+import { attackAnimationByAngle } from '@/utils/textures';
 
 class Battle {
   public readonly model: BattleModel;
@@ -26,7 +27,12 @@ class Battle {
     this.model.queue.endTurn();
   }
 
-  public async attackUnit(attackingHex: Hexagon, attackedHex: Hexagon, path: Array<Hexagon>) {
+  public async attackUnit(
+    attackingHex: Hexagon,
+    attackedHex: Hexagon,
+    path: Array<Hexagon>,
+    angle: number
+  ) {
     await this.model.activeUnit.animateMove(path);
 
     const monsters = this.model.heroes.flatMap((hero) => hero.model.army);
@@ -34,16 +40,16 @@ class Battle {
     const attacked = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackedHex));
     if (!attacking || !attacked) return;
 
-    await this.hitEnemyMonster(attacking, attacked);
+    await this.hitEnemyMonster(attacking, attacked, angle);
     this.model.queue.endTurn();
   }
 
-  private async hitEnemyMonster(attacking: BattleMonster, attacked: BattleMonster) {
-    await attacking.animateStep(MONSTER_SPRITES.attackStraight);
+  private async hitEnemyMonster(attacking: BattleMonster, attacked: BattleMonster, angle: number) {
+    await attacking.animateStep(attackAnimationByAngle({ angle, response: false }));
     attacked.getHit(2);
 
     await attacked.animateStep(MONSTER_SPRITES.getHit);
-    await attacked.animateStep(MONSTER_SPRITES.attackStraight);
+    await attacked.animateStep(attackAnimationByAngle({ angle, response: true }));
 
     attacking.getHit(2);
     await attacking.animateStep(MONSTER_SPRITES.getHit);

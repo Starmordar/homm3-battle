@@ -1,4 +1,4 @@
-import type { MONSTER_SPRITES, TEXTURES } from '@/constants/textures';
+import { MONSTER_SPRITES, TEXTURES } from '@/constants/textures';
 import type { Texture, TextureMap } from '@/types';
 
 export function slowFrames(textureMap: TextureMap, factor: number): TextureMap {
@@ -47,4 +47,13 @@ function maxFrame(frames: Texture['textures']): number {
   }
 
   return max;
+}
+
+export function attackAnimationByAngle({ angle, response }: { angle: number; response: boolean }) {
+  if ([0, 3].includes(angle)) return MONSTER_SPRITES.attackStraight;
+
+  const downAngles = response ? [4, 5] : [1, 2];
+  if (downAngles.includes(angle)) return MONSTER_SPRITES.attackDown;
+
+  return MONSTER_SPRITES.attackUp;
 }
