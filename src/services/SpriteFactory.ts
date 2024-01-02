@@ -4,7 +4,7 @@ import UISprite from '@/view/sprites/UISprite';
 import MonsterSprite from '@/view/sprites/MonsterSprite';
 
 import type { SpriteOptions, AnimatedSpriteOptions } from '@/constants/sprites';
-import type { MonsterTexture } from '@/types';
+import type { Texture } from '@/types';
 
 class SpriteFactory {
   constructor() {}
@@ -13,8 +13,8 @@ class SpriteFactory {
     if (options.animations) {
       return new AnimatedSprite(options as AnimatedSpriteOptions);
     }
-    if (options.sprites) {
-      return new MonsterSprite(options as MonsterTexture);
+    if (options.textures) {
+      return new MonsterSprite(options as Texture);
     }
 
     return new UISprite(options);

@@ -6,7 +6,7 @@ export interface SpriteOptions {
   height: number;
 
   animations?: SpriteAnimation;
-  sprites?: Record<MONSTER_SPRITES, { y: number; x: Array<number> }>;
+  textures?: Record<MONSTER_SPRITES, { y: number; x: Array<number> }>;
 }
 
 export interface SpriteAnimation {
@@ -60,9 +60,6 @@ export enum SPRITE {
 
   heroes_animation = 'heroes_animation',
   heroes_animation_mirror = 'heroes_animation_mirror',
-
-  heroes_undead = 'heroes_undead',
-  heroes_undead_mirror = 'heroes_undead_mirror',
 
   wraith = 'wraith',
   wraith_mirror = 'wraith_mirror',

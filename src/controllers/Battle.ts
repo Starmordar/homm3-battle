@@ -18,8 +18,6 @@ class Battle {
   private attachEvents() {
     globalEvents.on(EventKey.waitTurn, () => {
       this.model.queue.waitTurn();
-      //  TODO: Replace with "next turn" event
-      globalEvents.emit(EventKey.refreshCanvas);
     });
   }
 

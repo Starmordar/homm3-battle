@@ -105,8 +105,6 @@ class BattleMonsterView implements Observer {
   }
 
   private endActiveAnimation() {
-    // TODO: Change animation to active
-    // this.sprite.nextAnimation = MONSTER_ANIMATION.idle;
     this.controller.endStepAnimation();
   }
 

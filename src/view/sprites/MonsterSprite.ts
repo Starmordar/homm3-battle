@@ -1,6 +1,6 @@
 import Sprite from '@/view/sprites/Sprite';
 import { MONSTER_SPRITES } from '@/constants/textures';
-import { MonsterTexture } from '@/types';
+import { Texture } from '@/types';
 
 class MonsterSprite extends Sprite {
   currentAnimation: MONSTER_SPRITES;
@@ -9,12 +9,12 @@ class MonsterSprite extends Sprite {
   private nextAnimation: MONSTER_SPRITES;
   private animationSteps: { y: number; x: Array<number> };
 
-  constructor(options: MonsterTexture) {
+  constructor(options: Texture) {
     super(options);
 
     this.nextAnimation = MONSTER_SPRITES.idle;
     this.currentAnimation = MONSTER_SPRITES.idle;
-    this.animationSteps = this.options.sprites![this.currentAnimation];
+    this.animationSteps = this.options.textures![this.currentAnimation];
   }
 
   get isLastFrame() {
@@ -30,22 +30,22 @@ class MonsterSprite extends Sprite {
       this.currentAnimation = this.nextAnimation;
       this.nextAnimation = MONSTER_SPRITES.idle;
 
-      this.animationSteps = this.options.sprites![this.currentAnimation];
+      this.animationSteps = this.options.textures![this.currentAnimation];
     }
   }
 
   setAnimation(sprite: MONSTER_SPRITES) {
-    if (!this.options.sprites?.[sprite]) return;
+    if (!this.options.textures?.[sprite]) return;
 
     this.currentFrame = 0;
     this.currentAnimation = sprite;
     this.nextAnimation = MONSTER_SPRITES.idle;
 
-    this.animationSteps = this.options.sprites![this.currentAnimation];
+    this.animationSteps = this.options.textures![this.currentAnimation];
   }
 
   setNextAnimation(sprite: MONSTER_SPRITES) {
-    if (!this.options.sprites?.[sprite]) return;
+    if (!this.options.textures?.[sprite]) return;
     this.nextAnimation = sprite;
   }
 

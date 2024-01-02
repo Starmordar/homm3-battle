@@ -2,14 +2,8 @@ type EventHandler = (payload: any) => void;
 type Bus = Record<string, EventHandler[]>;
 
 export enum EventKey {
-  hoverHex = 'hoverHex',
-  clickHex = 'clickHex',
-
-  hitUnit = 'hitUnit',
-  refreshCanvas = 'refreshCanvas',
-  unitDefense = 'skipTurn',
-
-  moveEnd = 'moveEnd',
+  hoverBattleground = 'hoverBattleground',
+  clickBattleground = 'clickBattleground',
 
   nextTurn = 'nextTurn',
   waitTurn = 'waitTurn',

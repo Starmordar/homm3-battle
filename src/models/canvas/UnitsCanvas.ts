@@ -124,12 +124,12 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   }
 
   private attachMouseEvents() {
-    this.canvas.addEventListener('mousemove', async (evt: MouseEvent) => {
-      globalEvents.emit(EventKey.hoverHex, evt);
+    this.canvas.addEventListener('mousemove', (evt: MouseEvent) => {
+      globalEvents.emit(EventKey.hoverBattleground, evt);
     });
 
-    this.canvas.addEventListener('click', async (evt: MouseEvent) => {
-      globalEvents.emit(EventKey.clickHex, evt);
+    this.canvas.addEventListener('click', (evt: MouseEvent) => {
+      globalEvents.emit(EventKey.clickBattleground, evt);
     });
   }
 }

@@ -1,5 +1,4 @@
-import { SPRITE } from '@/constants/sprites';
-import { MONSTER_SPRITES } from '@/constants/textures';
+import { MONSTER_SPRITES, TEXTURES } from '@/constants/textures';
 
 export interface Renderable {
   /**
@@ -18,12 +17,13 @@ export interface Rect {
   y: number;
 }
 
-export interface MonsterTexture {
+export interface Texture {
   url: string;
   width: number;
   height: number;
 
-  sprites: Record<MONSTER_SPRITES, { y: number; x: Array<number> }>;
+  textures: Record<MONSTER_SPRITES, { y: number; x: Array<number> }>;
 }
 
-export type MonsterTexturesMap = Partial<Record<SPRITE, MonsterTexture>>;
+export type TextureMap = Partial<Record<TEXTURES, Texture>>;
+export type TextureFrames = Record<TEXTURES, Texture['textures']>;

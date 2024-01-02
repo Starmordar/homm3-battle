@@ -60,13 +60,13 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 
   private attachEvents() {
-    this.attachHoverEvent();
-    this.attachClickEvent();
-    this.attachRefreshEvent();
-  }
+    globalEvents.on(EventKey.hoverBattleground, (evt) => this.triggerHighlightHovered(evt));
+    globalEvents.on(EventKey.clickBattleground, (evt) => this.triggerActionOnClick(evt));
 
-  private attachHoverEvent() {
-    globalEvents.on(EventKey.hoverHex, (evt) => this.triggerHighlightHovered(evt));
+    globalEvents.on(EventKey.nextTurn, () => {
+      this.computeHexReachables();
+      this.refreshGridView();
+    });
   }
 
   private triggerHighlightHovered(evt: MouseEvent) {
@@ -103,10 +103,6 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     if (!isEnemyHex) return -1;
 
     return this.graph.hexAngleUnderPoint(hex, point);
-  }
-
-  private attachClickEvent() {
-    globalEvents.on(EventKey.clickHex, (evt) => this.triggerActionOnClick(evt));
   }
 
   private triggerActionOnClick(evt: MouseEvent) {
@@ -152,10 +148,6 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
     this.battle.model.animationPending = false;
     this.computeHexReachables();
     this.refreshGridView();
-  }
-
-  private attachRefreshEvent() {
-    globalEvents.on(EventKey.nextTurn, () => this.refreshGridView());
   }
 }
 
