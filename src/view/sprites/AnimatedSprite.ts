@@ -20,6 +20,14 @@ class AnimatedSprite extends Sprite<AnimatedSpriteOptions> {
     return this._currentFrame;
   }
 
+  get currentAnimation() {
+    return this._currentAnimation;
+  }
+
+  get isLastFrame() {
+    return this._currentFrame === this._animationSteps.length - 1;
+  }
+
   set currentFrame(frame: number) {
     this._currentFrame = frame;
 

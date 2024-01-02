@@ -1,15 +1,19 @@
+import { MONSTER_SPRITES } from './textures';
+
 export interface SpriteOptions {
   url: string;
   width: number;
   height: number;
 
   animations?: SpriteAnimation;
+  sprites?: Record<MONSTER_SPRITES, { y: number; x: Array<number> }>;
 }
 
 export interface SpriteAnimation {
   idle: Array<number>;
   active?: Array<number>;
   attack?: Array<number>;
+  attackStraight?: Array<number>;
 }
 
 export interface AnimatedSpriteOptions extends SpriteOptions {
@@ -65,24 +69,6 @@ export enum SPRITE {
 }
 
 export const animatedSprites = {
-  [SPRITE.wraith]: {
-    url: '/src/assets/wraith/standing.png',
-    width: 62,
-    height: 106,
-    animations: {
-      idle: [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 3, 3, 2, 2, 1, 1],
-    },
-  },
-
-  [SPRITE.wraith_mirror]: {
-    url: '/src/assets/wraith/standing-mirror.png',
-    width: 62,
-    height: 106,
-    animations: {
-      idle: [4, 4, 3, 3, 2, 2, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3],
-    },
-  },
-
   [SPRITE.heroes_animation]: {
     url: '/src/assets/heroes/hero-sprites.png',
     width: 150,

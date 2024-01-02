@@ -1,18 +1,19 @@
 import BattleMonster from '@/controllers/BattleMonster';
+import MonsterSprite from '../sprites/MonsterSprite';
 
 import { Observer } from '@/services/Observer';
-import AnimatedSprite from '../sprites/AnimatedSprite';
 import { gridLayout } from '@/constants/hex';
 import { Point } from '@/models/grid';
+import { MONSTER_SPRITES } from '@/constants/textures';
 
 class BattleMonsterView implements Observer {
   private readonly controller: BattleMonster;
   private readonly ctx: CanvasRenderingContext2D;
-  public sprite: AnimatedSprite;
+  public sprite: MonsterSprite;
 
   private animationIndex: number = 0;
 
-  constructor(controller: BattleMonster, ctx: CanvasRenderingContext2D, sprite: AnimatedSprite) {
+  constructor(controller: BattleMonster, ctx: CanvasRenderingContext2D, sprite: MonsterSprite) {
     this.ctx = ctx;
     this.sprite = sprite;
 
@@ -21,7 +22,9 @@ class BattleMonsterView implements Observer {
   }
 
   public draw() {
-    const { animationPath } = this.controller.model;
+    const { animationPath, activeAnimation } = this.controller.model;
+
+    if (activeAnimation) return this.drawActiveAnimation();
 
     if (animationPath === null) this.drawStandingSprite();
     else this.drawMovableSprite(animationPath);
@@ -37,8 +40,8 @@ class BattleMonsterView implements Observer {
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 
-    this.sprite.drawFrame(this.ctx, 0, x, y, width, height);
-    this.sprite.currentFrame++;
+    this.sprite.drawFrame(this.ctx, x, y, width, height);
+    this.sprite.setNextFrame();
 
     this.animationIndex++;
   }
@@ -51,8 +54,8 @@ class BattleMonsterView implements Observer {
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 
-    this.sprite.drawFrame(this.ctx, 0, x, y, width, height);
-    this.sprite.currentFrame++;
+    this.sprite.drawFrame(this.ctx, x, y, width, height);
+    this.sprite.setNextFrame();
 
     this.drawQuantityLegend();
   }
@@ -82,6 +85,29 @@ class BattleMonsterView implements Observer {
   private endAnimation() {
     this.controller.endMoveAnimation();
     this.animationIndex = 0;
+  }
+
+  private drawActiveAnimation() {
+    const { animation, activeAnimation, position } = this.controller.model;
+    const { width, height, offsetY } = animation.size;
+
+    if (this.sprite.isLastFrame) return this.endActiveAnimation();
+
+    const pixel = gridLayout.hexToPixel(position);
+    const x = pixel.x - width / 2;
+    const y = pixel.y - height + offsetY;
+
+    if (this.sprite.currentAnimation !== activeAnimation) {
+      this.sprite.setAnimation(activeAnimation as MONSTER_SPRITES);
+    }
+    this.sprite.drawFrame(this.ctx, x, y, width, height);
+    this.sprite.setNextFrame();
+  }
+
+  private endActiveAnimation() {
+    // TODO: Change animation to active
+    // this.sprite.nextAnimation = MONSTER_ANIMATION.idle;
+    this.controller.endStepAnimation();
   }
 
   update() {

@@ -3,6 +3,8 @@ import { EventKey, globalEvents as globalEvents } from '@/services/EventBus';
 import { BATTLE_SIDE } from '@/constants/common';
 import BattleModel from '@/models/Battle';
 import { Hexagon } from '@/models/grid';
+import BattleMonster from './BattleMonster';
+import { MONSTER_SPRITES } from '@/constants/textures';
 
 class Battle {
   public readonly model: BattleModel;
@@ -30,17 +32,23 @@ class Battle {
     await this.model.activeUnit.animateMove(path);
 
     const monsters = this.model.heroes.flatMap((hero) => hero.model.army);
+    const attacking = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackingHex));
+    const attacked = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackedHex));
+    if (!attacking || !attacked) return;
 
-    const attackingUnit = monsters.find(({ model }) =>
-      Hexagon.isEqual(model.position, attackingHex)
-    );
-
-    const attackedUnit = monsters.find(({ model }) => Hexagon.isEqual(model.position, attackedHex));
-
-    attackedUnit?.getHit(2);
-    attackingUnit?.getHit(2);
-
+    await this.hitEnemyMonster(attacking, attacked);
     this.model.queue.endTurn();
+  }
+
+  private async hitEnemyMonster(attacking: BattleMonster, attacked: BattleMonster) {
+    await attacking.animateStep(MONSTER_SPRITES.attackStraight);
+    attacked.getHit(2);
+
+    await attacked.animateStep(MONSTER_SPRITES.getHit);
+    await attacked.animateStep(MONSTER_SPRITES.attackStraight);
+
+    attacking.getHit(2);
+    await attacking.animateStep(MONSTER_SPRITES.getHit);
   }
 
   public isEnemyByPosition(hex: Hexagon) {
@@ -48,6 +56,10 @@ class Battle {
     const enemyHero = this.model.battleSide === BATTLE_SIDE.left ? rightHero : leftHero;
 
     return enemyHero.model.army.some((unit) => Hexagon.isEqual(unit.model.position, hex));
+  }
+
+  get monsters() {
+    return this.model.heroes.flatMap((hero) => hero.model.army);
   }
 }
 

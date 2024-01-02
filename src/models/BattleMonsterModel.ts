@@ -1,10 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
 import { gridLayout } from '@/constants/hex';
 import { monsters, type Monster } from '@/constants/monsters';
 import { Hexagon, Point } from '@/models/grid';
 import Subject from '@/services/Observer';
+import { TEXTURES } from '@/constants/textures';
 
 interface Animation {
-  sprite: string;
+  sprite: TEXTURES;
   size: { width: number; height: number; offsetY: number };
 }
 
@@ -18,6 +20,7 @@ interface Options {
 }
 
 class BattleMonsterModel extends Subject {
+  uuid: string;
   monsterId: number;
   data: Monster;
   controllable: boolean;
@@ -28,15 +31,19 @@ class BattleMonsterModel extends Subject {
   animationPath: Array<Point> | null;
   animation: Animation;
 
+  activeAnimation: string | null;
+
   hadTurn: boolean;
   hasResponse: boolean;
 
   constructor(options: Options) {
     super();
 
+    this.uuid = uuidv4();
     this.monsterId = options.monsterId;
     this.data = this.monsterData(options.monsterId);
 
+    this.activeAnimation = null;
     this.animation = options.animation;
     this.animationBreakpoints = null;
     this.animationPath = null;
@@ -54,6 +61,10 @@ class BattleMonsterModel extends Subject {
 
     if (!result) throw new Error(`Monster with ${monsterId} id is not found!`);
     return result;
+  }
+
+  setActiveAnimation(animation: string | null) {
+    this.activeAnimation = animation;
   }
 
   setAnimationBreakpoints(breakpoints: Array<Hexagon> | null) {

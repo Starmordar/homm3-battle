@@ -1,3 +1,6 @@
+import { SPRITE } from '@/constants/sprites';
+import { MONSTER_SPRITES } from '@/constants/textures';
+
 export interface Renderable {
   /**
    * Draw UI element on the canvas
@@ -14,3 +17,13 @@ export interface Rect {
   x: number;
   y: number;
 }
+
+export interface MonsterTexture {
+  url: string;
+  width: number;
+  height: number;
+
+  sprites: Record<MONSTER_SPRITES, { y: number; x: Array<number> }>;
+}
+
+export type MonsterTexturesMap = Partial<Record<SPRITE, MonsterTexture>>;

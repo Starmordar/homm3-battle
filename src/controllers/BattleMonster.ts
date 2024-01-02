@@ -1,9 +1,11 @@
 import { Hexagon } from '@/models/grid';
 import BattleMonsterModel from '../models/BattleMonsterModel';
 import EventBus from '../services/EventBus';
+import { MONSTER_SPRITES } from '@/constants/textures';
 
 enum Event {
   endMoveAnimation = 'endMoveAnimation',
+  endHitAnimation = 'endHitAnimation',
 }
 
 class BattleMonster {
@@ -34,6 +36,22 @@ class BattleMonster {
     this.model.notify();
 
     this.events.emit(Event.endMoveAnimation);
+  }
+
+  public animateStep(sprite: MONSTER_SPRITES) {
+    return new Promise((resolve) => {
+      this.model.setActiveAnimation(sprite);
+      this.model.notify();
+
+      this.events.on(Event.endHitAnimation, resolve);
+    });
+  }
+
+  public endStepAnimation() {
+    this.model.setActiveAnimation(null);
+    this.model.notify();
+
+    this.events.emit(Event.endHitAnimation);
   }
 
   waitTurn() {

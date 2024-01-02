@@ -13,6 +13,7 @@ import { gridLayout, hexObstacles } from './constants/hex';
 import { BATTLE_SIDE } from './constants/common';
 import BattleModel from './models/Battle';
 import Battle from '@/controllers/Battle';
+import { monsterTextures } from './constants/textures';
 
 const spriteRepository = new SpriteRepository();
 const spriteFactory = new SpriteFactory();
@@ -26,6 +27,14 @@ const battleHeight = 650;
 const side = BATTLE_SIDE.left;
 const battleModel = new BattleModel(side);
 const battle = new Battle(battleModel);
+
+const monsterSprites: Record<string, any> = {};
+
+battle.monsters.forEach(({ model }) => {
+  monsterSprites[model.uuid] = monsterTextures[model.animation.sprite];
+});
+
+await resources.loadSprites(monsterSprites);
 
 const uiCanvasOptions = {
   classNames: ['ui-canvas', 'cursor-default'],

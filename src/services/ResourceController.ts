@@ -16,7 +16,15 @@ class ResourceController {
     return Promise.all([this.loadSprites(uiSprites), this.loadSprites(animatedSprites)]);
   }
 
-  private async loadSprites(options: Record<string, SpriteOptions>): Promise<Array<Sprite>> {
+  // sprite + uuid
+  public loadSprite(key: string, options: SpriteOptions): Promise<Sprite> {
+    const sprite = this.spriteFactory.create(options);
+
+    this.spriteRegistry.register(key, sprite);
+    return sprite.load;
+  }
+
+  public async loadSprites(options: Record<string, SpriteOptions>): Promise<Array<Sprite>> {
     const promises = Object.keys(options).map((key) => {
       const sprite = this.spriteFactory.create(options[key as keyof typeof options]);
 

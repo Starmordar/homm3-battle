@@ -10,6 +10,7 @@ import { EventKey, globalEvents } from '@/services/EventBus';
 import BattleMonster from '@/controllers/BattleMonster';
 import BattleMonsterView from '@/view/objects/BattleMonster';
 import BattleHero from '@/controllers/BattleHero';
+import MonsterSprite from '@/view/sprites/MonsterSprite';
 
 export interface UnitsCanvasOptions extends CanvasOptions {
   heroes: Array<BattleHero>;
@@ -58,7 +59,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
   private createCreaturesAnimation(army: Array<BattleMonster>) {
     army.forEach((monster) => {
-      const sprite = this.spriteRepository.get<AnimatedSprite>(monster.model.animation.sprite);
+      const sprite = this.spriteRepository.get<MonsterSprite>(monster.model.uuid);
 
       const monsterView = new BattleMonsterView(monster, this.ctx, sprite);
       this.monsters.push(monsterView);
