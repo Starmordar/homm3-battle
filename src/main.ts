@@ -14,6 +14,7 @@ import { BATTLE_SIDE } from './constants/common';
 import BattleModel from './models/Battle';
 import Battle from '@/controllers/Battle';
 import { monsterTextures } from './constants/textures';
+import BattleGraph from './models/BattleGraph';
 
 const spriteRepository = new SpriteRepository();
 const spriteFactory = new SpriteFactory();
@@ -48,10 +49,13 @@ const uiCanvasOptions = {
 const uiCanvas = new UICanvas(spriteRepository, battle, uiCanvasOptions);
 uiCanvas.draw();
 
+const graph = new BattleGraph(gridLayout, hexObstacles);
+
 const hexCanvasOptions = {
   classNames: ['grid-canvas'],
   size: { width: battleWidth, height: battleHeight - 90 },
   obstacles: hexObstacles,
+  graph,
 };
 
 const hexagonCanvas = new HexagonalCanvas(gridLayout, battle, hexCanvasOptions);
@@ -60,7 +64,8 @@ hexagonCanvas.draw();
 const unitsCanvasOptions = {
   classNames: ['units-canvas'],
   size: { width: battleWidth, height: battleHeight - 90 },
-  heroes: battle.model.heroes,
+  battle,
+  graph,
 };
 
 const unitsCanvas = new UnitsCanvas(spriteRepository, unitsCanvasOptions);

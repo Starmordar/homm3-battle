@@ -63,6 +63,8 @@ export enum SPRITE {
 
   wraith = 'wraith',
   wraith_mirror = 'wraith_mirror',
+
+  monster_window = 'monster_window',
 }
 
 export const animatedSprites = {
@@ -88,6 +90,12 @@ export const animatedSprites = {
 };
 
 export const uiSprites = {
+  [SPRITE.monster_window]: {
+    url: '/src/assets/ui/popup.png',
+    width: 298,
+    height: 311,
+  },
+
   [SPRITE.surrender_btn]: {
     url: '/src/assets/ui/cr-controls/surrender.png',
     width: 90,

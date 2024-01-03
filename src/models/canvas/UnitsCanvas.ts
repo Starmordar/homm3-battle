@@ -11,9 +11,14 @@ import BattleMonster from '@/controllers/BattleMonster';
 import BattleMonsterView from '@/view/objects/BattleMonster';
 import BattleHero from '@/controllers/BattleHero';
 import MonsterSprite from '@/view/sprites/MonsterSprite';
+import Battle from '@/controllers/Battle';
+import { mousePointFromEvent } from '@/utils/canvas';
+import BattleGraph from '../BattleGraph';
+import MonsterWindow from '@/view/windows/MonsterWindow';
 
 export interface UnitsCanvasOptions extends CanvasOptions {
-  heroes: Array<BattleHero>;
+  battle: Battle;
+  graph: BattleGraph;
 }
 
 export interface AnimatedUnit {
@@ -22,22 +27,30 @@ export interface AnimatedUnit {
 }
 
 class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
+  private readonly graph: BattleGraph;
   private readonly spriteRepository: SpriteRepository;
 
   private animationStart: number = 0;
   private heroSprites: Array<{ sprite: AnimatedSprite; frameY: number }> = [];
 
   private monsters: Array<BattleMonsterView> = [];
+  private showMenu: boolean;
+  private monsterWindow: MonsterWindow | null;
 
   constructor(spriteRepository: SpriteRepository, options: UnitsCanvasOptions) {
     super(options);
+
+    this.graph = options.graph;
+
+    this.showMenu = false;
+    this.monsterWindow = null;
 
     this.spriteRepository = spriteRepository;
     this.animationStep = this.animationStep.bind(this);
   }
 
   public async setup() {
-    const heroes = this.options.heroes;
+    const heroes = this.options.battle.model.heroes;
 
     this.createHeroAnimation(heroes[0], false);
     this.createHeroAnimation(heroes[1], true);
@@ -84,6 +97,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
     this.animateHeroes();
     this.animateCreatures();
+    this.drawMonsterWindow();
 
     requestAnimationFrame(this.animationStep);
   }
@@ -120,10 +134,34 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   }
 
   private animateCreatures() {
-    this.monsters.forEach((monster) => monster.draw());
+    const sortedMonsters = this.monsters.sort((a, b) => a.position.r - b.position.r);
+    sortedMonsters.forEach((monster) => monster.draw());
+  }
+
+  private drawMonsterWindow() {
+    if (!this.showMenu) return;
+    this.monsterWindow?.draw();
   }
 
   private attachMouseEvents() {
+    this.canvas.addEventListener('contextmenu', (evt: MouseEvent) => {
+      evt.preventDefault();
+    });
+
+    this.canvas.addEventListener('mousedown', (evt: MouseEvent) => {
+      if (evt.button === 2) {
+        this.triggerMonsterWindow(evt);
+        this.showMenu = true;
+      }
+    });
+
+    this.canvas.addEventListener('mouseup', (evt: MouseEvent) => {
+      if (evt.button === 2) {
+        this.monsterWindow = null;
+        this.showMenu = false;
+      }
+    });
+
     this.canvas.addEventListener('mousemove', (evt: MouseEvent) => {
       globalEvents.emit(EventKey.hoverBattleground, evt);
     });
@@ -131,6 +169,17 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     this.canvas.addEventListener('click', (evt: MouseEvent) => {
       globalEvents.emit(EventKey.clickBattleground, evt);
     });
+  }
+
+  private triggerMonsterWindow(evt: MouseEvent) {
+    const hexUnderPoint = this.graph.hexUnderPoint(mousePointFromEvent(evt));
+    if (!hexUnderPoint) return;
+
+    const monster = this.options.battle.monsterByPosition(hexUnderPoint);
+    if (!monster) return;
+
+    const sprite = this.spriteRepository.get<MonsterSprite>(monster.model.uuid);
+    this.monsterWindow = new MonsterWindow(monster, this.ctx, this.spriteRepository, sprite);
   }
 }
 

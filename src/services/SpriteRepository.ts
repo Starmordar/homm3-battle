@@ -11,7 +11,10 @@ class SpriteRepository {
   }
 
   public get<T extends Sprite>(key: string): T {
-    return this.repository.get(key) as T;
+    const sprite = this.repository.get(key) as T;
+    if (!sprite) throw Error(`Invalid sprite key: ${key}`);
+
+    return sprite;
   }
 }
 

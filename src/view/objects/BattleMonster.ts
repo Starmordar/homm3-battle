@@ -3,7 +3,7 @@ import MonsterSprite from '../sprites/MonsterSprite';
 
 import { Observer } from '@/services/Observer';
 import { gridLayout } from '@/constants/hex';
-import { Point } from '@/models/grid';
+import { Hexagon, Point } from '@/models/grid';
 import { MONSTER_SPRITES } from '@/constants/textures';
 
 class BattleMonsterView implements Observer {
@@ -119,6 +119,10 @@ class BattleMonsterView implements Observer {
 
     this.sprite.setAnimation(MONSTER_SPRITES.dead);
     this.sprite.drawFrame(this.ctx, x, y, width, height);
+  }
+
+  get position(): Hexagon {
+    return this.controller.model.position;
   }
 
   update() {

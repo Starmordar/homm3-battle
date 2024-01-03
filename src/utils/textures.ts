@@ -31,10 +31,8 @@ export function mirrorFrames(frames: Texture['textures']): Texture['textures'] {
   const mirrored: Partial<Texture['textures']> = {};
 
   for (const [key, frame] of Object.entries(frames)) {
-    const lastFrame = frame.x[frame.x.length - 1];
-    const updatedFrames = frame.x.map((frameX) => frameX + (maxFrameX - lastFrame));
-
-    mirrored[key as MONSTER_SPRITES] = { y: frame.y, x: updatedFrames.reverse() };
+    const mirroredFrames = frame.x.map((frameX) => Math.abs(maxFrameX - frameX));
+    mirrored[key as MONSTER_SPRITES] = { y: frame.y, x: mirroredFrames };
   }
 
   return mirrored as Texture['textures'];

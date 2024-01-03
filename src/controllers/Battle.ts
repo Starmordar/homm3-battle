@@ -65,6 +65,13 @@ class Battle {
     return enemyHero.model.aliveMonsters.some((unit) => Hexagon.isEqual(unit.model.position, hex));
   }
 
+  public monsterByPosition(hex: Hexagon): BattleMonster | undefined {
+    const [leftHero, rightHero] = this.model.heroes;
+    const monsters = [...leftHero.model.aliveMonsters, ...rightHero.model.aliveMonsters];
+
+    return monsters.find((unit) => Hexagon.isEqual(unit.model.position, hex));
+  }
+
   get monsters() {
     return this.model.heroes.flatMap((hero) => hero.model.army);
   }

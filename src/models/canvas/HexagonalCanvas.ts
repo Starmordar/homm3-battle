@@ -11,6 +11,7 @@ import { mousePointFromEvent } from '@/utils/canvas';
 
 interface HexagonalCanvasOptions extends CanvasOptions {
   obstacles: Array<Hexagon>;
+  graph: BattleGraph;
 }
 
 class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
@@ -22,7 +23,7 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   constructor(layout: Layout, battle: Battle, options: HexagonalCanvasOptions) {
     super(options);
 
-    this.graph = new BattleGraph(layout, options.obstacles);
+    this.graph = options.graph;
     this.gridView = new BattleGrid(layout, this.graph);
 
     this.battle = battle;
