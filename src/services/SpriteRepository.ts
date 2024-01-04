@@ -18,4 +18,5 @@ class SpriteRepository {
   }
 }
 
+export const Textures = new SpriteRepository();
 export default SpriteRepository;

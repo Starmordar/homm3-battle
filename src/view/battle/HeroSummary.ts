@@ -1,4 +1,4 @@
-import SpriteRepository from '@/services/SpriteRepository';
+import { Textures } from '@/services/SpriteRepository';
 import Panel from '@/view/common/Panel';
 import Stroke from '@/view/common/Stroke';
 
@@ -12,12 +12,10 @@ interface HeroSummaryOptions extends Omit<Rect, 'width' | 'height'> {
 }
 
 class HeroSummary implements Renderable {
-  private readonly spriteRepository: SpriteRepository;
   private readonly options: HeroSummaryOptions;
   private readonly heroInfo: BattleHero;
 
-  constructor(spriteRepository: SpriteRepository, options: HeroSummaryOptions) {
-    this.spriteRepository = spriteRepository;
+  constructor(options: HeroSummaryOptions) {
     this.options = options;
 
     this.heroInfo = this.options.hero;
@@ -32,7 +30,7 @@ class HeroSummary implements Renderable {
     const { avatar } = defaultSummaryOptions;
     const [frameX, frameY] = this.heroInfo.model.options.sprite;
 
-    const portraitSprite = this.spriteRepository.get(SPRITE.hero_avatar_lg);
+    const portraitSprite = Textures.get(SPRITE.hero_avatar_lg);
     portraitSprite.drawFrame(
       ctx,
       frameX,
@@ -72,7 +70,7 @@ class HeroSummary implements Renderable {
   }
 
   private drawInfoPanel(ctx: CanvasRenderingContext2D, config: SummaryConfig) {
-    const infoPanel = new Panel(this.spriteRepository, {
+    const infoPanel = new Panel({
       ...config,
       x: config.x + this.options.x,
       y: config.y + this.options.y,

@@ -6,7 +6,7 @@ interface Dimensions {
   height: number;
 }
 
-export function buildGridLayout({ width, height }: Dimensions): Layout {
+export function getBattleLayout({ width, height }: Dimensions): Layout {
   const pointSize = Math.min(height, width) / hexagonCount;
 
   const originPoint = new Point((width - pointSize) / 2, height / 2);

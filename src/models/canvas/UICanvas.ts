@@ -1,4 +1,4 @@
-import SpriteRepository from '../../services/SpriteRepository';
+import { Textures } from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import BattlePanel from '../../view/battle/BattlePanel';
@@ -18,15 +18,12 @@ export interface UICanvasOptions extends CanvasOptions {
 
 class UICanvas extends Canvas<UICanvasOptions> {
   private readonly battleCanvasOffset: { x: number; y: number };
-  private readonly spriteRepository: SpriteRepository;
   private readonly battle: Battle;
 
   private battlePanel?: BattlePanel;
 
-  constructor(spriteRepository: SpriteRepository, battle: Battle, options: UICanvasOptions) {
+  constructor(battle: Battle, options: UICanvasOptions) {
     super(options);
-
-    this.spriteRepository = spriteRepository;
 
     this.battle = battle;
     this.battleCanvasOffset = {
@@ -36,7 +33,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
   }
 
   public draw() {
-    const patternSprite = this.spriteRepository.get(SPRITE.edge_pattern);
+    const patternSprite = Textures.get(SPRITE.edge_pattern);
     this.createCanvasPattern(patternSprite);
 
     this.drawBorders();
@@ -66,7 +63,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
   private drawCorners() {
     const { width, height } = this.options.size;
 
-    const sprite = this.spriteRepository.get(SPRITE.corner_gems);
+    const sprite = Textures.get(SPRITE.corner_gems);
 
     const dw = sprite.options.width;
     const dh = sprite.options.height;
@@ -90,14 +87,14 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
     const battleOffset = 5;
 
-    const leftHeroSummary = new HeroSummary(this.spriteRepository, {
+    const leftHeroSummary = new HeroSummary({
       hero: leftHero,
       x: (size.width - battleWidth) / 2 - summaryWidth - battleOffset,
       y: (size.height - battleHeight) / 2,
     });
     leftHeroSummary.draw(this.ctx);
 
-    const rightHeroSummary = new HeroSummary(this.spriteRepository, {
+    const rightHeroSummary = new HeroSummary({
       hero: rightHero,
       x: (size.width + battleWidth) / 2 + battleOffset,
       y: (size.height - battleHeight) / 2,
@@ -107,7 +104,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
   private drawBattleBackground() {
     const { battleWidth, battleHeight } = this.options;
-    const sprite = this.spriteRepository.get(this.options.backgroundSprite);
+    const sprite = Textures.get(this.options.backgroundSprite);
 
     sprite.drawFrame(
       this.ctx,
@@ -134,7 +131,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
     if (this.battlePanel) this.battlePanel.clear(this.canvas);
 
     const border = 2;
-    this.battlePanel = new BattlePanel(this.spriteRepository, this.battle, {
+    this.battlePanel = new BattlePanel(this.battle, {
       width: battleWidth - border,
       x: (size.width - battleWidth + border) / 2,
       y: (size.height + battleHeight) / 2 - battlePanelHeight,

@@ -65,6 +65,7 @@ export enum SPRITE {
   wraith_mirror = 'wraith_mirror',
 
   monster_window = 'monster_window',
+  necropolis_monster_bg = 'necropolis_monster_bg',
 }
 
 export const animatedSprites = {
@@ -90,6 +91,12 @@ export const animatedSprites = {
 };
 
 export const uiSprites = {
+  [SPRITE.necropolis_monster_bg]: {
+    url: '/src/assets/necropolis.png',
+    width: 250,
+    height: 324,
+  },
+
   [SPRITE.monster_window]: {
     url: '/src/assets/ui/popup.png',
     width: 298,

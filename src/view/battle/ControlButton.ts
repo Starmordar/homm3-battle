@@ -1,4 +1,4 @@
-import SpriteRepository from '@/services/SpriteRepository';
+import { Textures } from '@/services/SpriteRepository';
 import Stroke from '@/view/common/Stroke';
 import Battle from '@/controllers/Battle';
 
@@ -9,14 +9,12 @@ import type { ControlButtonOptions } from '@/constants/ui';
 import type { Renderable } from '@/types';
 
 class ControlButton implements Renderable {
-  private readonly spriteRepository: SpriteRepository;
   private options: ControlButtonOptions;
 
   private clickEffect?: (evt: MouseEvent) => void;
   private disabled: boolean;
 
-  constructor(spriteRepository: SpriteRepository, battle: Battle, options: ControlButtonOptions) {
-    this.spriteRepository = spriteRepository;
+  constructor(battle: Battle, options: ControlButtonOptions) {
     this.options = options;
 
     this.disabled = this.options.disabled(battle);
@@ -42,7 +40,7 @@ class ControlButton implements Renderable {
     const { sprites } = this.options;
     const sprite = this.disabled ? sprites.disabled : sprites.idle;
 
-    return this.spriteRepository.get(sprite);
+    return Textures.get(sprite);
   }
 
   private attachButtonClickEvent(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
@@ -70,7 +68,7 @@ class ControlButton implements Renderable {
   private drawClickAnimation(ctx: CanvasRenderingContext2D) {
     const { x, y, width, height, sprites } = this.options;
 
-    const sprite = this.spriteRepository.get(sprites.active);
+    const sprite = Textures.get(sprites.active);
     sprite.drawFrame(ctx, 0, 0, x, y, width, height);
 
     setTimeout(() => {

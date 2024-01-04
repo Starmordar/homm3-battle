@@ -1,4 +1,3 @@
-import SpriteRepository from '@/services/SpriteRepository';
 import Panel from '@/view/common/Panel';
 
 import { ConsoleOptions } from '@/constants/ui';
@@ -6,11 +5,8 @@ import type { Renderable } from '@/types';
 
 class ConsolePanel implements Renderable {
   private readonly options: ConsoleOptions;
-  private readonly spriteRepository: SpriteRepository;
 
-  constructor(spriteRepository: SpriteRepository, options: ConsoleOptions) {
-    this.spriteRepository = spriteRepository;
-
+  constructor(options: ConsoleOptions) {
     this.options = options;
   }
 
@@ -21,7 +17,7 @@ class ConsolePanel implements Renderable {
   }
 
   private drawConsolePanel(ctx: CanvasRenderingContext2D) {
-    const consolePanel = new Panel(this.spriteRepository, this.options);
+    const consolePanel = new Panel(this.options);
     consolePanel.draw(ctx);
   }
 }

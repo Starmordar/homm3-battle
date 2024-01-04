@@ -1,4 +1,4 @@
-import { buildGridLayout } from '@/utils/grid';
+import { getBattleLayout } from '@/utils/grid';
 import { Hexagon } from '../models/grid';
 
 export const battleGridSize = { width: 15, height: 11 };
@@ -46,7 +46,7 @@ export const hexObstacles: Array<Hexagon> = [
   new Hexagon(1, -3, 2),
 ];
 
-const battleWidth = 950;
-const battleHeight = 650;
+export const battleWidth = 950;
+export const battleHeight = 650;
 
-export const gridLayout = buildGridLayout({ width: battleWidth, height: battleHeight });
+export const battleLayout = getBattleLayout({ width: battleWidth, height: battleHeight });

@@ -16,6 +16,7 @@ export interface Monster {
 
   type: string;
   damage: MonsterDamage;
+  abilityText: string;
 }
 
 export const monsters: Array<Monster> = [
@@ -36,7 +37,7 @@ export const monsters: Array<Monster> = [
       spellPower: 0,
       magic: [12, 20],
     },
-    // abilityText: '"Undead.  Regenerating. Drains enemy mana."',
+    abilityText: 'Undead.  Regenerating. Drains enemy mana.',
     // attributes: 'FLYING_ARMY | IS_UNDEAD',
     // race: 4,
     // level: 3,

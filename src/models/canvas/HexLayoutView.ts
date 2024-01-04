@@ -4,28 +4,25 @@ import Battle from '@/controllers/Battle';
 import BattleGraph from '../BattleGraph';
 import Canvas, { CanvasOptions } from './Canvas';
 
-import { Point, Hexagon, Layout } from '../grid';
+import { Point, Hexagon } from '../grid';
 import { EventKey, globalEvents } from '@/services/EventBus';
 import { setCursorStyle } from '@/utils/common';
 import { mousePointFromEvent } from '@/utils/canvas';
 
-interface HexagonalCanvasOptions extends CanvasOptions {
+interface ViewOptions extends CanvasOptions {
   obstacles: Array<Hexagon>;
-  graph: BattleGraph;
 }
 
-class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
+class HexLayoutView extends Canvas<ViewOptions> {
   private readonly graph: BattleGraph;
   private readonly gridView: BattleGrid;
-
   private readonly battle: Battle;
 
-  constructor(layout: Layout, battle: Battle, options: HexagonalCanvasOptions) {
+  constructor(battle: Battle, graph: BattleGraph, options: ViewOptions) {
     super(options);
 
-    this.graph = options.graph;
-    this.gridView = new BattleGrid(layout, this.graph);
-
+    this.graph = graph;
+    this.gridView = new BattleGrid(this.graph);
     this.battle = battle;
   }
 
@@ -162,4 +159,4 @@ class HexagonalCanvas extends Canvas<HexagonalCanvasOptions> {
   }
 }
 
-export default HexagonalCanvas;
+export default HexLayoutView;

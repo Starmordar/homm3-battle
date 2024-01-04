@@ -1,25 +1,24 @@
 import './index.css';
 
 import SpriteFactory from './services/SpriteFactory';
-import SpriteRepository from './services/SpriteRepository';
+import { Textures } from './services/SpriteRepository';
 import ResourceController from './services/ResourceController';
 
 import UICanvas from './models/canvas/UICanvas';
-import UnitsCanvas from './models/canvas/UnitsCanvas';
-import HexagonalCanvas from './models/canvas/HexagonalCanvas';
+import UnitsView from './models/canvas/UnitsView';
+import HexLayoutView from './models/canvas/HexLayoutView';
 
 import { SPRITE } from './constants/sprites';
-import { gridLayout, hexObstacles } from './constants/hex';
+import { hexObstacles } from './constants/hex';
 import { BATTLE_SIDE } from './constants/common';
 import BattleModel from './models/Battle';
 import Battle from '@/controllers/Battle';
 import { monsterTextures } from './constants/textures';
 import BattleGraph from './models/BattleGraph';
 
-const spriteRepository = new SpriteRepository();
 const spriteFactory = new SpriteFactory();
 
-const resources = new ResourceController(spriteRepository, spriteFactory);
+const resources = new ResourceController(Textures, spriteFactory);
 await resources.load();
 
 const battleWidth = 950;
@@ -46,27 +45,24 @@ const uiCanvasOptions = {
   backgroundSprite: SPRITE.battle_bg_01,
 };
 
-const uiCanvas = new UICanvas(spriteRepository, battle, uiCanvasOptions);
+const uiCanvas = new UICanvas(battle, uiCanvasOptions);
 uiCanvas.draw();
 
-const graph = new BattleGraph(gridLayout, hexObstacles);
+const graph = new BattleGraph(hexObstacles);
 
-const hexCanvasOptions = {
+const hexLayoutViewOptions = {
   classNames: ['grid-canvas'],
   size: { width: battleWidth, height: battleHeight - 90 },
   obstacles: hexObstacles,
-  graph,
 };
 
-const hexagonCanvas = new HexagonalCanvas(gridLayout, battle, hexCanvasOptions);
+const hexagonCanvas = new HexLayoutView(battle, graph, hexLayoutViewOptions);
 hexagonCanvas.draw();
 
-const unitsCanvasOptions = {
+const unitsViewOptions = {
   classNames: ['units-canvas'],
   size: { width: battleWidth, height: battleHeight - 90 },
-  battle,
-  graph,
 };
 
-const unitsCanvas = new UnitsCanvas(spriteRepository, unitsCanvasOptions);
+const unitsCanvas = new UnitsView(battle, graph, unitsViewOptions);
 unitsCanvas.setup();

@@ -1,4 +1,4 @@
-import SpriteRepository from '../../services/SpriteRepository';
+import { Textures } from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
 import AnimatedSprite from '../../view/sprites/AnimatedSprite';
@@ -16,19 +16,16 @@ import { mousePointFromEvent } from '@/utils/canvas';
 import BattleGraph from '../BattleGraph';
 import MonsterWindow from '@/view/windows/MonsterWindow';
 
-export interface UnitsCanvasOptions extends CanvasOptions {
-  battle: Battle;
-  graph: BattleGraph;
-}
+export interface ViewOptions extends CanvasOptions {}
 
 export interface AnimatedUnit {
   sprite: AnimatedSprite;
   monster: BattleMonster;
 }
 
-class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
+class UnitsView extends Canvas<ViewOptions> {
   private readonly graph: BattleGraph;
-  private readonly spriteRepository: SpriteRepository;
+  private readonly battle: Battle;
 
   private animationStart: number = 0;
   private heroSprites: Array<{ sprite: AnimatedSprite; frameY: number }> = [];
@@ -37,20 +34,20 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
   private showMenu: boolean;
   private monsterWindow: MonsterWindow | null;
 
-  constructor(spriteRepository: SpriteRepository, options: UnitsCanvasOptions) {
+  constructor(battle: Battle, graph: BattleGraph, options: ViewOptions) {
     super(options);
 
-    this.graph = options.graph;
+    this.battle = battle;
+    this.graph = graph;
 
     this.showMenu = false;
     this.monsterWindow = null;
 
-    this.spriteRepository = spriteRepository;
     this.animationStep = this.animationStep.bind(this);
   }
 
   public async setup() {
-    const heroes = this.options.battle.model.heroes;
+    const heroes = this.battle.model.heroes;
 
     this.createHeroAnimation(heroes[0], false);
     this.createHeroAnimation(heroes[1], true);
@@ -64,7 +61,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     const settings = heroesClasses[hero.model.class];
     const spriteKey = mirror ? 'mirror' : 'normal';
 
-    const sprite = this.spriteRepository.get<AnimatedSprite>(settings.animation.sprites[spriteKey]);
+    const sprite = Textures.get<AnimatedSprite>(settings.animation.sprites[spriteKey]);
     this.heroSprites.push({ sprite, frameY: settings.animation.frame.y });
 
     this.createCreaturesAnimation(hero.model.army);
@@ -72,7 +69,7 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
 
   private createCreaturesAnimation(army: Array<BattleMonster>) {
     army.forEach((monster) => {
-      const sprite = this.spriteRepository.get<MonsterSprite>(monster.model.uuid);
+      const sprite = Textures.get<MonsterSprite>(monster.model.uuid);
 
       const monsterView = new BattleMonsterView(monster, this.ctx, sprite);
       this.monsters.push(monsterView);
@@ -175,12 +172,11 @@ class UnitsCanvas extends Canvas<UnitsCanvasOptions> {
     const hexUnderPoint = this.graph.hexUnderPoint(mousePointFromEvent(evt));
     if (!hexUnderPoint) return;
 
-    const monster = this.options.battle.monsterByPosition(hexUnderPoint);
+    const monster = this.battle.monsterByPosition(hexUnderPoint);
     if (!monster) return;
 
-    const sprite = this.spriteRepository.get<MonsterSprite>(monster.model.uuid);
-    this.monsterWindow = new MonsterWindow(monster, this.ctx, this.spriteRepository, sprite);
+    this.monsterWindow = new MonsterWindow(monster, this.ctx);
   }
 }
 
-export default UnitsCanvas;
+export default UnitsView;

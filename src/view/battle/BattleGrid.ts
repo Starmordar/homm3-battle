@@ -3,6 +3,7 @@ import {
   hexOutlineStyle,
   hexLabelStyles,
   activeHexStyles,
+  battleLayout,
 } from '../../constants/hex';
 
 import BattleGraph from '@/models/BattleGraph';
@@ -13,8 +14,8 @@ class BattleGrid implements Renderable {
   private readonly layout: Layout;
   private readonly graph: BattleGraph;
 
-  constructor(layout: Layout, graph: BattleGraph) {
-    this.layout = layout;
+  constructor(graph: BattleGraph) {
+    this.layout = battleLayout;
     this.graph = graph;
   }
 

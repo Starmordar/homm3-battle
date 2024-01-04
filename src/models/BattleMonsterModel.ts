@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { gridLayout } from '@/constants/hex';
+import { battleLayout } from '@/constants/hex';
 import { monsters, type Monster } from '@/constants/monsters';
 import { Hexagon, Point } from '@/models/grid';
 import Subject from '@/services/Observer';
@@ -84,8 +84,8 @@ class BattleMonsterModel extends Subject {
     const animationPath = [];
 
     for (let index = 0; index < breakpoints.length - 1; index++) {
-      const startPixel = gridLayout.hexToPixel(breakpoints[index]);
-      const endPixel = gridLayout.hexToPixel(breakpoints[index + 1]);
+      const startPixel = battleLayout.hexToPixel(breakpoints[index]);
+      const endPixel = battleLayout.hexToPixel(breakpoints[index + 1]);
 
       const diff = { x: endPixel.x - startPixel.x, y: endPixel.y - startPixel.y };
 

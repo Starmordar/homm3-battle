@@ -1,4 +1,4 @@
-import { battleGridSize } from '@/constants/hex';
+import { battleGridSize, battleLayout } from '@/constants/hex';
 import { Hexagon, Layout, Point } from './grid';
 import { getAngle, getHexReachables, getLayoutHexes, isPointInsideHex } from '@/utils/grid';
 
@@ -12,8 +12,8 @@ class BattleGraph {
   public hexReachables: Array<Hexagon> = [];
   public hexPathMap: Map<string, Hexagon | null> = new Map();
 
-  constructor(layout: Layout, obstacles: Array<Hexagon>) {
-    this.layout = layout;
+  constructor(obstacles: Array<Hexagon>) {
+    this.layout = battleLayout;
     this.hexes = getLayoutHexes(battleGridSize);
     this.hexCornersMap = this.getHexCornersMap();
 

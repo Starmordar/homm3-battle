@@ -2,7 +2,7 @@ import BattleMonster from '@/controllers/BattleMonster';
 import MonsterSprite from '../sprites/MonsterSprite';
 
 import { Observer } from '@/services/Observer';
-import { gridLayout } from '@/constants/hex';
+import { battleLayout } from '@/constants/hex';
 import { Hexagon, Point } from '@/models/grid';
 import { MONSTER_SPRITES } from '@/constants/textures';
 
@@ -51,7 +51,7 @@ class BattleMonsterView implements Observer {
     const { animation, position } = this.controller.model;
     const { width, height, offsetY } = animation.size;
 
-    const pixel = gridLayout.hexToPixel(position);
+    const pixel = battleLayout.hexToPixel(position);
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 
@@ -65,7 +65,7 @@ class BattleMonsterView implements Observer {
     const { animation, position, quantity } = this.controller.model;
     const { offsetY } = animation.size;
 
-    const pixel = gridLayout.hexToPixel(position);
+    const pixel = battleLayout.hexToPixel(position);
     const x = pixel.x;
     const y = pixel.y + offsetY;
 
@@ -97,7 +97,7 @@ class BattleMonsterView implements Observer {
     }
     if (this.sprite.isLastFrame) return this.endActiveAnimation();
 
-    const pixel = gridLayout.hexToPixel(position);
+    const pixel = battleLayout.hexToPixel(position);
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 
@@ -113,7 +113,7 @@ class BattleMonsterView implements Observer {
     const { animation, position } = this.controller.model;
     const { width, height, offsetY } = animation.size;
 
-    const pixel = gridLayout.hexToPixel(position);
+    const pixel = battleLayout.hexToPixel(position);
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 

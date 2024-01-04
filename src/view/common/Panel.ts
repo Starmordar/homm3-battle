@@ -1,4 +1,4 @@
-import SpriteRepository from '@/services/SpriteRepository';
+import { Textures } from '@/services/SpriteRepository';
 import Stroke from '@/view/common/Stroke';
 
 import { SPRITE } from '@/constants/sprites';
@@ -13,14 +13,12 @@ interface PanelOptions extends Rect {
 }
 
 class Panel implements Renderable {
-  private readonly spriteRepository: SpriteRepository;
   private readonly options: Required<PanelOptions>;
 
   private lightShadow: Path2D = new Path2D();
   private darkShadow: Path2D = new Path2D();
 
-  constructor(spriteRepository: SpriteRepository, options: PanelOptions) {
-    this.spriteRepository = spriteRepository;
+  constructor(options: PanelOptions) {
     this.options = { ...defaultPanelOptions, ...options };
   }
 
@@ -49,7 +47,7 @@ class Panel implements Renderable {
   private drawBackgroundImage(ctx: CanvasRenderingContext2D) {
     const { width, height, x, y } = this.options;
 
-    const sprite = this.spriteRepository.get(SPRITE.panel_bg);
+    const sprite = Textures.get(SPRITE.panel_bg);
     const pattern = ctx.createPattern(sprite.image, 'repeat')!;
 
     ctx.fillStyle = pattern;
