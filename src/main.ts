@@ -9,7 +9,7 @@ import UnitsView from './models/canvas/UnitsView';
 import HexLayoutView from './models/canvas/HexLayoutView';
 
 import { SPRITE } from './constants/sprites';
-import { hexObstacles } from './constants/hex';
+import { battleHeight, battleWidth, hexObstacles, layoutViewSize } from './constants/hex';
 import { BATTLE_SIDE } from './constants/common';
 import BattleModel from './models/Battle';
 import Battle from '@/controllers/Battle';
@@ -20,9 +20,6 @@ const spriteFactory = new SpriteFactory();
 
 const resources = new ResourceController(Textures, spriteFactory);
 await resources.load();
-
-const battleWidth = 950;
-const battleHeight = 650;
 
 const side = BATTLE_SIDE.left;
 const battleModel = new BattleModel(side);
@@ -52,7 +49,7 @@ const graph = new BattleGraph(hexObstacles);
 
 const hexLayoutViewOptions = {
   classNames: ['grid-canvas'],
-  size: { width: battleWidth, height: battleHeight - 90 },
+  size: layoutViewSize,
   obstacles: hexObstacles,
 };
 
@@ -61,7 +58,7 @@ hexagonCanvas.draw();
 
 const unitsViewOptions = {
   classNames: ['units-canvas'],
-  size: { width: battleWidth, height: battleHeight - 90 },
+  size: layoutViewSize,
 };
 
 const unitsCanvas = new UnitsView(battle, graph, unitsViewOptions);

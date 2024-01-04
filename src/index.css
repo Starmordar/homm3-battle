@@ -6,6 +6,11 @@ body {
   overflow: hidden;
 }
 
+@font-face {
+  font-family: 'MorrisRoman';
+  src: url('./assets/fonts/MorrisRoman-Black.ttf');
+}
+
 .melee_attack_0 {
   cursor: url('./assets/cursor/melee_attack_0.png') 0 0, default;
 }

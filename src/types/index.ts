@@ -17,6 +17,11 @@ export interface Rect {
   y: number;
 }
 
+export interface Bounds {
+  x: [number, number];
+  y: [number, number];
+}
+
 export interface Texture {
   url: string;
   width: number;

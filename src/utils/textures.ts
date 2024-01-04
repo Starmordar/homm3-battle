@@ -1,3 +1,4 @@
+import { SPRITE } from '@/constants/sprites';
 import { MONSTER_SPRITES, TEXTURES } from '@/constants/textures';
 import BattleMonster from '@/controllers/BattleMonster';
 import type { Texture, TextureMap } from '@/types';
@@ -62,4 +63,14 @@ export function attackedAnimation(attacked: BattleMonster, hitBy: number) {
 
   // TODO: Shield animation
   return MONSTER_SPRITES.getHit;
+}
+
+export function monsterBgSpriteByRace(race: number) {
+  // TODO: Add all races
+  return SPRITE.necropolis_monster_bg;
+}
+
+export function monsterSpriteById(id: number) {
+  // TODO: Add all ids
+  return SPRITE.wraith_static;
 }

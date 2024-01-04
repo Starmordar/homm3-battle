@@ -49,4 +49,5 @@ export const hexObstacles: Array<Hexagon> = [
 export const battleWidth = 950;
 export const battleHeight = 650;
 
+export const layoutViewSize = { width: battleWidth, height: battleHeight - 90 };
 export const battleLayout = getBattleLayout({ width: battleWidth, height: battleHeight });
