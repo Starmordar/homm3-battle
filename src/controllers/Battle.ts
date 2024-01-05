@@ -47,15 +47,15 @@ class Battle {
   private async hitEnemyMonster(attacking: BattleMonster, attacked: BattleMonster, angle: number) {
     await attacking.animateStep(attackAnimationByAngle({ angle, response: false }));
 
-    await attacked.animateStep(attackedAnimation(attacked, 2));
-    attacked.getHit(2);
+    await attacked.animateStep(attackedAnimation(attacking, attacked));
+    attacked.model.meleeHitFrom(attacking.model);
 
     if (!attacked.model.hasResponse) return;
     await attacked.animateStep(attackAnimationByAngle({ angle, response: true }));
     attacked.attackEnemy();
 
-    await attacking.animateStep(attackedAnimation(attacking, 2));
-    attacking.getHit(2);
+    await attacking.animateStep(attackedAnimation(attacked, attacking));
+    attacking.model.meleeHitFrom(attacked.model);
   }
 
   public isEnemyByPosition(hex: Hexagon) {

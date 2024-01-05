@@ -58,8 +58,8 @@ export function attackAnimationByAngle({ angle, response }: { angle: number; res
   return MONSTER_SPRITES.attackUp;
 }
 
-export function attackedAnimation(attacked: BattleMonster, hitBy: number) {
-  if (attacked.isDeadAfterHit(hitBy)) return MONSTER_SPRITES.death;
+export function attackedAnimation(attacking: BattleMonster, attacked: BattleMonster) {
+  if (attacked.model.isDeadAfterHit(attacking.model)) return MONSTER_SPRITES.death;
 
   // TODO: Shield animation
   return MONSTER_SPRITES.getHit;

@@ -43,7 +43,7 @@ class BattleModel extends Subject {
     const controllable = side === this.battleSide;
 
     const monsters = army.map((monster) => {
-      const model = new BattleMonsterModel({ ...monster, controllable });
+      const model = new BattleMonsterModel({ ...monster, owner: null, controllable });
       return new BattleMonster(model);
     });
 
@@ -67,6 +67,10 @@ class BattleModel extends Subject {
     );
 
     const hero = new BattleHero(model);
+    monsters.forEach((monster) => {
+      monster.model.owner = hero;
+    });
+
     this.heroes.push(hero);
   }
 
