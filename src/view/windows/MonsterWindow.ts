@@ -6,7 +6,9 @@ import type { Bounds } from '@/types';
 import MarkupPanel from '../common/MarkupPanel';
 import { monsterPopupMarkup as markup } from '@/constants/markup/monster_popup';
 import { Point } from '@/models/grid';
-import { Monster } from '@/constants/monsters';
+import BattleMonsterModel from '@/models/BattleMonsterModel';
+
+const offset = 10;
 
 class MonsterWindow implements Observer {
   private readonly controller: BattleMonster;
@@ -20,18 +22,17 @@ class MonsterWindow implements Observer {
   }
 
   public draw() {
-    const offset = 10;
     const bounds: Bounds = {
       x: [offset, layoutViewSize.width - offset],
       y: [offset, layoutViewSize.height - offset],
     };
 
-    const markupPanel = new MarkupPanel<Monster>(
+    const markupPanel = new MarkupPanel<BattleMonsterModel>(
       this.ctx,
       markup,
       bounds,
       this.anchorPoint(),
-      this.controller.model.data
+      this.controller.model
     );
 
     markupPanel.draw();
@@ -42,9 +43,7 @@ class MonsterWindow implements Observer {
     return battleLayout.hexToPixel(position);
   }
 
-  update() {
-    this.draw();
-  }
+  update() {}
 }
 
 export default MonsterWindow;

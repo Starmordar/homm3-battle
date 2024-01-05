@@ -5,8 +5,9 @@ import {
   TextMarkup,
   SpriteMarkup,
 } from '@/constants/markup/types';
-import { Point } from '@/models/grid';
+
 import { Textures } from '@/services/SpriteRepository';
+import type { Point } from '@/models/grid';
 import type { Bounds, Rect } from '@/types';
 
 class MarkupPanel<Data> {
@@ -91,13 +92,16 @@ class MarkupPanel<Data> {
     children.forEach((child) => {
       const markup = { ...child, options: this.populateOptions(child, parent) };
 
-      if (markup.type === MarkupType.text) this.drawText(markup);
-      else if (markup.type === MarkupType.sprite) this.drawSprite(markup);
+      if (markup.type === MarkupType.text) this.drawText(markup as TextMarkup<Data>);
+      else if (markup.type === MarkupType.sprite) this.drawSprite(markup as SpriteMarkup<Data>);
       else if (markup.type === MarkupType.group) this.parse(markup.children, markup);
     });
   }
 
-  private populateOptions(child: MarkupChild<Data>, parent?: MarkupChild<Data>): any {
+  private populateOptions(
+    child: MarkupChild<Data>,
+    parent?: MarkupChild<Data>
+  ): MarkupChild<Data>['options'] {
     if (!parent) return child.options;
     return { ...parent.options, ...child.options };
   }

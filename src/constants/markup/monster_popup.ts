@@ -1,9 +1,10 @@
 import { SPRITE } from '../sprites';
-import type { Monster } from '../monsters';
-import { Markup, MarkupType } from './types';
 import { monsterBgSpriteByRace, monsterSpriteById } from '@/utils/textures';
 
-const monsterPopupMarkup: Markup<Monster> = {
+import { Markup, MarkupType } from './types';
+import type BattleMonsterModel from '@/models/BattleMonsterModel';
+
+const monsterPopupMarkup: Markup<BattleMonsterModel> = {
   background: { sprite: SPRITE.monster_window, width: 350, height: 360 },
   textOptions: { font: '15px Crimson Pro', fillStyle: 'white', textBaseline: 'bottom' },
 
@@ -14,7 +15,7 @@ const monsterPopupMarkup: Markup<Monster> = {
         left: 175,
         top: 43,
         align: 'center',
-        text: (data: Monster) => `${data.type}`,
+        text: ({ data }: BattleMonsterModel) => `${data.type}`,
       },
     },
     {
@@ -24,7 +25,7 @@ const monsterPopupMarkup: Markup<Monster> = {
         top: 55,
         width: 118,
         height: 152,
-        sprite: (data: Monster) => monsterBgSpriteByRace(data.race),
+        sprite: ({ data }: BattleMonsterModel) => monsterBgSpriteByRace(data.race),
       },
     },
     {
@@ -34,7 +35,7 @@ const monsterPopupMarkup: Markup<Monster> = {
         top: 80,
         width: 110,
         height: 120,
-        sprite: (data: Monster) => monsterSpriteById(data.id),
+        sprite: ({ data }: BattleMonsterModel) => monsterSpriteById(data.id),
       },
     },
     {
@@ -51,7 +52,10 @@ const monsterPopupMarkup: Markup<Monster> = {
             },
             {
               type: MarkupType.text,
-              options: { align: 'right', text: (data: Monster) => `${data.damage.attack}` },
+              options: {
+                align: 'right',
+                text: ({ data, attack }: BattleMonsterModel) => `${data.damage.attack} (${attack})`,
+              },
             },
           ],
         },
@@ -65,7 +69,11 @@ const monsterPopupMarkup: Markup<Monster> = {
             },
             {
               type: MarkupType.text,
-              options: { align: 'right', text: (data: Monster) => `${data.damage.defense}` },
+              options: {
+                align: 'right',
+                text: ({ data, defense }: BattleMonsterModel) =>
+                  `${data.damage.defense} (${defense})`,
+              },
             },
           ],
         },
@@ -79,7 +87,10 @@ const monsterPopupMarkup: Markup<Monster> = {
             },
             {
               type: MarkupType.text,
-              options: { align: 'right', text: (data: Monster) => `${data.damage.shots}` },
+              options: {
+                align: 'right',
+                text: ({ data }: BattleMonsterModel) => `${data.damage.shots}`,
+              },
             },
           ],
         },
@@ -95,7 +106,7 @@ const monsterPopupMarkup: Markup<Monster> = {
               type: MarkupType.text,
               options: {
                 align: 'right',
-                text: (data: Monster) => `${data.damage.melee.join(' - ')}`,
+                text: ({ data }: BattleMonsterModel) => `${data.damage.melee.join(' - ')}`,
               },
             },
           ],
@@ -110,7 +121,10 @@ const monsterPopupMarkup: Markup<Monster> = {
             },
             {
               type: MarkupType.text,
-              options: { align: 'right', text: (data: Monster) => `${data.damage.hitPoints}` },
+              options: {
+                align: 'right',
+                text: ({ data }: BattleMonsterModel) => `${data.damage.hitPoints}`,
+              },
             },
           ],
         },
@@ -124,7 +138,10 @@ const monsterPopupMarkup: Markup<Monster> = {
             },
             {
               type: MarkupType.text,
-              options: { align: 'right', text: (data: Monster) => `${data.damage.hitPoints}` },
+              options: {
+                align: 'right',
+                text: ({ lastUnitHealth }: BattleMonsterModel) => `${lastUnitHealth}`,
+              },
             },
           ],
         },
@@ -138,7 +155,10 @@ const monsterPopupMarkup: Markup<Monster> = {
             },
             {
               type: MarkupType.text,
-              options: { align: 'right', text: (data: Monster) => `${data.damage.speed}` },
+              options: {
+                align: 'right',
+                text: ({ data }: BattleMonsterModel) => `${data.damage.speed}`,
+              },
             },
           ],
         },
@@ -150,7 +170,7 @@ const monsterPopupMarkup: Markup<Monster> = {
         left: 25,
         top: 287,
         align: 'left',
-        text: (data: Monster) => `${data.abilityText}`,
+        text: ({ data }: BattleMonsterModel) => `${data.abilityText}`,
       },
     },
   ],

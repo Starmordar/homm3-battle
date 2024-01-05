@@ -257,7 +257,7 @@ export const uiSprites = {
     height: 128,
   },
   [SPRITE.battle_bg_01]: {
-    url: 'src/assets/battlefields/1_0.jpg',
+    url: 'src/assets/battlefields/CMBKBOAT.png',
     width: 800,
     height: 556,
   },

@@ -137,6 +137,7 @@ class UnitsView extends Canvas<ViewOptions> {
 
   private drawMonsterWindow() {
     if (!this.showMenu) return;
+    console.log('draw monster window');
     this.monsterWindow?.draw();
   }
 
@@ -154,6 +155,7 @@ class UnitsView extends Canvas<ViewOptions> {
 
     this.canvas.addEventListener('mouseup', (evt: MouseEvent) => {
       if (evt.button === 2) {
+        console.log('mouseup trigger');
         this.monsterWindow = null;
         this.showMenu = false;
       }
