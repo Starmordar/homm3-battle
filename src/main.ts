@@ -5,7 +5,7 @@ import { Textures } from './services/SpriteRepository';
 import ResourceController from './services/ResourceController';
 
 import UICanvas from './models/canvas/UICanvas';
-import UnitsView from './models/canvas/UnitsView';
+import AnimationView from './models/canvas/AnimationView';
 import HexLayoutView from './models/canvas/HexLayoutView';
 
 import { battleHeight, battleWidth, hexObstacles, layoutViewSize } from './constants/hex';
@@ -63,5 +63,5 @@ const unitsViewOptions = {
   size: layoutViewSize,
 };
 
-const unitsCanvas = new UnitsView(battle, graph, unitsViewOptions);
+const unitsCanvas = new AnimationView(battle, graph, unitsViewOptions);
 unitsCanvas.setup();

@@ -2,18 +2,18 @@ import BattleGrid from '@/view/battle/BattleGrid';
 import Battle from '@/controllers/Battle';
 
 import BattleGraph from '../BattleGraph';
-import Canvas, { CanvasOptions } from './Canvas';
+import View, { ViewOptions } from './View';
 
 import { Point, Hexagon } from '../grid';
 import { EventKey, globalEvents } from '@/services/EventBus';
 import { setCursorStyle } from '@/utils/common';
 import { mousePointFromEvent } from '@/utils/canvas';
 
-interface ViewOptions extends CanvasOptions {
+interface ViewOptions extends ViewOptions {
   obstacles: Array<Hexagon>;
 }
 
-class HexLayoutView extends Canvas<ViewOptions> {
+class HexLayoutView extends View<ViewOptions> {
   private readonly graph: BattleGraph;
   private readonly gridView: BattleGrid;
   private readonly battle: Battle;

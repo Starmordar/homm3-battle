@@ -6,11 +6,11 @@ class BattleGraph {
   private readonly layout: Layout;
   private readonly terrainObstacles: Array<Hexagon>;
 
-  public hexes: Array<Hexagon>;
-  public hexCornersMap: Map<Hexagon, Array<Point>>;
+  hexes: Array<Hexagon>;
+  hexCornersMap: Map<Hexagon, Array<Point>>;
 
-  public hexReachables: Array<Hexagon> = [];
-  public hexPathMap: Map<string, Hexagon | null> = new Map();
+  hexReachables: Array<Hexagon> = [];
+  hexPathMap: Map<string, Hexagon | null> = new Map();
 
   constructor(obstacles: Array<Hexagon>) {
     this.layout = battleLayout;
@@ -20,7 +20,7 @@ class BattleGraph {
     this.terrainObstacles = obstacles;
   }
 
-  public computeHexReachables(position: Hexagon, unitObstacles: Array<Hexagon>, range: number) {
+  computeHexReachables(position: Hexagon, unitObstacles: Array<Hexagon>, range: number) {
     const obstacles = [...this.terrainObstacles, ...unitObstacles];
     const { fringes, path } = getHexReachables(position, obstacles, range);
 
@@ -28,16 +28,16 @@ class BattleGraph {
     this.hexPathMap = path;
   }
 
-  public resetHexReachables() {
+  resetHexReachables() {
     this.hexReachables = [];
     this.hexPathMap = new Map();
   }
 
-  public isPositionReachable(position: Hexagon): boolean {
+  isPositionReachable(position: Hexagon): boolean {
     return this.hexReachables.some((hex) => Hexagon.isEqual(position, hex));
   }
 
-  public hexAngleUnderPoint(hexagon: Hexagon, point: Point): number {
+  hexAngleUnderPoint(hexagon: Hexagon, point: Point): number {
     const corners = this.layout.hexToCorners(hexagon);
     const angle = getAngle(point, corners, this.layout.hexToPixel(hexagon));
 
@@ -45,15 +45,15 @@ class BattleGraph {
     return this.isPositionReachable(neighbor) ? angle : -1;
   }
 
-  public hexUnderPoint(point: Point): Hexagon | undefined {
+  hexUnderPoint(point: Point): Hexagon | undefined {
     return this.hexes.find((hex) => isPointInsideHex(point, this.layout.hexToCorners(hex)));
   }
 
-  public reachableHexUnderPoint(point: Point): Hexagon | undefined {
+  reachableHexUnderPoint(point: Point): Hexagon | undefined {
     return this.hexReachables.find((hex) => isPointInsideHex(point, this.layout.hexToCorners(hex)));
   }
 
-  public getPath(startPosition: Hexagon, endPosition: Hexagon) {
+  getPath(startPosition: Hexagon, endPosition: Hexagon) {
     const path = [endPosition];
     let tempPosition = endPosition;
 
@@ -63,6 +63,10 @@ class BattleGraph {
     }
 
     return path.reverse();
+  }
+
+  renderOrder(positionA: Hexagon, positionB: Hexagon) {
+    return positionA.r - positionB.r;
   }
 
   private getHexCornersMap(): Map<Hexagon, Array<Point>> {

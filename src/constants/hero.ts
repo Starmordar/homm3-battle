@@ -109,8 +109,3 @@ export const heroesClasses = {
     details: { morale: 1, luck: 0 },
   },
 };
-
-export const heroAnimationSize = {
-  width: 150,
-  height: 180,
-};

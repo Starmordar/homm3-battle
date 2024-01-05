@@ -1,11 +1,12 @@
 import Sprite from '../../view/sprites/Sprite';
+import type { StaticTexture } from '@/constants/textures/types';
 
-export interface CanvasOptions {
+export interface ViewOptions {
   classNames: Array<string>;
   size: { height: number; width: number };
 }
 
-class Canvas<Options extends CanvasOptions> {
+class View<Options extends ViewOptions> {
   protected readonly options: Options;
   protected readonly canvas: HTMLCanvasElement;
   protected readonly ctx: CanvasRenderingContext2D;
@@ -13,15 +14,13 @@ class Canvas<Options extends CanvasOptions> {
   constructor(options: Options) {
     this.options = options;
 
-    const canvas = this.createCanvas();
+    this.canvas = this.createView();
+    this.ctx = this.canvas.getContext('2d')!;
 
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d')!;
-
-    this.setCanvasSize();
+    this.setViewSize();
   }
 
-  private createCanvas(): HTMLCanvasElement {
+  private createView(): HTMLCanvasElement {
     const canvas = document.createElement('canvas');
     canvas.classList.add(...this.options.classNames);
 
@@ -31,7 +30,7 @@ class Canvas<Options extends CanvasOptions> {
     return canvas;
   }
 
-  protected setCanvasSize() {
+  protected setViewSize() {
     const { width, height } = this.options.size;
 
     this.canvas.style.width = width + 'px';
@@ -43,7 +42,7 @@ class Canvas<Options extends CanvasOptions> {
     this.ctx.scale(devicePixelRatio, devicePixelRatio);
   }
 
-  protected createCanvasPattern(sprite: Sprite) {
+  protected createViewPattern(sprite: Sprite<StaticTexture>) {
     const { width, height } = this.options.size;
     const pattern = this.ctx.createPattern(sprite.image, 'repeat')!;
 
@@ -52,4 +51,4 @@ class Canvas<Options extends CanvasOptions> {
   }
 }
 
-export default Canvas;
+export default View;

@@ -23,6 +23,15 @@ export interface Texture<T extends string> extends StaticTexture {
 export type TextureMap<T extends string> = Partial<Record<TEXTURES, Texture<T>>>;
 export type TextureFrames<T extends string> = Record<TEXTURES, Texture<T>['textures']>;
 
+export interface TextureOverrides {
+  width: number;
+  height: number;
+
+  top: number;
+  left: number;
+  right: (width: number) => number;
+}
+
 export enum TEXTURES {
   // STATIC TEXTURES
   surrender_btn = 'surrender_btn',

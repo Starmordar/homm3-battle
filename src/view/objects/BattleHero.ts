@@ -29,12 +29,11 @@ class BattleHeroView implements Observer {
 
   private createSprite() {
     const { model } = this.controller;
-    const settings = heroesClasses[model.class];
+    const heroClass = heroesClasses[model.class];
     const spriteKey = this.settings.mirror ? 'mirror' : 'normal';
 
-    this.sprite = Textures.get<HeroSprite>(settings.animation.sprites[spriteKey]);
-    this.frameY = settings.animation.frame.y;
-    console.log('this.sprite :>> ', this.sprite);
+    this.sprite = Textures.get<HeroSprite>(heroClass.animation.sprites[spriteKey]);
+    this.frameY = heroClass.animation.frame.y;
   }
 
   draw() {

@@ -1,5 +1,5 @@
 import { Textures } from '../../services/SpriteRepository';
-import Canvas, { CanvasOptions } from './Canvas';
+import View, { ViewOptions } from './View';
 
 import BattlePanel from '../../view/battle/BattlePanel';
 import HeroSummary from '../../view/battle/HeroSummary';
@@ -10,13 +10,13 @@ import { EventKey, globalEvents } from '@/services/EventBus';
 import Battle from '@/controllers/Battle';
 import { TEXTURES } from '@/constants/textures/types';
 
-export interface UICanvasOptions extends CanvasOptions {
+export interface UICanvasOptions extends ViewOptions {
   backgroundSprite: string;
   battleWidth: number;
   battleHeight: number;
 }
 
-class UICanvas extends Canvas<UICanvasOptions> {
+class UICanvas extends View<UICanvasOptions> {
   private readonly battleCanvasOffset: { x: number; y: number };
   private readonly battle: Battle;
 
@@ -34,7 +34,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
 
   public draw() {
     const patternSprite = Textures.get(TEXTURES.edge_pattern);
-    this.createCanvasPattern(patternSprite);
+    this.createViewPattern(patternSprite);
 
     this.drawBorders();
     this.drawCorners();
