@@ -1,4 +1,4 @@
-import { SPRITE } from '../sprites';
+import { TEXTURES } from '../textures/types';
 
 export enum MarkupType {
   text = 'text',
@@ -15,7 +15,7 @@ export type TextMarkup<T> = {
 
 export type SpriteMarkup<T> = {
   type: MarkupType.sprite;
-  options: MarkupOptions & { sprite: SPRITE | ((data: T) => SPRITE) };
+  options: MarkupOptions & { sprite: TEXTURES | ((data: T) => TEXTURES) };
 };
 
 export type GroupMarkup<T> = {
@@ -27,7 +27,7 @@ export type GroupMarkup<T> = {
 export type MarkupChild<T> = TextMarkup<T> | SpriteMarkup<T> | GroupMarkup<T>;
 
 export interface Markup<T> {
-  background: { sprite: SPRITE; width: number; height: number };
+  background: { sprite: TEXTURES; width: number; height: number };
   textOptions: { font: string; fillStyle: string; textBaseline: CanvasTextBaseline };
   children: Array<MarkupChild<T>>;
 }

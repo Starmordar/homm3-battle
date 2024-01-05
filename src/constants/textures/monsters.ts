@@ -1,10 +1,5 @@
 import { mirrorFrames, slowFrames } from '@/utils/textures';
-import type { TextureFrames, TextureMap } from '@/types';
-
-export enum TEXTURES {
-  wraith = 'wraith',
-  wraith_mirror = 'wraith_mirror',
-}
+import { TEXTURES, TextureFrames, TextureMap } from './types';
 
 export enum MONSTER_SPRITES {
   idle = 'idle',
@@ -20,7 +15,7 @@ export enum MONSTER_SPRITES {
   dead = 'dead',
 }
 
-const frames: Partial<TextureFrames> = {
+const frames: Partial<TextureFrames<MONSTER_SPRITES>> = {
   [TEXTURES.wraith]: {
     [MONSTER_SPRITES.idle]: { y: 6, x: [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6] },
     [MONSTER_SPRITES.move]: { y: 6, x: [0, 1, 2, 3, 4, 5, 6] },
@@ -36,7 +31,7 @@ const frames: Partial<TextureFrames> = {
   },
 };
 
-export const monsterTextures: TextureMap = slowFrames(
+export const monsterTextures: TextureMap<MONSTER_SPRITES> = slowFrames(
   {
     [TEXTURES.wraith]: {
       url: '/src/assets/wraith.png',

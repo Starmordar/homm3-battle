@@ -1,7 +1,9 @@
-import { uiSprites, animatedSprites, type SpriteOptions } from '../constants/sprites';
 import Sprite from '../view/sprites/Sprite';
 import SpriteFactory from './SpriteFactory';
 import SpriteRepository from './SpriteRepository';
+
+import { staticTextures } from '@/constants/textures/static';
+import type { StaticTexture, TEXTURE_TYPE } from '@/constants/textures/types';
 
 class ResourceController {
   private readonly spriteRegistry: SpriteRepository;
@@ -13,20 +15,22 @@ class ResourceController {
   }
 
   public load() {
-    return Promise.all([this.loadSprites(uiSprites), this.loadSprites(animatedSprites)]);
+    return Promise.all([this.loadSprites(staticTextures)]);
   }
 
-  // sprite + uuid
-  public loadSprite(key: string, options: SpriteOptions): Promise<Sprite> {
+  public loadSprite(key: string, options: StaticTexture): Promise<Sprite<StaticTexture>> {
     const sprite = this.spriteFactory.create(options);
 
     this.spriteRegistry.register(key, sprite);
     return sprite.load;
   }
 
-  public async loadSprites(options: Record<string, SpriteOptions>): Promise<Array<Sprite>> {
+  public async loadSprites(
+    options: Record<string, StaticTexture>,
+    type?: TEXTURE_TYPE
+  ): Promise<Array<Sprite<StaticTexture>>> {
     const promises = Object.keys(options).map((key) => {
-      const sprite = this.spriteFactory.create(options[key as keyof typeof options]);
+      const sprite = this.spriteFactory.create(options[key as keyof typeof options], type);
 
       this.spriteRegistry.register(key, sprite);
       return sprite.load;

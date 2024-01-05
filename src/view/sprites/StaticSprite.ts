@@ -1,12 +1,12 @@
 import Sprite from '@/view/sprites/Sprite';
-import type { SpriteOptions } from '@/constants/sprites';
+import type { StaticTexture } from '@/constants/textures/types';
 
-class UISprite extends Sprite {
-  constructor(options: SpriteOptions) {
+class StaticSprite extends Sprite<StaticTexture> {
+  constructor(options: StaticTexture) {
     super(options);
   }
 
-  public drawFrame(
+  drawFrame(
     ctx: CanvasRenderingContext2D,
     frameX: number,
     frameY: number,
@@ -24,4 +24,4 @@ class UISprite extends Sprite {
   }
 }
 
-export default UISprite;
+export default StaticSprite;

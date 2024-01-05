@@ -1,9 +1,9 @@
 import { Textures } from '@/services/SpriteRepository';
 import Stroke from '@/view/common/Stroke';
 
-import { SPRITE } from '@/constants/sprites';
 import { defaultPanelOptions } from '@/constants/ui';
 import type { Rect, Renderable } from '@/types';
+import { TEXTURES } from '@/constants/textures/types';
 
 interface PanelOptions extends Rect {
   borderSize?: number;
@@ -47,7 +47,7 @@ class Panel implements Renderable {
   private drawBackgroundImage(ctx: CanvasRenderingContext2D) {
     const { width, height, x, y } = this.options;
 
-    const sprite = Textures.get(SPRITE.panel_bg);
+    const sprite = Textures.get(TEXTURES.panel_bg);
     const pattern = ctx.createPattern(sprite.image, 'repeat')!;
 
     ctx.fillStyle = pattern;

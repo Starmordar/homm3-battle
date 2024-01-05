@@ -4,7 +4,8 @@ import MonsterSprite from '../sprites/MonsterSprite';
 import { Observer } from '@/services/Observer';
 import { battleLayout } from '@/constants/hex';
 import { Hexagon, Point } from '@/models/grid';
-import { MONSTER_SPRITES } from '@/constants/textures';
+import { MONSTER_SPRITES } from '@/constants/textures/monsters';
+import { Textures } from '@/services/SpriteRepository';
 
 class BattleMonsterView implements Observer {
   private readonly controller: BattleMonster;
@@ -13,12 +14,13 @@ class BattleMonsterView implements Observer {
 
   private animationIndex: number = 0;
 
-  constructor(controller: BattleMonster, ctx: CanvasRenderingContext2D, sprite: MonsterSprite) {
+  constructor(controller: BattleMonster, ctx: CanvasRenderingContext2D) {
     this.ctx = ctx;
-    this.sprite = sprite;
 
     this.controller = controller;
     this.controller.model.addObserver(this);
+
+    this.sprite = Textures.get<MonsterSprite>(this.controller.model.uuid);
   }
 
   public draw() {

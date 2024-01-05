@@ -1,7 +1,7 @@
 import { Hexagon } from '@/models/grid';
 import BattleMonsterModel from '../models/BattleMonsterModel';
 import EventBus from '../services/EventBus';
-import { MONSTER_SPRITES } from '@/constants/textures';
+import { MONSTER_SPRITES } from '@/constants/textures/monsters';
 
 enum Event {
   endMoveAnimation = 'endMoveAnimation',

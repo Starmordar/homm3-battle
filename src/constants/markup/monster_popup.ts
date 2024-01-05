@@ -1,11 +1,11 @@
-import { SPRITE } from '../sprites';
 import { monsterBgSpriteByRace, monsterSpriteById } from '@/utils/textures';
 
 import { Markup, MarkupType } from './types';
 import type BattleMonsterModel from '@/models/BattleMonsterModel';
+import { TEXTURES } from '../textures/types';
 
 const monsterPopupMarkup: Markup<BattleMonsterModel> = {
-  background: { sprite: SPRITE.monster_window, width: 350, height: 360 },
+  background: { sprite: TEXTURES.monster_window, width: 350, height: 360 },
   textOptions: { font: '15px Crimson Pro', fillStyle: 'white', textBaseline: 'bottom' },
 
   children: [

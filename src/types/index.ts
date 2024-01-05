@@ -1,5 +1,3 @@
-import { MONSTER_SPRITES, TEXTURES } from '@/constants/textures';
-
 export interface Renderable {
   /**
    * Draw UI element on the canvas
@@ -21,14 +19,3 @@ export interface Bounds {
   x: [number, number];
   y: [number, number];
 }
-
-export interface Texture {
-  url: string;
-  width: number;
-  height: number;
-
-  textures: Record<MONSTER_SPRITES, { y: number; x: Array<number> }>;
-}
-
-export type TextureMap = Partial<Record<TEXTURES, Texture>>;
-export type TextureFrames = Record<TEXTURES, Texture['textures']>;

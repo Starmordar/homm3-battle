@@ -13,24 +13,25 @@ const offset = 10;
 class MonsterWindow implements Observer {
   private readonly controller: BattleMonster;
   private readonly ctx: CanvasRenderingContext2D;
+  private bounds: Bounds;
 
   constructor(controller: BattleMonster, ctx: CanvasRenderingContext2D) {
     this.ctx = ctx;
+
+    this.bounds = {
+      x: [offset, layoutViewSize.width - offset],
+      y: [offset, layoutViewSize.height - offset],
+    };
 
     this.controller = controller;
     this.controller.model.addObserver(this);
   }
 
-  public draw() {
-    const bounds: Bounds = {
-      x: [offset, layoutViewSize.width - offset],
-      y: [offset, layoutViewSize.height - offset],
-    };
-
+  draw() {
     const markupPanel = new MarkupPanel<BattleMonsterModel>(
       this.ctx,
       markup,
-      bounds,
+      this.bounds,
       this.anchorPoint(),
       this.controller.model
     );
@@ -43,7 +44,13 @@ class MonsterWindow implements Observer {
     return battleLayout.hexToPixel(position);
   }
 
-  update() {}
+  update() {
+    this.draw();
+  }
+
+  remove() {
+    this.controller.model.removeObserver(this);
+  }
 }
 
 export default MonsterWindow;

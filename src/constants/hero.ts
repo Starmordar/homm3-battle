@@ -1,4 +1,4 @@
-import { SPRITE } from './sprites';
+import { TEXTURES } from './textures/types';
 
 export interface HeroOptions {
   sprite: [number, number];
@@ -93,7 +93,7 @@ export const heroesClasses = {
   deathknight: {
     commander: 'powerLich',
     animation: {
-      sprites: { normal: SPRITE.heroes_animation, mirror: SPRITE.heroes_animation_mirror },
+      sprites: { normal: TEXTURES.hero, mirror: TEXTURES.hero_mirror },
       frame: { x: 0, y: 8 },
     },
     primarySkills: { attack: 1, defense: 3, spellPower: 1, knowledge: 1 },
@@ -102,7 +102,7 @@ export const heroesClasses = {
   necromancer: {
     commander: 'powerLich',
     animation: {
-      sprites: { normal: SPRITE.heroes_animation, mirror: SPRITE.heroes_animation_mirror },
+      sprites: { normal: TEXTURES.hero, mirror: TEXTURES.hero_mirror },
       frame: { x: 0, y: 9 },
     },
     primarySkills: { attack: 1, defense: 1, spellPower: 2, knowledge: 2 },

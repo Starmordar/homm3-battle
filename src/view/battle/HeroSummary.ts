@@ -2,10 +2,10 @@ import { Textures } from '@/services/SpriteRepository';
 import Panel from '@/view/common/Panel';
 import Stroke from '@/view/common/Stroke';
 
-import { SPRITE } from '@/constants/sprites';
 import { SummaryConfig, defaultSummaryOptions } from '@/constants/ui';
 import type { Rect, Renderable } from '@/types';
 import BattleHero from '@/controllers/BattleHero';
+import { TEXTURES } from '@/constants/textures/types';
 
 interface HeroSummaryOptions extends Omit<Rect, 'width' | 'height'> {
   hero: BattleHero;
@@ -30,7 +30,7 @@ class HeroSummary implements Renderable {
     const { avatar } = defaultSummaryOptions;
     const [frameX, frameY] = this.heroInfo.model.options.sprite;
 
-    const portraitSprite = Textures.get(SPRITE.hero_avatar_lg);
+    const portraitSprite = Textures.get(TEXTURES.hero_avatar_lg);
     portraitSprite.drawFrame(
       ctx,
       frameX,

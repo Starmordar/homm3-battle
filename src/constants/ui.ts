@@ -1,8 +1,8 @@
 import { EventKey } from '@/services/EventBus';
-import { SPRITE } from './sprites';
 import { Rect } from '@/types';
 import { isWaitDisabled } from '@/utils/battle';
 import Battle from '@/controllers/Battle';
+import { TEXTURES } from './textures/types';
 
 interface BattleControlSprites {
   idle: string;
@@ -30,9 +30,9 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
     y: 0,
 
     sprites: {
-      idle: SPRITE.settings_btn,
-      active: SPRITE.settings_btn_active,
-      disabled: SPRITE.settings_btn_disabled,
+      idle: TEXTURES.settings_btn,
+      active: TEXTURES.settings_btn_active,
+      disabled: TEXTURES.settings_btn_disabled,
     },
     disabled: () => true,
     event: EventKey.waitTurn,
@@ -43,9 +43,9 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
     y: 0,
 
     sprites: {
-      idle: SPRITE.surrender_btn,
-      active: SPRITE.surrender_btn_active,
-      disabled: SPRITE.surrender_btn_disabled,
+      idle: TEXTURES.surrender_btn,
+      active: TEXTURES.surrender_btn_active,
+      disabled: TEXTURES.surrender_btn_disabled,
     },
     disabled: () => true,
     event: EventKey.waitTurn,
@@ -56,9 +56,9 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
     y: 0,
 
     sprites: {
-      idle: SPRITE.flee_btn,
-      active: SPRITE.flee_btn_active,
-      disabled: SPRITE.flee_btn_disabled,
+      idle: TEXTURES.flee_btn,
+      active: TEXTURES.flee_btn_active,
+      disabled: TEXTURES.flee_btn_disabled,
     },
     disabled: () => true,
     event: EventKey.waitTurn,
@@ -69,9 +69,9 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
     y: 0,
 
     sprites: {
-      idle: SPRITE.magic_btn,
-      active: SPRITE.magic_btn_active,
-      disabled: SPRITE.magic_btn_disabled,
+      idle: TEXTURES.magic_btn,
+      active: TEXTURES.magic_btn_active,
+      disabled: TEXTURES.magic_btn_disabled,
     },
     disabled: () => true,
     event: EventKey.waitTurn,
@@ -83,9 +83,9 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
     y: 0,
 
     sprites: {
-      idle: SPRITE.shield_btn,
-      active: SPRITE.shield_btn_active,
-      disabled: SPRITE.shield_btn_disabled,
+      idle: TEXTURES.shield_btn,
+      active: TEXTURES.shield_btn_active,
+      disabled: TEXTURES.shield_btn_disabled,
     },
     disabled: () => true,
     event: EventKey.waitTurn,
@@ -96,9 +96,9 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
     y: 0,
 
     sprites: {
-      idle: SPRITE.pass_btn,
-      active: SPRITE.pass_btn_active,
-      disabled: SPRITE.pass_btn_disabled,
+      idle: TEXTURES.pass_btn,
+      active: TEXTURES.pass_btn_active,
+      disabled: TEXTURES.pass_btn_disabled,
     },
     disabled: isWaitDisabled,
     event: EventKey.waitTurn,
@@ -109,9 +109,9 @@ export const battleControlsOptions = (panelWidth: number): Array<ControlButtonOp
     y: 0,
 
     sprites: {
-      idle: SPRITE.auto_btn,
-      active: SPRITE.auto_btn_active,
-      disabled: SPRITE.auto_btn_disabled,
+      idle: TEXTURES.auto_btn,
+      active: TEXTURES.auto_btn_active,
+      disabled: TEXTURES.auto_btn_disabled,
     },
     disabled: () => true,
     event: EventKey.waitTurn,
@@ -124,7 +124,7 @@ export const battleConsoleOptions = (panelWidth: number): ConsoleOptions => {
     y: 0,
     width: panelWidth - defaultControlSettings.width * 7,
     height: defaultControlSettings.height,
-    sprite: SPRITE.panel_bg,
+    sprite: TEXTURES.panel_bg,
   };
 };
 

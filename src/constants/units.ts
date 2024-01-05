@@ -1,5 +1,5 @@
 import { Hexagon } from '../models/grid';
-import { TEXTURES } from './textures';
+import { TEXTURES } from './textures/types';
 
 export interface Creature {
   monsterId: number;

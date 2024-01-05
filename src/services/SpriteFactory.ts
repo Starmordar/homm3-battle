@@ -1,23 +1,26 @@
 import Sprite from '@/view/sprites/Sprite';
-import AnimatedSprite from '@/view/sprites/AnimatedSprite';
-import UISprite from '@/view/sprites/UISprite';
+import StaticSprite from '@/view/sprites/StaticSprite';
 import MonsterSprite from '@/view/sprites/MonsterSprite';
+import HeroSprite from '@/view/sprites/HeroSprite';
 
-import type { SpriteOptions, AnimatedSpriteOptions } from '@/constants/sprites';
-import type { Texture } from '@/types';
+import { StaticTexture, TEXTURE_TYPE, Texture } from '@/constants/textures/types';
+import type { MONSTER_SPRITES } from '@/constants/textures/monsters';
+import { HERO_SPRITES } from '@/constants/textures/heroes';
 
 class SpriteFactory {
   constructor() {}
 
-  public create(options: SpriteOptions): Sprite {
-    if (options.animations) {
-      return new AnimatedSprite(options as AnimatedSpriteOptions);
+  create(options: StaticTexture, type?: TEXTURE_TYPE): Sprite<StaticTexture> {
+    switch (type) {
+      case TEXTURE_TYPE.hero:
+        return new HeroSprite(options as Texture<HERO_SPRITES>);
+      case TEXTURE_TYPE.monster:
+        return new MonsterSprite(options as Texture<MONSTER_SPRITES>);
+      case TEXTURE_TYPE.static:
+        return new StaticSprite(options);
+      default:
+        return new StaticSprite(options);
     }
-    if (options.textures) {
-      return new MonsterSprite(options as Texture);
-    }
-
-    return new UISprite(options);
   }
 }
 

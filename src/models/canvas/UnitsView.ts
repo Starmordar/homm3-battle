@@ -1,25 +1,26 @@
-import { Textures } from '../../services/SpriteRepository';
 import Canvas, { CanvasOptions } from './Canvas';
 
-import AnimatedSprite from '../../view/sprites/AnimatedSprite';
-
-import { type SpriteAnimation } from '../../constants/sprites';
-import { heroAnimationSize, heroesClasses } from '@/constants/hero';
+import { heroAnimationSize } from '@/constants/hero';
 import { EventKey, globalEvents } from '@/services/EventBus';
+
+import Battle from '@/controllers/Battle';
+import BattleGraph from '@/models/BattleGraph';
+
+import BattleHero from '@/controllers/BattleHero';
+import BattleHeroView from '@/view/objects/BattleHero';
 
 import BattleMonster from '@/controllers/BattleMonster';
 import BattleMonsterView from '@/view/objects/BattleMonster';
-import BattleHero from '@/controllers/BattleHero';
-import MonsterSprite from '@/view/sprites/MonsterSprite';
-import Battle from '@/controllers/Battle';
-import { mousePointFromEvent } from '@/utils/canvas';
-import BattleGraph from '../BattleGraph';
 import MonsterWindow from '@/view/windows/MonsterWindow';
+
+import { mousePointFromEvent } from '@/utils/canvas';
+import { BUTTON_CODE } from '@/constants/common';
+import MonsterSprite from '@/view/sprites/MonsterSprite';
 
 export interface ViewOptions extends CanvasOptions {}
 
 export interface AnimatedUnit {
-  sprite: AnimatedSprite;
+  sprite: MonsterSprite;
   monster: BattleMonster;
 }
 
@@ -27,11 +28,9 @@ class UnitsView extends Canvas<ViewOptions> {
   private readonly graph: BattleGraph;
   private readonly battle: Battle;
 
-  private animationStart: number = 0;
-  private heroSprites: Array<{ sprite: AnimatedSprite; frameY: number }> = [];
-
-  private monsters: Array<BattleMonsterView> = [];
-  private showMenu: boolean;
+  private animationStartTimestamp: number = 0;
+  private heroViews: Array<BattleHeroView> = [];
+  private monsterViews: Array<BattleMonsterView> = [];
   private monsterWindow: MonsterWindow | null;
 
   constructor(battle: Battle, graph: BattleGraph, options: ViewOptions) {
@@ -40,56 +39,49 @@ class UnitsView extends Canvas<ViewOptions> {
     this.battle = battle;
     this.graph = graph;
 
-    this.showMenu = false;
     this.monsterWindow = null;
-
     this.animationStep = this.animationStep.bind(this);
   }
 
   public async setup() {
-    const heroes = this.battle.model.heroes;
+    const [leftHero, rightHero] = this.battle.model.heroes;
 
-    this.createHeroAnimation(heroes[0], false);
-    this.createHeroAnimation(heroes[1], true);
+    this.createHeroView(leftHero, false);
+    this.createHeroView(rightHero, true);
 
-    this.attachMouseEvents();
+    this.attachEvents();
 
     requestAnimationFrame(this.firstFrame.bind(this));
   }
 
-  private createHeroAnimation(hero: BattleHero, mirror: boolean) {
-    const settings = heroesClasses[hero.model.class];
-    const spriteKey = mirror ? 'mirror' : 'normal';
+  private createHeroView(hero: BattleHero, mirror: boolean) {
+    const view = new BattleHeroView(hero, this.ctx, { mirror });
+    this.heroViews.push(view);
 
-    const sprite = Textures.get<AnimatedSprite>(settings.animation.sprites[spriteKey]);
-    this.heroSprites.push({ sprite, frameY: settings.animation.frame.y });
-
-    this.createCreaturesAnimation(hero.model.army);
+    this.createMonsterViews(hero.model.army);
   }
 
-  private createCreaturesAnimation(army: Array<BattleMonster>) {
-    army.forEach((monster) => {
-      const sprite = Textures.get<MonsterSprite>(monster.model.uuid);
-
-      const monsterView = new BattleMonsterView(monster, this.ctx, sprite);
-      this.monsters.push(monsterView);
+  private createMonsterViews(monsters: Array<BattleMonster>) {
+    monsters.forEach((monster) => {
+      const view = new BattleMonsterView(monster, this.ctx);
+      this.monsterViews.push(view);
     });
   }
 
   private firstFrame(timeStamp: DOMHighResTimeStamp) {
-    this.animationStart = timeStamp;
+    this.animationStartTimestamp = timeStamp;
     this.animationStep(timeStamp);
   }
 
   private animationStep(timeStamp: DOMHighResTimeStamp) {
-    const delta = (timeStamp - this.animationStart) / 20;
+    const delta = (timeStamp - this.animationStartTimestamp) / 20;
 
     if (delta < 1) {
       requestAnimationFrame(this.animationStep);
       return;
     }
 
-    this.animationStart = timeStamp;
+    this.animationStartTimestamp = timeStamp;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.animateHeroes();
@@ -110,55 +102,55 @@ class UnitsView extends Canvas<ViewOptions> {
 
   private animateFirstHero({ top, left }: { top: number; left: number }) {
     const { width, height } = heroAnimationSize;
-    const { sprite, frameY } = this.heroSprites[0];
+    const { sprite } = this.heroViews[0];
 
-    sprite.drawFrame(this.ctx, frameY, left, top, width, height);
-    sprite.currentFrame++;
-    sprite.nextAnimation = this.nextHeroAnimation();
+    sprite.drawFrame(this.ctx, left, top, width, height);
+    sprite.setNextFrame();
   }
 
   private animateSecondHero({ top, left }: { top: number; left: number }) {
     const { width, height } = heroAnimationSize;
-    const { sprite, frameY } = this.heroSprites[1];
+    const { sprite } = this.heroViews[1];
 
-    sprite.drawFrame(this.ctx, frameY, left, top, width, height);
-    sprite.currentFrame++;
-    sprite.nextAnimation = this.nextHeroAnimation();
-  }
-
-  private nextHeroAnimation(): keyof SpriteAnimation {
-    return Math.random() < 0.05 ? 'active' : 'idle';
+    sprite.drawFrame(this.ctx, left, top, width, height);
+    sprite.setNextFrame();
   }
 
   private animateCreatures() {
-    const sortedMonsters = this.monsters.sort((a, b) => a.position.r - b.position.r);
+    const sortedMonsters = this.monsterViews.sort((a, b) => a.position.r - b.position.r);
     sortedMonsters.forEach((monster) => monster.draw());
   }
 
   private drawMonsterWindow() {
-    if (!this.showMenu) return;
-    console.log('draw monster window');
     this.monsterWindow?.draw();
   }
 
-  private attachMouseEvents() {
+  private removeMonsterWindow() {
+    this.monsterWindow?.remove();
+    this.monsterWindow = null;
+  }
+
+  private createMonsterWindow(evt: MouseEvent) {
+    const hexUnderPoint = this.graph.hexUnderPoint(mousePointFromEvent(evt));
+    if (!hexUnderPoint) return;
+
+    const monster = this.battle.monsterByPosition(hexUnderPoint);
+    if (!monster) return;
+
+    this.monsterWindow = new MonsterWindow(monster, this.ctx);
+  }
+
+  private attachEvents() {
     this.canvas.addEventListener('contextmenu', (evt: MouseEvent) => {
       evt.preventDefault();
     });
 
     this.canvas.addEventListener('mousedown', (evt: MouseEvent) => {
-      if (evt.button === 2) {
-        this.triggerMonsterWindow(evt);
-        this.showMenu = true;
-      }
+      if (evt.button === BUTTON_CODE.RIGHT) this.createMonsterWindow(evt);
     });
 
     this.canvas.addEventListener('mouseup', (evt: MouseEvent) => {
-      if (evt.button === 2) {
-        console.log('mouseup trigger');
-        this.monsterWindow = null;
-        this.showMenu = false;
-      }
+      if (evt.button === BUTTON_CODE.RIGHT) this.removeMonsterWindow();
     });
 
     this.canvas.addEventListener('mousemove', (evt: MouseEvent) => {
@@ -168,16 +160,6 @@ class UnitsView extends Canvas<ViewOptions> {
     this.canvas.addEventListener('click', (evt: MouseEvent) => {
       globalEvents.emit(EventKey.clickBattleground, evt);
     });
-  }
-
-  private triggerMonsterWindow(evt: MouseEvent) {
-    const hexUnderPoint = this.graph.hexUnderPoint(mousePointFromEvent(evt));
-    if (!hexUnderPoint) return;
-
-    const monster = this.battle.monsterByPosition(hexUnderPoint);
-    if (!monster) return;
-
-    this.monsterWindow = new MonsterWindow(monster, this.ctx);
   }
 }
 

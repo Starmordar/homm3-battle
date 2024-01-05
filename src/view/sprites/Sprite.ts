@@ -1,12 +1,12 @@
-import type { SpriteOptions } from '@/constants/sprites';
+import type { StaticTexture } from '@/constants/textures/types';
 
-abstract class Sprite<T extends SpriteOptions = SpriteOptions> {
-  public readonly options: T;
+class Sprite<Options extends StaticTexture> {
+  public readonly options: Options;
 
   public image: HTMLImageElement = new Image();
   public load: Promise<this>;
 
-  constructor(options: T) {
+  constructor(options: Options) {
     this.options = options;
     this.load = this.loadImage(options.url);
   }
@@ -23,16 +23,6 @@ abstract class Sprite<T extends SpriteOptions = SpriteOptions> {
       this.image.src = url;
     });
   }
-
-  abstract drawFrame(
-    ctx: CanvasRenderingContext2D,
-    fx: number,
-    fy: number,
-    dx: number,
-    dy: number,
-    dw: number,
-    dh: number
-  ): void;
 }
 
 export default Sprite;

@@ -1,9 +1,11 @@
-import { SPRITE } from '@/constants/sprites';
-import { MONSTER_SPRITES, TEXTURES } from '@/constants/textures';
 import BattleMonster from '@/controllers/BattleMonster';
-import type { Texture, TextureMap } from '@/types';
+import { MONSTER_SPRITES } from '@/constants/textures/monsters';
+import { Frame, TEXTURES, Texture, TextureMap } from '@/constants/textures/types';
 
-export function slowFrames(textureMap: TextureMap, factor: number): TextureMap {
+export function slowFrames<T extends string>(
+  textureMap: TextureMap<T>,
+  factor: number
+): TextureMap<T> {
   const textureMapClone = structuredClone(textureMap);
 
   for (const mapKey in textureMapClone) {
@@ -11,9 +13,9 @@ export function slowFrames(textureMap: TextureMap, factor: number): TextureMap {
     if (!texture) continue;
 
     for (const textureKey in texture.textures) {
-      const animation = texture.textures[textureKey as MONSTER_SPRITES];
+      const animation = texture.textures[textureKey as T];
 
-      texture.textures[textureKey as MONSTER_SPRITES] = {
+      texture.textures[textureKey as T] = {
         y: animation.y,
         x: slowFrame(animation.x, factor),
       };
@@ -27,22 +29,25 @@ function slowFrame(frames: Array<number>, factor = 8) {
   return frames.flatMap((frame) => new Array(factor).fill(frame));
 }
 
-export function mirrorFrames(frames: Texture['textures']): Texture['textures'] {
-  const maxFrameX = maxFrame(frames);
-  const mirrored: Partial<Texture['textures']> = {};
+export function mirrorFrames<T extends string>(
+  frames: Texture<T>['textures'],
+  max?: number
+): Texture<T>['textures'] {
+  const maxFrameX = max ?? maxFrame(frames);
+  const mirrored: Partial<Texture<T>['textures']> = {};
 
-  for (const [key, frame] of Object.entries(frames)) {
+  for (const [key, frame] of Object.entries<Frame>(frames)) {
     const mirroredFrames = frame.x.map((frameX) => Math.abs(maxFrameX - frameX));
-    mirrored[key as MONSTER_SPRITES] = { y: frame.y, x: mirroredFrames };
+    mirrored[key as T] = { y: frame.y, x: mirroredFrames };
   }
 
-  return mirrored as Texture['textures'];
+  return mirrored as Texture<T>['textures'];
 }
 
-function maxFrame(frames: Texture['textures']): number {
+function maxFrame<T extends string>(frames: Texture<T>['textures']): number {
   let max = 0;
 
-  for (const [_, frame] of Object.entries(frames)) {
+  for (const [_, frame] of Object.entries<Frame>(frames)) {
     max = Math.max(max, ...frame.x);
   }
 
@@ -67,10 +72,10 @@ export function attackedAnimation(attacking: BattleMonster, attacked: BattleMons
 
 export function monsterBgSpriteByRace(race: number) {
   // TODO: Add all races
-  return SPRITE.necropolis_monster_bg;
+  return TEXTURES.necropolis_monster_bg;
 }
 
 export function monsterSpriteById(id: number) {
   // TODO: Add all ids
-  return SPRITE.wraith_static;
+  return TEXTURES.wraith_static;
 }

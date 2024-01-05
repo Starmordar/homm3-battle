@@ -5,10 +5,10 @@ import BattlePanel from '../../view/battle/BattlePanel';
 import HeroSummary from '../../view/battle/HeroSummary';
 import Stroke from '../../view/common/Stroke';
 
-import { SPRITE } from '../../constants/sprites';
 import { battlePanelHeight, summaryWidth } from '../../constants/ui';
 import { EventKey, globalEvents } from '@/services/EventBus';
 import Battle from '@/controllers/Battle';
+import { TEXTURES } from '@/constants/textures/types';
 
 export interface UICanvasOptions extends CanvasOptions {
   backgroundSprite: string;
@@ -33,7 +33,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
   }
 
   public draw() {
-    const patternSprite = Textures.get(SPRITE.edge_pattern);
+    const patternSprite = Textures.get(TEXTURES.edge_pattern);
     this.createCanvasPattern(patternSprite);
 
     this.drawBorders();
@@ -63,7 +63,7 @@ class UICanvas extends Canvas<UICanvasOptions> {
   private drawCorners() {
     const { width, height } = this.options.size;
 
-    const sprite = Textures.get(SPRITE.corner_gems);
+    const sprite = Textures.get(TEXTURES.corner_gems);
 
     const dw = sprite.options.width;
     const dh = sprite.options.height;

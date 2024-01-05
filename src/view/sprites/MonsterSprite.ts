@@ -1,15 +1,15 @@
 import Sprite from '@/view/sprites/Sprite';
-import { MONSTER_SPRITES } from '@/constants/textures';
-import { Texture } from '@/types';
+import { MONSTER_SPRITES } from '@/constants/textures/monsters';
+import { Texture } from '@/constants/textures/types';
 
-class MonsterSprite extends Sprite {
+class MonsterSprite extends Sprite<Texture<MONSTER_SPRITES>> {
   currentAnimation: MONSTER_SPRITES;
 
   private currentFrame = 0;
   private nextAnimation: MONSTER_SPRITES;
   private animationSteps: { y: number; x: Array<number> };
 
-  constructor(options: Texture) {
+  constructor(options: Texture<MONSTER_SPRITES>) {
     super(options);
 
     this.nextAnimation = MONSTER_SPRITES.idle;
@@ -49,7 +49,7 @@ class MonsterSprite extends Sprite {
     this.nextAnimation = sprite;
   }
 
-  public drawFrame(ctx: CanvasRenderingContext2D, dx: number, dy: number, dw: number, dh: number) {
+  drawFrame(ctx: CanvasRenderingContext2D, dx: number, dy: number, dw: number, dh: number) {
     ctx.drawImage(
       this.image,
       this.animationSteps.x[this.currentFrame] * this.options.width,

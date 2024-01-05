@@ -8,13 +8,14 @@ import UICanvas from './models/canvas/UICanvas';
 import UnitsView from './models/canvas/UnitsView';
 import HexLayoutView from './models/canvas/HexLayoutView';
 
-import { SPRITE } from './constants/sprites';
 import { battleHeight, battleWidth, hexObstacles, layoutViewSize } from './constants/hex';
 import { BATTLE_SIDE } from './constants/common';
 import BattleModel from './models/Battle';
 import Battle from '@/controllers/Battle';
-import { monsterTextures } from './constants/textures';
+import { monsterTextures } from './constants/textures/monsters';
 import BattleGraph from './models/BattleGraph';
+import { heroTextures } from './constants/textures/heroes';
+import { TEXTURES, TEXTURE_TYPE } from './constants/textures/types';
 
 const spriteFactory = new SpriteFactory();
 
@@ -31,7 +32,8 @@ battle.monsters.forEach(({ model }) => {
   monsterSprites[model.uuid] = monsterTextures[model.animation.sprite];
 });
 
-await resources.loadSprites(monsterSprites);
+await resources.loadSprites(monsterSprites, TEXTURE_TYPE.monster);
+await resources.loadSprites(heroTextures as any, TEXTURE_TYPE.hero);
 
 const uiCanvasOptions = {
   classNames: ['ui-canvas', 'cursor-default'],
@@ -39,7 +41,7 @@ const uiCanvasOptions = {
 
   battleHeight,
   battleWidth,
-  backgroundSprite: SPRITE.battle_bg_01,
+  backgroundSprite: TEXTURES.battle_bg_01,
 };
 
 const uiCanvas = new UICanvas(battle, uiCanvasOptions);

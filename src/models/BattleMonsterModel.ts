@@ -1,10 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import { battleLayout } from '@/constants/hex';
-import { monsters, type Monster } from '@/constants/monsters';
+
+import BattleHero from '@/controllers/BattleHero';
 import { Hexagon, Point } from '@/models/grid';
 import Subject from '@/services/Observer';
-import { TEXTURES } from '@/constants/textures';
-import BattleHero from '@/controllers/BattleHero';
+
+import { battleLayout } from '@/constants/hex';
+import { monsters, type Monster } from '@/constants/monsters';
+import { TEXTURES } from '@/constants/textures/types';
 
 interface Animation {
   sprite: TEXTURES;
