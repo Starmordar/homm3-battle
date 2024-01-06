@@ -50,6 +50,7 @@ const graph = new BattleGraph(hexObstacles);
 const layoutViewOptions = {
   classNames: ['grid-canvas'],
   size: layoutViewSize,
+  offset: { x: (window.innerHeight - battleHeight) / 2 },
   obstacles: hexObstacles,
 };
 
@@ -59,6 +60,7 @@ layoutView.draw();
 const animationViewOptions = {
   classNames: ['units-canvas'],
   size: layoutViewSize,
+  offset: { x: (window.innerHeight - battleHeight) / 2 },
 };
 
 const animationView = new AnimationView(battle, graph, animationViewOptions);

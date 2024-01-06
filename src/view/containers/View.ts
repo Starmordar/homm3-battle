@@ -4,6 +4,7 @@ import type { StaticTexture } from '@/constants/textures/types';
 export interface ViewOptions {
   classNames: Array<string>;
   size: { height: number; width: number };
+  offset?: { x?: number; y?: number };
 }
 
 class View<Options extends ViewOptions> {
@@ -23,11 +24,18 @@ class View<Options extends ViewOptions> {
   private createView(): HTMLCanvasElement {
     const canvas = document.createElement('canvas');
     canvas.classList.add(...this.options.classNames);
+    this.setCanvasOffset(canvas);
 
     const root = document.getElementById('root')!;
     root.appendChild(canvas);
 
     return canvas;
+  }
+
+  private setCanvasOffset(canvas: HTMLCanvasElement) {
+    const { offset } = this.options;
+    if (offset?.x) canvas.style.top = `${offset.x}px`;
+    if (offset?.y) canvas.style.left = `${offset.y}px`;
   }
 
   protected setViewSize() {
