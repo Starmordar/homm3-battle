@@ -1,6 +1,6 @@
-import { heroesOptions } from '@/constants/hero';
 import BattleMonster from '@/controllers/BattleMonster';
 import Subject from '@/services/Observer';
+import type { HERO_CLASS, HeroClassSettings, HeroSettings, HeroSkill } from '@/types/heroes';
 
 interface PrimarySkills {
   attack: number;
@@ -9,46 +9,56 @@ interface PrimarySkills {
   knowledge: number;
 }
 
-export interface Details {
-  name: string;
-  class: 'deathknight' | 'necromancer';
-
-  primarySkills: PrimarySkills;
-
-  morale: number;
-  luck: number;
+export interface Settings extends HeroSettings {
+  classSettings: HeroClassSettings;
 }
 
 class BattleHeroModel extends Subject {
+  heroId: number;
   name: string;
-  class: 'deathknight' | 'necromancer';
+  race: number;
+  female: boolean;
+  class: HERO_CLASS;
+  spec: string;
+
+  primarySkills: PrimarySkills;
+  skillList: Array<HeroSkill>;
+
   morale: number;
   luck: number;
-
   manaLimit: number;
   mana: number;
 
-  primarySkills: PrimarySkills;
-
   army: Array<BattleMonster>;
 
-  constructor(details: Details, army: Array<BattleMonster>) {
+  constructor(settings: Settings, army: Array<BattleMonster>) {
     super();
 
-    this.name = details.name;
-    this.class = details.class;
-    this.primarySkills = details.primarySkills;
-    this.luck = details.luck;
-    this.morale = details.morale;
+    this.heroId = settings.id;
+    this.name = settings.name;
+    this.race = settings.race;
+    this.female = settings.female;
+    this.class = settings.class;
+    this.spec = settings.spec;
+    this.skillList = [settings.skill1, settings.skill2];
 
-    this.mana = details.primarySkills.knowledge * 10;
-    this.manaLimit = details.primarySkills.knowledge * 10;
+    this.primarySkills = this.populatePrimarySkills(settings.classSettings);
+    this.mana = this.primarySkills.knowledge * 10;
+    this.manaLimit = this.primarySkills.knowledge * 10;
+
+    this.luck = 1;
+    this.morale = 0;
 
     this.army = army;
   }
 
-  get options() {
-    return heroesOptions[this.name];
+  private populatePrimarySkills(classSettings: HeroClassSettings) {
+    const attack = classSettings.attack.start;
+    const defense = classSettings.defence.start;
+    const spellPower = classSettings.power.start;
+    const knowledge = classSettings.knowledge.start;
+
+    return { attack, defense, spellPower, knowledge };
   }
 
   get aliveMonsters() {

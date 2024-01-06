@@ -5,6 +5,7 @@ import Battle from '@/controllers/Battle';
 import { globalEvents } from '@/services/EventBus';
 import { mousePosition, isMouseInsideRect } from '@/utils/canvas';
 
+import type StaticSprite from '../sprites/StaticSprite';
 import type { ControlButtonOptions } from '@/constants/ui';
 import type { Renderable } from '@/types';
 
@@ -36,11 +37,11 @@ class ControlButton implements Renderable {
     }
   }
 
-  private buttonSprite() {
+  private buttonSprite(): StaticSprite {
     const { sprites } = this.options;
     const sprite = this.disabled ? sprites.disabled : sprites.idle;
 
-    return Textures.get(sprite);
+    return Textures.get<StaticSprite>(sprite);
   }
 
   private attachButtonClickEvent(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
@@ -68,7 +69,7 @@ class ControlButton implements Renderable {
   private drawClickAnimation(ctx: CanvasRenderingContext2D) {
     const { x, y, width, height, sprites } = this.options;
 
-    const sprite = Textures.get(sprites.active);
+    const sprite = Textures.get<StaticSprite>(sprites.active);
     sprite.drawFrame(ctx, 0, 0, x, y, width, height);
 
     setTimeout(() => {

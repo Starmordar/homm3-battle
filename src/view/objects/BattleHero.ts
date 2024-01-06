@@ -2,10 +2,14 @@ import { Observer } from '@/services/Observer';
 import BattleHero from '@/controllers/BattleHero';
 import HeroSprite from '../sprites/HeroSprite';
 
-import { heroesClasses } from '@/constants/hero';
 import { Textures } from '@/services/SpriteRepository';
+import { heroClassFrameMap } from '@/constants/textures/heroes';
+import { TEXTURES } from '@/constants/textures/types';
+import { heroOverrides } from '@/constants/textures/overrides';
 
 interface Settings {
+  x: number;
+  y: number;
   mirror: boolean;
 }
 
@@ -29,15 +33,20 @@ class BattleHeroView implements Observer {
 
   private createSprite() {
     const { model } = this.controller;
-    const heroClass = heroesClasses[model.class];
-    const spriteKey = this.settings.mirror ? 'mirror' : 'normal';
 
-    this.sprite = Textures.get<HeroSprite>(heroClass.animation.sprites[spriteKey]);
-    this.frameY = heroClass.animation.frame.y;
+    const spriteKey = this.settings.mirror ? TEXTURES.hero_mirror : TEXTURES.hero;
+    this.sprite = Textures.get<HeroSprite>(spriteKey);
+
+    const classFrame = heroClassFrameMap[model.class];
+    this.frameY = model.female ? classFrame.female : classFrame.male;
   }
 
   draw() {
-    console.log('draw', this.ctx);
+    const { x, y } = this.settings;
+    const { width, height } = heroOverrides;
+
+    this.sprite.drawFrame(this.ctx, this.frameY, x, y, width, height);
+    this.sprite.setNextFrame();
   }
 
   update() {

@@ -46,7 +46,10 @@ class AnimationView extends View<ViewOptions> {
   }
 
   private createHeroAnimation(hero: BattleHero, mirror: boolean) {
-    const view = new BattleHeroView(hero, this.ctx, { mirror });
+    const { top, left, right } = heroOverrides;
+    const x = mirror ? right(this.options.size.width) : left;
+
+    const view = new BattleHeroView(hero, this.ctx, { mirror, x, y: top });
     this.createMonsterViews(hero.model.army);
 
     return view;
@@ -83,18 +86,7 @@ class AnimationView extends View<ViewOptions> {
   }
 
   private animateHeroes() {
-    const { top, left, right } = heroOverrides;
-
-    const [leftHero, rightHero] = this.heroAnimations;
-    this.animateHero(leftHero, { top, left });
-    this.animateHero(rightHero, { top, left: right(this.options.size.width) });
-  }
-
-  private animateHero(view: BattleHeroView, { top, left }: { top: number; left: number }) {
-    const { width, height } = heroOverrides;
-
-    view.sprite.drawFrame(this.ctx, left, top, width, height);
-    view.sprite.setNextFrame();
+    this.heroAnimations.forEach((hero) => hero.draw());
   }
 
   private animateMonsters() {

@@ -79,3 +79,8 @@ export function monsterSpriteById(id: number) {
   // TODO: Add all ids
   return TEXTURES.wraith_static;
 }
+
+export function frameByIndex(index: number, maxFrame: number): { x: number; y: number } {
+  if (index === 0) return { x: 0, y: 0 };
+  return { x: index % maxFrame, y: Math.floor(index / maxFrame) };
+}

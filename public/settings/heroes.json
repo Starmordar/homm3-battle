@@ -1,0 +1,2438 @@
+{
+  "0": {
+    "id": 0,
+    "name": "Orrin",
+    "female": false,
+    "race": 0,
+    "class": "Knight",
+    "spec": "ARCHERY",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARCHERY"
+    }
+  },
+  "1": {
+    "id": 1,
+    "name": "Valeska",
+    "female": true,
+    "race": 0,
+    "class": "Knight",
+    "spec": "ARCHERS",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARCHERY"
+    }
+  },
+  "2": {
+    "id": 2,
+    "name": "Edric",
+    "female": false,
+    "race": 0,
+    "class": "Knight",
+    "spec": "GRIFFINS",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARMORER"
+    }
+  },
+  "3": {
+    "id": 3,
+    "name": "Sylvia",
+    "female": true,
+    "race": 0,
+    "class": "Knight",
+    "spec": "NAVIGATION",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "NAVIGATION"
+    }
+  },
+  "4": {
+    "id": 4,
+    "name": "Lord Haart",
+    "female": false,
+    "race": 0,
+    "class": "Knight",
+    "spec": "ESTATES",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ESTATES"
+    }
+  },
+  "5": {
+    "id": 5,
+    "name": "Sorsha",
+    "female": true,
+    "race": 0,
+    "class": "Knight",
+    "spec": "SWORDSMEN",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "6": {
+    "id": 6,
+    "name": "Christian",
+    "female": false,
+    "race": 0,
+    "class": "Knight",
+    "spec": "BALLISTA",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "7": {
+    "id": 7,
+    "name": "Tyris",
+    "female": true,
+    "race": 0,
+    "class": "Knight",
+    "spec": "CAVALIERS",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "8": {
+    "id": 8,
+    "name": "Rion",
+    "female": false,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "FIRST_AID",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "FIRST_AID"
+    }
+  },
+  "9": {
+    "id": 9,
+    "name": "Adela",
+    "female": true,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "BLESS",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "DIPLOMACY"
+    }
+  },
+  "10": {
+    "id": 10,
+    "name": "Cuthbert",
+    "female": false,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "WEAKNESS",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ESTATES"
+    }
+  },
+  "11": {
+    "id": 11,
+    "name": "Adelaide",
+    "female": true,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "FROST_RING",
+    "skill1": {
+      "level": 2,
+      "name": "WISDOM"
+    },
+    "skill2": {}
+  },
+  "12": {
+    "id": 12,
+    "name": "Ingham",
+    "female": false,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "MONKS",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "MYSTICISM"
+    }
+  },
+  "13": {
+    "id": 13,
+    "name": "Sanya",
+    "female": true,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "EAGLE_EYE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "14": {
+    "id": 14,
+    "name": "Loynis",
+    "female": false,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "PRAYER",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+  "15": {
+    "id": 15,
+    "name": "Caitlin",
+    "female": true,
+    "race": 0,
+    "class": "Cleric",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "16": {
+    "id": 16,
+    "name": "Mephala",
+    "female": true,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "ARMORER",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARMORER"
+    }
+  },
+  "17": {
+    "id": 17,
+    "name": "Ufretin",
+    "female": false,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "DWARVES",
+    "skill1": {
+      "level": 1,
+      "name": "RESISTANCE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LUCK"
+    }
+  },
+  "18": {
+    "id": 18,
+    "name": "Jenova",
+    "female": true,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 2,
+      "name": "ARCHERY"
+    },
+    "skill2": {}
+  },
+  "19": {
+    "id": 19,
+    "name": "Ryland",
+    "female": false,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "DENDROIDS",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "DIPLOMACY"
+    }
+  },
+  "20": {
+    "id": 20,
+    "name": "Thorgrim",
+    "female": false,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "RESISTANCE",
+    "skill1": {
+      "level": 2,
+      "name": "RESISTANCE"
+    },
+    "skill2": {}
+  },
+  "21": {
+    "id": 21,
+    "name": "Ivor",
+    "female": false,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "ELVES",
+    "skill1": {
+      "level": 1,
+      "name": "ARCHERY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "22": {
+    "id": 22,
+    "name": "Clancy",
+    "female": false,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "UNICORNS",
+    "skill1": {
+      "level": 1,
+      "name": "RESISTANCE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "PATHFINDING"
+    }
+  },
+  "23": {
+    "id": 23,
+    "name": "Kyrre",
+    "female": true,
+    "race": 1,
+    "class": "Ranger",
+    "spec": "LOGISTICS",
+    "skill1": {
+      "level": 1,
+      "name": "ARCHERY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LOGISTICS"
+    }
+  },
+  "24": {
+    "id": 24,
+    "name": "Coronius",
+    "female": false,
+    "race": 1,
+    "class": "Druid",
+    "spec": "SLAYER",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "25": {
+    "id": 25,
+    "name": "Uland",
+    "female": false,
+    "race": 1,
+    "class": "Druid",
+    "spec": "CURE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "BALLISTICS"
+    }
+  },
+  "26": {
+    "id": 26,
+    "name": "Elleshar",
+    "female": false,
+    "race": 1,
+    "class": "Druid",
+    "spec": "INTELLIGENCE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "27": {
+    "id": 27,
+    "name": "Gem",
+    "female": true,
+    "race": 1,
+    "class": "Druid",
+    "spec": "FIRST_AID",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "FIRST_AID"
+    }
+  },
+  "28": {
+    "id": 28,
+    "name": "Malcom",
+    "female": false,
+    "race": 1,
+    "class": "Druid",
+    "spec": "EAGLE_EYE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "29": {
+    "id": 29,
+    "name": "Melodia",
+    "female": true,
+    "race": 1,
+    "class": "Druid",
+    "spec": "FORTUNE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LUCK"
+    }
+  },
+  "30": {
+    "id": 30,
+    "name": "Alagar",
+    "female": false,
+    "race": 1,
+    "class": "Druid",
+    "spec": "ICE_BOLT",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "31": {
+    "id": 31,
+    "name": "Aeris",
+    "female": false,
+    "race": 1,
+    "class": "Druid",
+    "spec": "PEGASI",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCOUTING"
+    }
+  },
+  "32": {
+    "id": 32,
+    "name": "Piquedram",
+    "female": false,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "GARGOYLES",
+    "skill1": {
+      "level": 1,
+      "name": "MYSTICISM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCOUTING"
+    }
+  },
+  "33": {
+    "id": 33,
+    "name": "Thane",
+    "female": false,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "GENIES",
+    "skill1": {
+      "level": 2,
+      "name": "SCHOLAR"
+    },
+    "skill2": {}
+  },
+  "34": {
+    "id": 34,
+    "name": "Josephine",
+    "female": true,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "GOLEMS",
+    "skill1": {
+      "level": 1,
+      "name": "MYSTICISM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "35": {
+    "id": 35,
+    "name": "Neela",
+    "female": true,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "ARMORER",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "36": {
+    "id": 36,
+    "name": "Torosar",
+    "female": false,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "BALLISTA",
+    "skill1": {
+      "level": 1,
+      "name": "MYSTICISM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "37": {
+    "id": 37,
+    "name": "Fafner",
+    "female": false,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "NAGAS",
+    "skill1": {
+      "level": 1,
+      "name": "SCHOLAR"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "RESISTANCE"
+    }
+  },
+  "38": {
+    "id": 38,
+    "name": "Rissa",
+    "female": true,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "MERCURY",
+    "skill1": {
+      "level": 1,
+      "name": "MYSTICISM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "39": {
+    "id": 39,
+    "name": "Iona",
+    "female": true,
+    "race": 2,
+    "class": "Alchemist",
+    "spec": "GENIES",
+    "skill1": {
+      "level": 1,
+      "name": "SCHOLAR"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "40": {
+    "id": 40,
+    "name": "Astral",
+    "female": false,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "HYPNOTIZE",
+    "skill1": {
+      "level": 2,
+      "name": "WISDOM"
+    },
+    "skill2": {}
+  },
+  "41": {
+    "id": 41,
+    "name": "Halon",
+    "female": false,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "MYSTICISM",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "MYSTICISM"
+    }
+  },
+  "42": {
+    "id": 42,
+    "name": "Serena",
+    "female": true,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "EAGLE_EYE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "43": {
+    "id": 43,
+    "name": "Daremyth",
+    "female": true,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "FORTUNE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "44": {
+    "id": 44,
+    "name": "Theodorus",
+    "female": false,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "MAGI",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "BALLISTICS"
+    }
+  },
+  "45": {
+    "id": 45,
+    "name": "Solmyr",
+    "female": false,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "CHAIN_LIGHTING",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "46": {
+    "id": 46,
+    "name": "Cyra",
+    "female": true,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "HASTE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "DIPLOMACY"
+    }
+  },
+  "47": {
+    "id": 47,
+    "name": "Aine",
+    "female": true,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "48": {
+    "id": 48,
+    "name": "Fiona",
+    "female": true,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "HELL_HOUNDS",
+    "skill1": {
+      "level": 2,
+      "name": "SCOUTING"
+    },
+    "skill2": {}
+  },
+  "49": {
+    "id": 49,
+    "name": "Rashka",
+    "female": false,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "EFREETI",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "50": {
+    "id": 50,
+    "name": "Marius",
+    "female": true,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "DEMONS",
+    "skill1": {
+      "level": 2,
+      "name": "ARMORER"
+    },
+    "skill2": {}
+  },
+  "51": {
+    "id": 51,
+    "name": "Ignatius",
+    "female": false,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "IMPS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "RESISTANCE"
+    }
+  },
+  "52": {
+    "id": 52,
+    "name": "Octavia",
+    "female": true,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 1,
+      "name": "SCHOLAR"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "53": {
+    "id": 53,
+    "name": "Calh",
+    "female": false,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "GOGS",
+    "skill1": {
+      "level": 1,
+      "name": "ARCHERY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCOUTING"
+    }
+  },
+  "54": {
+    "id": 54,
+    "name": "Pyre",
+    "female": true,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "BALLISTA",
+    "skill1": {
+      "level": 1,
+      "name": "LOGISTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "55": {
+    "id": 55,
+    "name": "Nymus",
+    "female": true,
+    "race": 3,
+    "class": "Demoniac",
+    "spec": "PIT_FIENDS",
+    "skill1": {
+      "level": 2,
+      "name": "OFFENSE"
+    },
+    "skill2": {}
+  },
+  "56": {
+    "id": 56,
+    "name": "Ayden",
+    "female": false,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "INTELLIGENCE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "57": {
+    "id": 57,
+    "name": "Xyron",
+    "female": false,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "INFERNO",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "58": {
+    "id": 58,
+    "name": "Axsis",
+    "female": false,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "MYSTICISM",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "MYSTICISM"
+    }
+  },
+  "59": {
+    "id": 59,
+    "name": "Olema",
+    "female": true,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "WEAKNESS",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "BALLISTICS"
+    }
+  },
+  "60": {
+    "id": 60,
+    "name": "Calid",
+    "female": false,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "SULFUR",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+  "61": {
+    "id": 61,
+    "name": "Ash",
+    "female": true,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "BLOODLUST",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "62": {
+    "id": 62,
+    "name": "Zydar",
+    "female": false,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "SORCERY",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "63": {
+    "id": 63,
+    "name": "Xarfax",
+    "female": false,
+    "race": 3,
+    "class": "Heretic",
+    "spec": "FIREBALL",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    }
+  },
+  "64": {
+    "id": 64,
+    "name": "Straker",
+    "female": false,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "WALKING_DEAD",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "RESISTANCE"
+    }
+  },
+  "65": {
+    "id": 65,
+    "name": "Vokial",
+    "female": false,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "VAMPIRES",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "66": {
+    "id": 66,
+    "name": "Moandor",
+    "female": false,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "LICHES",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+  "67": {
+    "id": 67,
+    "name": "Charna",
+    "female": true,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "WIGHTS",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "68": {
+    "id": 68,
+    "name": "Tamika",
+    "female": true,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "BLACK_KNIGHTS",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "69": {
+    "id": 69,
+    "name": "Isra",
+    "female": true,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "NECROMANCY",
+    "skill1": {
+      "level": 2,
+      "name": "NECROMANCY"
+    },
+    "skill2": {}
+  },
+  "70": {
+    "id": 70,
+    "name": "Clavius",
+    "female": false,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "71": {
+    "id": 71,
+    "name": "Galthran",
+    "female": false,
+    "race": 4,
+    "class": "Death Knight",
+    "spec": "SKELETONS",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARMORER"
+    }
+  },
+  "72": {
+    "id": 72,
+    "name": "Septienna",
+    "female": true,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "DEATH_RIPPLE",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "73": {
+    "id": 73,
+    "name": "Aislinn",
+    "female": true,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "METEOR_SHOWER",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "WISDOM"
+    }
+  },
+  "74": {
+    "id": 74,
+    "name": "Sandro",
+    "female": false,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "SORCERY",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "75": {
+    "id": 75,
+    "name": "Nimbus",
+    "female": false,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "EAGLE_EYE",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "76": {
+    "id": 76,
+    "name": "Thant",
+    "female": false,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "ANIMATE_DEAD",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "MYSTICISM"
+    }
+  },
+  "77": {
+    "id": 77,
+    "name": "Xsi",
+    "female": true,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "STONE_SKIN",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+  "78": {
+    "id": 78,
+    "name": "Vidomina",
+    "female": true,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "NECROMANCY",
+    "skill1": {
+      "level": 2,
+      "name": "NECROMANCY"
+    },
+    "skill2": {}
+  },
+  "79": {
+    "id": 79,
+    "name": "Nagash",
+    "female": false,
+    "race": 4,
+    "class": "Necromancer",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 1,
+      "name": "NECROMANCY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "80": {
+    "id": 80,
+    "name": "Lorelei",
+    "female": true,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "HARPIES",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCOUTING"
+    }
+  },
+  "81": {
+    "id": 81,
+    "name": "Arlach",
+    "female": false,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "BALLISTA",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "82": {
+    "id": 82,
+    "name": "Dace",
+    "female": false,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "MINOTAURS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "83": {
+    "id": 83,
+    "name": "Ajit",
+    "female": false,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "BEHOLDERS",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "RESISTANCE"
+    }
+  },
+  "84": {
+    "id": 84,
+    "name": "Damacon",
+    "female": false,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 2,
+      "name": "OFFENSE"
+    },
+    "skill2": {}
+  },
+  "85": {
+    "id": 85,
+    "name": "Gunnar",
+    "female": false,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "LOGISTICS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LOGISTICS"
+    }
+  },
+  "86": {
+    "id": 86,
+    "name": "Synca",
+    "female": true,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "MANTICORES",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "87": {
+    "id": 87,
+    "name": "Shakti",
+    "female": false,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "TROGLODYTES",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "88": {
+    "id": 88,
+    "name": "Alamar",
+    "female": false,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "RESURRECTION",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCHOLAR"
+    }
+  },
+  "89": {
+    "id": 89,
+    "name": "Jaegar",
+    "female": false,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "MYSTICISM",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "MYSTICISM"
+    }
+  },
+  "90": {
+    "id": 90,
+    "name": "Malekith",
+    "female": false,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "SORCERY",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "91": {
+    "id": 91,
+    "name": "Jeddite",
+    "female": true,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "RESURRECTION",
+    "skill1": {
+      "level": 2,
+      "name": "WISDOM"
+    },
+    "skill2": {}
+  },
+  "92": {
+    "id": 92,
+    "name": "Geon",
+    "female": false,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "EAGLE_EYE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "93": {
+    "id": 93,
+    "name": "Deemer",
+    "female": false,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "METEOR_SHOWER",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 2,
+      "name": "SCOUTING"
+    }
+  },
+  "94": {
+    "id": 94,
+    "name": "Sephinroth",
+    "female": true,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "CRYSTAL",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "95": {
+    "id": 95,
+    "name": "Darkstorn",
+    "female": false,
+    "race": 5,
+    "class": "Warlock",
+    "spec": "STONE_SKIN",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+  "96": {
+    "id": 96,
+    "name": "Yog",
+    "female": false,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "CYCLOPS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "BALLISTICS"
+    }
+  },
+  "97": {
+    "id": 97,
+    "name": "Gurnisson",
+    "female": false,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "BALLISTA",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "98": {
+    "id": 98,
+    "name": "Jabarkas",
+    "female": false,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "ORCS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARCHERY"
+    }
+  },
+  "99": {
+    "id": 99,
+    "name": "Shiva",
+    "female": true,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "ROCS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCOUTING"
+    }
+  },
+  "100": {
+    "id": 100,
+    "name": "Gretchin",
+    "female": true,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "GOBLINS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "PATHFINDING"
+    }
+  },
+  "101": {
+    "id": 101,
+    "name": "Krellion",
+    "female": false,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "OGRES",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "RESISTANCE"
+    }
+  },
+  "102": {
+    "id": 102,
+    "name": "Crag Hack",
+    "female": false,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "OFFENSE",
+    "skill1": {
+      "level": 2,
+      "name": "OFFENSE"
+    },
+    "skill2": {}
+  },
+  "103": {
+    "id": 103,
+    "name": "Tyraxor",
+    "female": false,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "WOLF_RIDERS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "104": {
+    "id": 104,
+    "name": "Gird",
+    "female": true,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "SORCERY",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "105": {
+    "id": 105,
+    "name": "Vey",
+    "female": false,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "OGRES",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    }
+  },
+  "106": {
+    "id": 106,
+    "name": "Dessa",
+    "female": true,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "LOGISTICS",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LOGISTICS"
+    }
+  },
+  "107": {
+    "id": 107,
+    "name": "Terek",
+    "female": false,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "HASTE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "108": {
+    "id": 108,
+    "name": "Zubin",
+    "female": false,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "PRECISION",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "109": {
+    "id": 109,
+    "name": "Gundula",
+    "female": true,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "OFFENSE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "110": {
+    "id": 110,
+    "name": "Oris",
+    "female": true,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "EAGLE_EYE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "111": {
+    "id": 111,
+    "name": "Saurug",
+    "female": false,
+    "race": 6,
+    "class": "Battle Mage",
+    "spec": "GEMS",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "RESISTANCE"
+    }
+  },
+  "112": {
+    "id": 112,
+    "name": "Bron",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "BASILISKS",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "RESISTANCE"
+    }
+  },
+  "113": {
+    "id": 113,
+    "name": "Drakon",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "GNOLLS",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    }
+  },
+  "114": {
+    "id": 114,
+    "name": "Wystan",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "LIZARMEN",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARCHERY"
+    }
+  },
+  "115": {
+    "id": 115,
+    "name": "Tazar",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "ARMORER",
+    "skill1": {
+      "level": 2,
+      "name": "ARMORER"
+    },
+    "skill2": {}
+  },
+  "116": {
+    "id": 116,
+    "name": "Alkin",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "GORGONS",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "117": {
+    "id": 117,
+    "name": "Korbac",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "SERPENT_FLIES",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "PATHFINDING"
+    }
+  },
+  "118": {
+    "id": 118,
+    "name": "Gerwulf",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "BALLISTA",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "119": {
+    "id": 119,
+    "name": "Broghild",
+    "female": false,
+    "race": 7,
+    "class": "Beastmaster",
+    "spec": "WYVERNS",
+    "skill1": {
+      "level": 1,
+      "name": "ARMORER"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SCOUTING"
+    }
+  },
+  "120": {
+    "id": 120,
+    "name": "Mirlanda",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "WEAKNESS",
+    "skill1": {
+      "level": 2,
+      "name": "WISDOM"
+    },
+    "skill2": {}
+  },
+  "121": {
+    "id": 121,
+    "name": "Rosic",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "MYSTICISM",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "MYSTICISM"
+    }
+  },
+  "122": {
+    "id": 122,
+    "name": "Voy",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "NAVIGATION",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "NAVIGATION"
+    }
+  },
+  "123": {
+    "id": 123,
+    "name": "Verdish",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "FIRST_AID",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "FIRST_AID"
+    }
+  },
+  "124": {
+    "id": 124,
+    "name": "Merist",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "STONE_SKIN",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+  "125": {
+    "id": 125,
+    "name": "Styg",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "SORCERY",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "SORCERY"
+    }
+  },
+  "126": {
+    "id": 126,
+    "name": "Andra",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "INTELLIGENCE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "INTELLIGENCE"
+    }
+  },
+  "127": {
+    "id": 127,
+    "name": "Tiva",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "EAGLE_EYE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EAGLE_EYE"
+    }
+  },
+  "128": {
+    "id": 128,
+    "name": "Pasis",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "PSYCHIC_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "129": {
+    "id": 129,
+    "name": "Thunar",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "EARTH_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ESTATES"
+    }
+  },
+  "130": {
+    "id": 130,
+    "name": "Ignissa",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "FIRE_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "131": {
+    "id": 131,
+    "name": "Lacus",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "WATER_ELEMENTALS",
+    "skill1": {
+      "level": 2,
+      "name": "TACTICS"
+    },
+    "skill2": {}
+  },
+  "132": {
+    "id": 132,
+    "name": "Monere",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "PSYCHIC_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LOGISTICS"
+    }
+  },
+  "133": {
+    "id": 133,
+    "name": "Erdamon",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "EARTH_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ESTATES"
+    }
+  },
+  "134": {
+    "id": 134,
+    "name": "Fiur",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "FIRE_ELEMENTALS",
+    "skill1": {
+      "level": 2,
+      "name": "OFFENSE"
+    },
+    "skill2": {}
+  },
+  "135": {
+    "id": 135,
+    "name": "Kalt",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "WATER_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+  "136": {
+    "id": 136,
+    "name": "Luna",
+    "female": true,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "FIRE_WALL",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "FIRE_MAGIC"
+    }
+  },
+  "137": {
+    "id": 137,
+    "name": "Brissa",
+    "female": true,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "HASTE",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "AIR_MAGIC"
+    }
+  },
+  "138": {
+    "id": 138,
+    "name": "Ciele",
+    "female": true,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "MAGIC_ARROW",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "WATER_MAGIC"
+    }
+  },
+  "139": {
+    "id": 139,
+    "name": "Labetha",
+    "female": true,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "STONE_SKIN",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EARTH_MAGIC"
+    }
+  },
+  "140": {
+    "id": 140,
+    "name": "Inteus",
+    "female": false,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "BLOODLUST",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "FIRE_MAGIC"
+    }
+  },
+  "141": {
+    "id": 141,
+    "name": "Aenain",
+    "female": false,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "DISRUPTING_RAY",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "AIR_MAGIC"
+    }
+  },
+  "142": {
+    "id": 142,
+    "name": "Gelare",
+    "female": false,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "WATER_MAGIC"
+    }
+  },
+  "143": {
+    "id": 143,
+    "name": "Grindan",
+    "female": false,
+    "race": 8,
+    "class": "Elementalist",
+    "spec": "GOLD",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "EARTH_MAGIC"
+    }
+  },
+  "144": {
+    "id": 144,
+    "name": "Sir Mullich",
+    "female": false,
+    "race": 0,
+    "class": "Knight",
+    "spec": "SPEED",
+    "skill1": {
+      "level": 2,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {}
+  },
+  "145": {
+    "id": 145,
+    "name": "Adrienne",
+    "female": true,
+    "race": 7,
+    "class": "Witch",
+    "spec": "FIRE_MAGIC",
+    "skill1": {
+      "level": 1,
+      "name": "WISDOM"
+    },
+    "skill2": {
+      "level": 3,
+      "name": "FIRE_MAGIC"
+    }
+  },
+  "146": {
+    "id": 146,
+    "name": "Catherine",
+    "female": true,
+    "race": 0,
+    "class": "Knight",
+    "spec": "SWORDSMEN",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "OFFENSE"
+    }
+  },
+  "147": {
+    "id": 147,
+    "name": "Dracon",
+    "female": false,
+    "race": 2,
+    "class": "Wizard",
+    "spec": "ENCHANTERS",
+    "skill1": {
+      "level": 2,
+      "name": "WISDOM"
+    },
+    "skill2": {}
+  },
+  "148": {
+    "id": 148,
+    "name": "Gelu",
+    "female": false,
+    "race": 7,
+    "class": "Ranger",
+    "spec": "SHARPSHOOTERS",
+    "skill1": {
+      "level": 1,
+      "name": "ARCHERY"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    }
+  },
+  "149": {
+    "id": 149,
+    "name": "Kilgor",
+    "female": false,
+    "race": 6,
+    "class": "Barbarian",
+    "spec": "BEHEMOTHS",
+    "skill1": {
+      "level": 2,
+      "name": "OFFENSE"
+    },
+    "skill2": {}
+  },
+  "150": {
+    "id": 150,
+    "name": "Lord Haart",
+    "female": false,
+    "race": 4,
+    "class": "Knight",
+    "spec": "ESTATES",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ESTATES"
+    }
+  },
+  "151": {
+    "id": 151,
+    "name": "Mutare",
+    "female": true,
+    "race": 5,
+    "class": "Overlord",
+    "spec": "DRAGONS",
+    "skill1": {
+      "level": 1,
+      "name": "ESTATES"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "152": {
+    "id": 152,
+    "name": "Roland",
+    "female": false,
+    "race": 0,
+    "class": "Knight",
+    "spec": "SWORDSMEN",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARMORER"
+    }
+  },
+  "153": {
+    "id": 153,
+    "name": "Mutare Drake",
+    "female": true,
+    "race": 0,
+    "class": "Overlord",
+    "spec": "DRAGONS",
+    "skill1": {
+      "level": 1,
+      "name": "ESTATES"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "154": {
+    "id": 154,
+    "name": "Boragus",
+    "female": false,
+    "race": 0,
+    "class": "Barbarian",
+    "spec": "OGRES",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  },
+  "155": {
+    "id": 155,
+    "name": "Xeron",
+    "female": false,
+    "race": 0,
+    "class": "Demoniac",
+    "spec": "DEVILS",
+    "skill1": {
+      "level": 1,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "TACTICS"
+    }
+  }
+}

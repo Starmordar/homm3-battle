@@ -33,11 +33,18 @@ class HeroSprite extends Sprite<Texture<HERO_SPRITES>> {
     return Math.random() < 0.1 ? HERO_SPRITES.active : HERO_SPRITES.idle;
   }
 
-  drawFrame(ctx: CanvasRenderingContext2D, dx: number, dy: number, dw: number, dh: number) {
+  drawFrame(
+    ctx: CanvasRenderingContext2D,
+    frameY: number,
+    dx: number,
+    dy: number,
+    dw: number,
+    dh: number
+  ) {
     ctx.drawImage(
       this.image,
       this.animationSteps.x[this.currentFrame] * this.options.width,
-      this.animationSteps.y * this.options.height,
+      frameY * this.options.height,
       this.options.width,
       this.options.height,
       dx,

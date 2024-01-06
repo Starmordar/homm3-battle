@@ -1,0 +1,416 @@
+[
+  {
+    "name": "Knight",
+    "attack": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 2,
+      "chance": 45,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 1,
+      "chance": 10,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 10,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Cleric",
+    "attack": {
+      "start": 1,
+      "chance": 20,
+      "chance_10": 20
+    },
+    "defence": {
+      "start": 0,
+      "chance": 15,
+      "chance_10": 20
+    },
+    "power": {
+      "start": 2,
+      "chance": 30,
+      "chance_10": 30
+    },
+    "knowledge": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    }
+  },
+  {
+    "name": "Ranger",
+    "attack": {
+      "start": 1,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 3,
+      "chance": 45,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 1,
+      "chance": 10,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 10,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Druid",
+    "attack": {
+      "start": 0,
+      "chance": 10,
+      "chance_10": 20
+    },
+    "defence": {
+      "start": 2,
+      "chance": 20,
+      "chance_10": 20
+    },
+    "power": {
+      "start": 1,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "knowledge": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    }
+  },
+  {
+    "name": "Alchemist",
+    "attack": {
+      "start": 1,
+      "chance": 30,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 1,
+      "chance": 30,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 2,
+      "chance": 20,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 2,
+      "chance": 20,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Wizard",
+    "attack": {
+      "start": 0,
+      "chance": 10,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 0,
+      "chance": 10,
+      "chance_10": 20
+    },
+    "power": {
+      "start": 2,
+      "chance": 40,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 3,
+      "chance": 40,
+      "chance_10": 30
+    }
+  },
+  {
+    "name": "Demoniac",
+    "attack": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Heretic",
+    "attack": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    },
+    "defence": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    },
+    "power": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 35,
+      "chance_10": 30
+    }
+  },
+  {
+    "name": "Death Knight",
+    "attack": {
+      "start": 1,
+      "chance": 30,
+      "chance_10": 25
+    },
+    "defence": {
+      "start": 2,
+      "chance": 25,
+      "chance_10": 25
+    },
+    "power": {
+      "start": 2,
+      "chance": 20,
+      "chance_10": 25
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 25,
+      "chance_10": 25
+    }
+  },
+  {
+    "name": "Necromancer",
+    "attack": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 25
+    },
+    "defence": {
+      "start": 0,
+      "chance": 15,
+      "chance_10": 25
+    },
+    "power": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 25
+    },
+    "knowledge": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 25
+    }
+  },
+  {
+    "name": "Overlord",
+    "attack": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 2,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Warlock",
+    "attack": {
+      "start": 0,
+      "chance": 10,
+      "chance_10": 20
+    },
+    "defence": {
+      "start": 0,
+      "chance": 10,
+      "chance_10": 20
+    },
+    "power": {
+      "start": 3,
+      "chance": 50,
+      "chance_10": 30
+    },
+    "knowledge": {
+      "start": 2,
+      "chance": 30,
+      "chance_10": 30
+    }
+  },
+  {
+    "name": "Barbarian",
+    "attack": {
+      "start": 4,
+      "chance": 55,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 0,
+      "chance": 35,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 1,
+      "chance": 5,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 5,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Battle Mage",
+    "attack": {
+      "start": 2,
+      "chance": 30,
+      "chance_10": 25
+    },
+    "defence": {
+      "start": 1,
+      "chance": 20,
+      "chance_10": 25
+    },
+    "power": {
+      "start": 1,
+      "chance": 25,
+      "chance_10": 25
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 25,
+      "chance_10": 25
+    }
+  },
+  {
+    "name": "Beastmaster",
+    "attack": {
+      "start": 0,
+      "chance": 30,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 4,
+      "chance": 50,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 1,
+      "chance": 10,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 10,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Witch",
+    "attack": {
+      "start": 0,
+      "chance": 5,
+      "chance_10": 20
+    },
+    "defence": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    },
+    "power": {
+      "start": 2,
+      "chance": 40,
+      "chance_10": 30
+    },
+    "knowledge": {
+      "start": 2,
+      "chance": 40,
+      "chance_10": 30
+    }
+  },
+  {
+    "name": "Planeswalker",
+    "attack": {
+      "start": 3,
+      "chance": 45,
+      "chance_10": 30
+    },
+    "defence": {
+      "start": 1,
+      "chance": 25,
+      "chance_10": 30
+    },
+    "power": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    },
+    "knowledge": {
+      "start": 1,
+      "chance": 15,
+      "chance_10": 20
+    }
+  },
+  {
+    "name": "Elementalist",
+    "attack": {
+      "start": 0,
+      "chance": 15,
+      "chance_10": 25
+    },
+    "defence": {
+      "start": 0,
+      "chance": 15,
+      "chance_10": 25
+    },
+    "power": {
+      "start": 3,
+      "chance": 35,
+      "chance_10": 25
+    },
+    "knowledge": {
+      "start": 3,
+      "chance": 35,
+      "chance_10": 25
+    }
+  }
+]

@@ -146,8 +146,8 @@ export const staticTextures: StaticTextureMap = {
   },
   [TEXTURES.battle_bg_01]: {
     url: 'src/assets/battlefields/CMBKBOAT.png',
-    width: 800,
-    height: 556,
+    width: 875,
+    height: 630,
   },
 
   [TEXTURES.wraith_static]: {

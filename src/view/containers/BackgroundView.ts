@@ -1,28 +1,29 @@
 import { Textures } from '../../services/SpriteRepository';
 import View, { ViewOptions } from './View';
 
-import BattlePanel from '../../view/battle/BattlePanel';
-import HeroSummary from '../../view/battle/HeroSummary';
-import Stroke from '../../view/common/Stroke';
+import BattlePanel from '../battle/BattlePanel';
+import HeroSummary from '../battle/HeroSummary';
+import Stroke from '../common/Stroke';
 
 import { battlePanelHeight, summaryWidth } from '../../constants/ui';
 import { EventKey, globalEvents } from '@/services/EventBus';
 import Battle from '@/controllers/Battle';
 import { TEXTURES } from '@/constants/textures/types';
+import type StaticSprite from '@/view/sprites/StaticSprite';
 
-export interface UICanvasOptions extends ViewOptions {
+export interface BackgroundViewOptions extends ViewOptions {
   backgroundSprite: string;
   battleWidth: number;
   battleHeight: number;
 }
 
-class UICanvas extends View<UICanvasOptions> {
+class BackgroundView extends View<BackgroundViewOptions> {
   private readonly battleCanvasOffset: { x: number; y: number };
   private readonly battle: Battle;
 
   private battlePanel?: BattlePanel;
 
-  constructor(battle: Battle, options: UICanvasOptions) {
+  constructor(battle: Battle, options: BackgroundViewOptions) {
     super(options);
 
     this.battle = battle;
@@ -63,7 +64,7 @@ class UICanvas extends View<UICanvasOptions> {
   private drawCorners() {
     const { width, height } = this.options.size;
 
-    const sprite = Textures.get(TEXTURES.corner_gems);
+    const sprite = Textures.get<StaticSprite>(TEXTURES.corner_gems);
 
     const dw = sprite.options.width;
     const dh = sprite.options.height;
@@ -104,16 +105,16 @@ class UICanvas extends View<UICanvasOptions> {
 
   private drawBattleBackground() {
     const { battleWidth, battleHeight } = this.options;
-    const sprite = Textures.get(this.options.backgroundSprite);
+    const sprite = Textures.get<StaticSprite>(this.options.backgroundSprite);
 
     sprite.drawFrame(
       this.ctx,
       0,
       0,
-      this.battleCanvasOffset.x,
-      this.battleCanvasOffset.y,
-      battleWidth,
-      battleHeight - battlePanelHeight
+      this.battleCanvasOffset.x - 45,
+      this.battleCanvasOffset.y - 40,
+      battleWidth + 90,
+      battleHeight - battlePanelHeight + 80
     );
 
     const stroke = new Stroke({
@@ -141,4 +142,4 @@ class UICanvas extends View<UICanvasOptions> {
   }
 }
 
-export default UICanvas;
+export default BackgroundView;

@@ -1,24 +1,23 @@
-import BattleGrid from '@/view/battle/BattleGrid';
-import Battle from '@/controllers/Battle';
-
-import BattleGraph from '../BattleGraph';
 import View, { ViewOptions } from './View';
+import Battle from '@/controllers/Battle';
+import BattleGrid from '@/view/battle/BattleGrid';
+import BattleGraph from '../../models/BattleGraph';
 
-import { Point, Hexagon } from '../grid';
+import { Point, Hexagon } from '../../models/grid';
 import { EventKey, globalEvents } from '@/services/EventBus';
 import { setCursorStyle } from '@/utils/common';
 import { mousePointFromEvent } from '@/utils/canvas';
 
-interface ViewOptions extends ViewOptions {
+interface LayoutViewOptions extends ViewOptions {
   obstacles: Array<Hexagon>;
 }
 
-class HexLayoutView extends View<ViewOptions> {
+class LayoutView extends View<LayoutViewOptions> {
   private readonly graph: BattleGraph;
   private readonly gridView: BattleGrid;
   private readonly battle: Battle;
 
-  constructor(battle: Battle, graph: BattleGraph, options: ViewOptions) {
+  constructor(battle: Battle, graph: BattleGraph, options: LayoutViewOptions) {
     super(options);
 
     this.graph = graph;
@@ -159,4 +158,4 @@ class HexLayoutView extends View<ViewOptions> {
   }
 }
 
-export default HexLayoutView;
+export default LayoutView;

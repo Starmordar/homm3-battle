@@ -2,7 +2,7 @@ import { getBattleLayout } from '@/utils/grid';
 import { Hexagon } from '../models/grid';
 
 export const battleGridSize = { width: 15, height: 11 };
-export const hexagonCount = 24;
+export const hexagonCount = 21;
 
 export const hexLabelColors = {
   startHex: 'hsl(0, 50%, 0%)',
@@ -46,8 +46,8 @@ export const hexObstacles: Array<Hexagon> = [
   new Hexagon(1, -3, 2),
 ];
 
-export const battleWidth = 950;
-export const battleHeight = 650;
+export const battleWidth = 1000;
+export const battleHeight = 680;
 
-export const layoutViewSize = { width: battleWidth, height: battleHeight - 90 };
+export const layoutViewSize = { width: battleWidth, height: battleHeight - 45 };
 export const battleLayout = getBattleLayout({ width: battleWidth, height: battleHeight });

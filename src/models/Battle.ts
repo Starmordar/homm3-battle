@@ -8,20 +8,23 @@ import Subject from '@/services/Observer';
 
 import { randomValueOf } from '@/utils/common';
 import { Creature, rightHeroArmy, leftHeroArmy } from '@/constants/units';
-import { type HeroOptions, heroesOptions, heroesClasses } from '@/constants/hero';
 import { BATTLE_SIDE } from '@/constants/common';
-
-type HeroGeneralDetails = HeroOptions & { name: string };
+import { HeroClassesResponse, HeroSettings, HeroesResponse } from '@/types/heroes';
 
 class BattleModel extends Subject {
+  settings: HeroesResponse;
+  classes: HeroClassesResponse;
+
   battleSide: BATTLE_SIDE;
   queue: BattleQueue;
   animationPending: boolean;
   heroes: Array<BattleHero> = [];
 
-  constructor(battleSide: BATTLE_SIDE) {
+  constructor(battleSide: BATTLE_SIDE, settings: HeroesResponse, classes: HeroClassesResponse) {
     super();
 
+    this.classes = classes;
+    this.settings = settings;
     this.battleSide = battleSide;
     this.animationPending = false;
 
@@ -51,20 +54,10 @@ class BattleModel extends Subject {
   }
 
   private createRandomHero(monsters: Array<BattleMonster>) {
-    const generalDetails = randomValueOf<HeroGeneralDetails>(heroesOptions);
-    const classDetails = heroesClasses[generalDetails.class];
+    const baseSettings = randomValueOf<HeroSettings>(this.settings);
+    const classSettings = this.classes.find((cl) => cl.name === baseSettings.class)!;
 
-    const model = new BattleHeroModel(
-      {
-        name: generalDetails.name,
-        class: generalDetails.class,
-
-        primarySkills: classDetails.primarySkills,
-        morale: classDetails.details.morale,
-        luck: classDetails.details.luck,
-      },
-      monsters
-    );
+    const model = new BattleHeroModel({ ...baseSettings, classSettings }, monsters);
 
     const hero = new BattleHero(model);
     monsters.forEach((monster) => {

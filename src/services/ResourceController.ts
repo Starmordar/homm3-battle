@@ -14,18 +14,18 @@ class ResourceController {
     this.spriteFactory = spriteFactory;
   }
 
-  public load() {
+  load() {
     return Promise.all([this.loadSprites(staticTextures)]);
   }
 
-  public loadSprite(key: string, options: StaticTexture): Promise<Sprite<StaticTexture>> {
+  loadSprite(key: string, options: StaticTexture): Promise<Sprite<StaticTexture>> {
     const sprite = this.spriteFactory.create(options);
 
     this.spriteRegistry.register(key, sprite);
     return sprite.load;
   }
 
-  public async loadSprites(
+  async loadSprites(
     options: Record<string, StaticTexture>,
     type?: TEXTURE_TYPE
   ): Promise<Array<Sprite<StaticTexture>>> {

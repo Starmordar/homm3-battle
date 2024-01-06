@@ -6,6 +6,8 @@ import { SummaryConfig, defaultSummaryOptions } from '@/constants/ui';
 import type { Rect, Renderable } from '@/types';
 import BattleHero from '@/controllers/BattleHero';
 import { TEXTURES } from '@/constants/textures/types';
+import { frameByIndex } from '@/utils/textures';
+import StaticSprite from '../sprites/StaticSprite';
 
 interface HeroSummaryOptions extends Omit<Rect, 'width' | 'height'> {
   hero: BattleHero;
@@ -28,13 +30,14 @@ class HeroSummary implements Renderable {
 
   private drawAvatar(ctx: CanvasRenderingContext2D) {
     const { avatar } = defaultSummaryOptions;
-    const [frameX, frameY] = this.heroInfo.model.options.sprite;
+    const { x, y } = frameByIndex(this.heroInfo.model.heroId, 8);
 
-    const portraitSprite = Textures.get(TEXTURES.hero_avatar_lg);
+    const portraitSprite = Textures.get<StaticSprite>(TEXTURES.hero_avatar_lg);
+
     portraitSprite.drawFrame(
       ctx,
-      frameX,
-      frameY,
+      x,
+      y,
       this.options.x + avatar.x,
       this.options.y + avatar.y,
       avatar.width,

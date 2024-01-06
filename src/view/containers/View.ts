@@ -1,4 +1,4 @@
-import Sprite from '../../view/sprites/Sprite';
+import Sprite from '../sprites/Sprite';
 import type { StaticTexture } from '@/constants/textures/types';
 
 export interface ViewOptions {
