@@ -1,3 +1,5 @@
+import { HeroClassesResponse, HeroesResponse } from './heroes';
+
 export interface Renderable {
   /**
    * Draw UI element on the canvas
@@ -18,4 +20,9 @@ export interface Rect {
 export interface Bounds {
   x: [number, number];
   y: [number, number];
+}
+
+export interface DataSettings {
+  heroes: HeroesResponse;
+  heroClasses: HeroClassesResponse;
 }

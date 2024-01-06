@@ -2002,130 +2002,9 @@
       "name": "EAGLE_EYE"
     }
   },
+
   "128": {
     "id": 128,
-    "name": "Pasis",
-    "female": true,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "PSYCHIC_ELEMENTALS",
-    "skill1": {
-      "level": 1,
-      "name": "OFFENSE"
-    },
-    "skill2": {
-      "level": 1,
-      "name": "ARTILLERY"
-    }
-  },
-  "129": {
-    "id": 129,
-    "name": "Thunar",
-    "female": true,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "EARTH_ELEMENTALS",
-    "skill1": {
-      "level": 1,
-      "name": "TACTICS"
-    },
-    "skill2": {
-      "level": 1,
-      "name": "ESTATES"
-    }
-  },
-  "130": {
-    "id": 130,
-    "name": "Ignissa",
-    "female": true,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "FIRE_ELEMENTALS",
-    "skill1": {
-      "level": 1,
-      "name": "OFFENSE"
-    },
-    "skill2": {
-      "level": 1,
-      "name": "ARTILLERY"
-    }
-  },
-  "131": {
-    "id": 131,
-    "name": "Lacus",
-    "female": true,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "WATER_ELEMENTALS",
-    "skill1": {
-      "level": 2,
-      "name": "TACTICS"
-    },
-    "skill2": {}
-  },
-  "132": {
-    "id": 132,
-    "name": "Monere",
-    "female": false,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "PSYCHIC_ELEMENTALS",
-    "skill1": {
-      "level": 1,
-      "name": "OFFENSE"
-    },
-    "skill2": {
-      "level": 1,
-      "name": "LOGISTICS"
-    }
-  },
-  "133": {
-    "id": 133,
-    "name": "Erdamon",
-    "female": false,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "EARTH_ELEMENTALS",
-    "skill1": {
-      "level": 1,
-      "name": "TACTICS"
-    },
-    "skill2": {
-      "level": 1,
-      "name": "ESTATES"
-    }
-  },
-  "134": {
-    "id": 134,
-    "name": "Fiur",
-    "female": false,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "FIRE_ELEMENTALS",
-    "skill1": {
-      "level": 2,
-      "name": "OFFENSE"
-    },
-    "skill2": {}
-  },
-  "135": {
-    "id": 135,
-    "name": "Kalt",
-    "female": false,
-    "race": 8,
-    "class": "Planeswalker",
-    "spec": "WATER_ELEMENTALS",
-    "skill1": {
-      "level": 1,
-      "name": "TACTICS"
-    },
-    "skill2": {
-      "level": 1,
-      "name": "LEARNING"
-    }
-  },
-  "136": {
-    "id": 136,
     "name": "Luna",
     "female": true,
     "race": 8,
@@ -2140,8 +2019,8 @@
       "name": "FIRE_MAGIC"
     }
   },
-  "137": {
-    "id": 137,
+  "129": {
+    "id": 129,
     "name": "Brissa",
     "female": true,
     "race": 8,
@@ -2156,8 +2035,8 @@
       "name": "AIR_MAGIC"
     }
   },
-  "138": {
-    "id": 138,
+  "130": {
+    "id": 130,
     "name": "Ciele",
     "female": true,
     "race": 8,
@@ -2172,8 +2051,8 @@
       "name": "WATER_MAGIC"
     }
   },
-  "139": {
-    "id": 139,
+  "131": {
+    "id": 131,
     "name": "Labetha",
     "female": true,
     "race": 8,
@@ -2188,8 +2067,8 @@
       "name": "EARTH_MAGIC"
     }
   },
-  "140": {
-    "id": 140,
+  "132": {
+    "id": 132,
     "name": "Inteus",
     "female": false,
     "race": 8,
@@ -2204,8 +2083,8 @@
       "name": "FIRE_MAGIC"
     }
   },
-  "141": {
-    "id": 141,
+  "133": {
+    "id": 133,
     "name": "Aenain",
     "female": false,
     "race": 8,
@@ -2220,8 +2099,8 @@
       "name": "AIR_MAGIC"
     }
   },
-  "142": {
-    "id": 142,
+  "134": {
+    "id": 134,
     "name": "Gelare",
     "female": false,
     "race": 8,
@@ -2236,8 +2115,8 @@
       "name": "WATER_MAGIC"
     }
   },
-  "143": {
-    "id": 143,
+  "135": {
+    "id": 135,
     "name": "Grindan",
     "female": false,
     "race": 8,
@@ -2252,21 +2131,132 @@
       "name": "EARTH_MAGIC"
     }
   },
-  "144": {
-    "id": 144,
-    "name": "Sir Mullich",
-    "female": false,
-    "race": 0,
-    "class": "Knight",
-    "spec": "SPEED",
+
+  "136": {
+    "id": 136,
+    "name": "Pasis",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "PSYCHIC_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "137": {
+    "id": 137,
+    "name": "Thunar",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "EARTH_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ESTATES"
+    }
+  },
+  "138": {
+    "id": 138,
+    "name": "Ignissa",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "FIRE_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ARTILLERY"
+    }
+  },
+  "139": {
+    "id": 139,
+    "name": "Lacus",
+    "female": true,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "WATER_ELEMENTALS",
     "skill1": {
       "level": 2,
-      "name": "LEADERSHIP"
+      "name": "TACTICS"
     },
     "skill2": {}
   },
-  "145": {
-    "id": 145,
+  "140": {
+    "id": 140,
+    "name": "Monere",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "PSYCHIC_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "OFFENSE"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LOGISTICS"
+    }
+  },
+  "141": {
+    "id": 141,
+    "name": "Erdamon",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "EARTH_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "ESTATES"
+    }
+  },
+  "142": {
+    "id": 142,
+    "name": "Fiur",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "FIRE_ELEMENTALS",
+    "skill1": {
+      "level": 2,
+      "name": "OFFENSE"
+    },
+    "skill2": {}
+  },
+  "143": {
+    "id": 143,
+    "name": "Kalt",
+    "female": false,
+    "race": 8,
+    "class": "Planeswalker",
+    "spec": "WATER_ELEMENTALS",
+    "skill1": {
+      "level": 1,
+      "name": "TACTICS"
+    },
+    "skill2": {
+      "level": 1,
+      "name": "LEARNING"
+    }
+  },
+
+  "144": {
+    "id": 144,
     "name": "Adrienne",
     "female": true,
     "race": 7,
@@ -2387,8 +2377,23 @@
       "name": "ARMORER"
     }
   },
+
   "153": {
     "id": 153,
+    "name": "Sir Mullich",
+    "female": false,
+    "race": 0,
+    "class": "Knight",
+    "spec": "SPEED",
+    "skill1": {
+      "level": 2,
+      "name": "LEADERSHIP"
+    },
+    "skill2": {}
+  },
+
+  "156": {
+    "id": 156,
     "name": "Mutare Drake",
     "female": true,
     "race": 0,

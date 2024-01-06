@@ -9,37 +9,33 @@ import Subject from '@/services/Observer';
 import { randomValueOf } from '@/utils/common';
 import { Creature, rightHeroArmy, leftHeroArmy } from '@/constants/units';
 import { BATTLE_SIDE } from '@/constants/common';
-import { HeroClassesResponse, HeroSettings, HeroesResponse } from '@/types/heroes';
+
+import type { HeroSettings } from '@/types/heroes';
+import type { DataSettings } from '@/types';
 
 class BattleModel extends Subject {
-  settings: HeroesResponse;
-  classes: HeroClassesResponse;
-
   battleSide: BATTLE_SIDE;
   queue: BattleQueue;
   animationPending: boolean;
   heroes: Array<BattleHero> = [];
 
-  constructor(battleSide: BATTLE_SIDE, settings: HeroesResponse, classes: HeroClassesResponse) {
+  constructor(battleSide: BATTLE_SIDE, settings: DataSettings) {
     super();
 
-    this.classes = classes;
-    this.settings = settings;
     this.battleSide = battleSide;
     this.animationPending = false;
-
-    this.initializeHeroes();
+    this.initializeHeroes(settings);
 
     const [leftHero, rightHero] = this.heroes;
     this.queue = new BattleQueue(leftHero, rightHero);
   }
 
-  private initializeHeroes() {
+  private initializeHeroes(settings: DataSettings) {
     const leftMonsters = this.battleMonsters(leftHeroArmy, BATTLE_SIDE.left);
-    this.createRandomHero(leftMonsters);
+    this.createRandomHero(leftMonsters, settings);
 
     const rightMonsters = this.battleMonsters(rightHeroArmy, BATTLE_SIDE.right);
-    this.createRandomHero(rightMonsters);
+    this.createRandomHero(rightMonsters, settings);
   }
 
   private battleMonsters(army: Array<Creature>, side: BATTLE_SIDE): Array<BattleMonster> {
@@ -53,11 +49,11 @@ class BattleModel extends Subject {
     return monsters;
   }
 
-  private createRandomHero(monsters: Array<BattleMonster>) {
-    const baseSettings = randomValueOf<HeroSettings>(this.settings);
-    const classSettings = this.classes.find((cl) => cl.name === baseSettings.class)!;
+  private createRandomHero(monsters: Array<BattleMonster>, settings: DataSettings) {
+    const heroSettings = randomValueOf<HeroSettings>(settings.heroes);
+    const classSettings = settings.heroClasses.find((cl) => cl.name === heroSettings.class)!;
 
-    const model = new BattleHeroModel({ ...baseSettings, classSettings }, monsters);
+    const model = new BattleHeroModel({ ...heroSettings, classSettings }, monsters);
 
     const hero = new BattleHero(model);
     monsters.forEach((monster) => {

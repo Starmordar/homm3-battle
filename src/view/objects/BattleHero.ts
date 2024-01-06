@@ -38,6 +38,8 @@ class BattleHeroView implements Observer {
     this.sprite = Textures.get<HeroSprite>(spriteKey);
 
     const classFrame = heroClassFrameMap[model.class];
+    console.log('classFrame :>> ', classFrame, model);
+
     this.frameY = model.female ? classFrame.female : classFrame.male;
   }
 

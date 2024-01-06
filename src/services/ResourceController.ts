@@ -1,17 +1,17 @@
 import Sprite from '../view/sprites/Sprite';
 import SpriteFactory from './SpriteFactory';
-import SpriteRepository from './SpriteRepository';
+import { Textures } from './SpriteRepository';
 
+import { fetchHeroClasses, fetchHeroes } from '@/api/settings';
 import { staticTextures } from '@/constants/textures/static';
+import type { DataSettings } from '@/types';
 import type { StaticTexture, TEXTURE_TYPE } from '@/constants/textures/types';
 
 class ResourceController {
-  private readonly spriteRegistry: SpriteRepository;
   private readonly spriteFactory: SpriteFactory;
 
-  constructor(spriteRegistry: SpriteRepository, spriteFactory: SpriteFactory) {
-    this.spriteRegistry = spriteRegistry;
-    this.spriteFactory = spriteFactory;
+  constructor() {
+    this.spriteFactory = new SpriteFactory();
   }
 
   load() {
@@ -21,7 +21,7 @@ class ResourceController {
   loadSprite(key: string, options: StaticTexture): Promise<Sprite<StaticTexture>> {
     const sprite = this.spriteFactory.create(options);
 
-    this.spriteRegistry.register(key, sprite);
+    Textures.register(key, sprite);
     return sprite.load;
   }
 
@@ -32,11 +32,16 @@ class ResourceController {
     const promises = Object.keys(options).map((key) => {
       const sprite = this.spriteFactory.create(options[key as keyof typeof options], type);
 
-      this.spriteRegistry.register(key, sprite);
+      Textures.register(key, sprite);
       return sprite.load;
     });
 
     return Promise.all(promises);
+  }
+
+  async loadSettings(): Promise<DataSettings> {
+    const [heroes, heroClasses] = await Promise.all([fetchHeroes(), fetchHeroClasses()]);
+    return { heroes, heroClasses };
   }
 }
 

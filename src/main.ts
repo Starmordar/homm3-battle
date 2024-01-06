@@ -1,33 +1,27 @@
 import './index.css';
 
-import SpriteFactory from './services/SpriteFactory';
-import { Textures } from './services/SpriteRepository';
 import ResourceController from './services/ResourceController';
 
 import BackgroundView from './view/containers/BackgroundView';
 import AnimationView from './view/containers/AnimationView';
 import LayoutView from './view/containers/LayoutView';
 
+import Battle from '@/controllers/Battle';
+import BattleModel from './models/Battle';
+import BattleGraph from './models/BattleGraph';
+
 import { battleHeight, battleWidth, hexObstacles, layoutViewSize } from './constants/hex';
 import { BATTLE_SIDE } from './constants/common';
-import BattleModel from './models/Battle';
-import Battle from '@/controllers/Battle';
 import { monsterTextures } from './constants/textures/monsters';
-import BattleGraph from './models/BattleGraph';
 import { heroTextures } from './constants/textures/heroes';
 import { TEXTURES, TEXTURE_TYPE } from './constants/textures/types';
-import { fetchHeroClasses, fetchHeroes } from './api/settings';
 
-const spriteFactory = new SpriteFactory();
-
-const resources = new ResourceController(Textures, spriteFactory);
+const resources = new ResourceController();
 await resources.load();
-
-const heroes = await fetchHeroes();
-const heroClasses = await fetchHeroClasses();
+const settings = await resources.loadSettings();
 
 const side = BATTLE_SIDE.left;
-const battleModel = new BattleModel(side, heroes, heroClasses);
+const battleModel = new BattleModel(side, settings);
 const battle = new Battle(battleModel);
 
 const monsterSprites: Record<string, any> = {};
