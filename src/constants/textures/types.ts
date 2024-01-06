@@ -69,7 +69,6 @@ export enum TEXTURES {
   corner_gems = 'corner_gems',
   edge_pattern = 'edge_pattern',
   panel_bg = 'panel_bg',
-  battle_bg_01 = 'battle_bg_01',
 
   battlefield_bg = 'battlefield_bg',
   monster_window = 'monster_window',

@@ -144,11 +144,11 @@ export const staticTextures: StaticTextureMap = {
     width: 128,
     height: 128,
   },
-  [TEXTURES.battle_bg_01]: {
-    url: 'src/assets/battlefields/CMBKBOAT.png',
-    width: 875,
-    height: 630,
-  },
+  // [TEXTURES.battlefield_bg]: {
+  //   url: 'src/assets/battlefields/CMBKBOAT.png',
+  //   width: 875,
+  //   height: 630,
+  // },
 
   [TEXTURES.wraith_static]: {
     url: '/src/assets/wraith/static.png',
@@ -168,4 +168,11 @@ export const staticTextures: StaticTextureMap = {
     width: 298,
     height: 311,
   },
+};
+
+export const battleFieldSprite = {
+  key: TEXTURES.battlefield_bg,
+  url: (filename: string) => `/src/assets/battlefields/${filename}`,
+  width: 875,
+  height: 630,
 };

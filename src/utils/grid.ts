@@ -9,7 +9,7 @@ interface Dimensions {
 export function getBattleLayout({ width, height }: Dimensions): Layout {
   const pointSize = Math.min(height, width) / hexagonCount;
 
-  const originPoint = new Point((width - pointSize) / 2, (height + pointSize) / 2);
+  const originPoint = new Point((width - pointSize) / 2, height / 2 + pointSize);
   const sizePoint = new Point(pointSize, pointSize);
 
   return new Layout(Layout.pointyOnTop, sizePoint, originPoint);

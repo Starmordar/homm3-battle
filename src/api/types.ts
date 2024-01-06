@@ -21,3 +21,9 @@ interface HeroResponse {
 }
 
 type HeroesResponse = Record<string, HeroResponse>;
+
+interface BattlefieldResponse {
+  graphics: string;
+}
+
+type BattlefieldsResponse = Record<string, BattlefieldResponse>;

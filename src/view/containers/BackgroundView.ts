@@ -12,7 +12,6 @@ import { TEXTURES } from '@/constants/textures/types';
 import type StaticSprite from '@/view/sprites/StaticSprite';
 
 export interface BackgroundViewOptions extends ViewOptions {
-  backgroundSprite: string;
   battleWidth: number;
   battleHeight: number;
 }
@@ -105,7 +104,7 @@ class BackgroundView extends View<BackgroundViewOptions> {
 
   private drawBattleBackground() {
     const { battleWidth, battleHeight } = this.options;
-    const sprite = Textures.get<StaticSprite>(this.options.backgroundSprite);
+    const sprite = Textures.get<StaticSprite>(TEXTURES.battlefield_bg);
 
     sprite.drawFrame(
       this.ctx,

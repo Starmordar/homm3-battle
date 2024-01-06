@@ -14,11 +14,15 @@ import { battleHeight, battleWidth, hexObstacles, layoutViewSize } from './const
 import { BATTLE_SIDE } from './constants/common';
 import { monsterTextures } from './constants/textures/monsters';
 import { heroTextures } from './constants/textures/heroes';
-import { TEXTURES, TEXTURE_TYPE } from './constants/textures/types';
+import { TEXTURE_TYPE } from './constants/textures/types';
+import { globalSettings } from './services/GlobalSettings';
+import { battleFieldSprite } from './constants/textures/static';
 
 const resources = new ResourceController();
 await resources.load();
 const settings = await resources.loadSettings();
+
+globalSettings.addBattlefield(settings);
 
 const side = BATTLE_SIDE.left;
 const battleModel = new BattleModel(side, settings);
@@ -33,13 +37,17 @@ battle.monsters.forEach(({ model }) => {
 await resources.loadSprites(monsterSprites, TEXTURE_TYPE.monster);
 await resources.loadSprites(heroTextures as any, TEXTURE_TYPE.hero);
 
+await resources.loadSprite(battleFieldSprite.key, {
+  ...battleFieldSprite,
+  url: battleFieldSprite.url(globalSettings.battlefield!.graphics),
+});
+
 const backgroundViewOptions = {
   classNames: ['ui-canvas', 'cursor-default'],
   size: { width: window.innerWidth, height: window.innerHeight },
 
   battleHeight,
   battleWidth,
-  backgroundSprite: TEXTURES.battle_bg_01,
 };
 
 const backgroundView = new BackgroundView(battle, backgroundViewOptions);

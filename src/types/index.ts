@@ -25,4 +25,5 @@ export interface Bounds {
 export interface DataSettings {
   heroes: HeroesResponse;
   heroClasses: HeroClassesResponse;
+  battleFields: BattlefieldsResponse;
 }
