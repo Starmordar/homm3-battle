@@ -95,7 +95,7 @@ class DefUnpacker {
     const buffer = this.canvas.toBuffer('image/png');
     const filename = this.filename.split('.')[0];
 
-    fs.writeFileSync(`./${filename}.png`, buffer);
+    fs.writeFileSync(`./assests/result/${filename}.png`, buffer);
   }
 }
 

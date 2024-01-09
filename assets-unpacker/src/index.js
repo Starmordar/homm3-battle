@@ -17,4 +17,4 @@ async function unpackAssetsFromLod(path) {
   });
 }
 
-unpackAssetsFromLod('./assets/H3sprite.lod');
+unpackAssetsFromLod('./assets/source/H3sprite.lod');

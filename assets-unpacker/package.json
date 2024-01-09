@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@squoosh/lib": "^0.5.3",
     "canvas": "^2.11.2",
-    "homm3-unpacker": "^0.5.1"
+    "homm3-unpacker": "^0.5.1",
+    "sharp": "^0.33.1"
   }
 }
