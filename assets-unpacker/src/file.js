@@ -13,9 +13,13 @@ function write(path, buffer) {
   });
 }
 
+function writeFileSync(path, buffer) {
+  return fs.writeFileSync(path, buffer);
+}
+
 async function clearDir(dirPath) {
   const files = fs.readdirSync(dirPath);
   files.map((file) => fs.unlinkSync(path.join(dirPath, file)));
 }
 
-module.exports = { read, write, clearDir };
+module.exports = { read, write, writeFileSync, clearDir };

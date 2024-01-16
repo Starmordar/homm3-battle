@@ -1,6 +1,8 @@
 const { unpackDEF } = require('homm3-unpacker');
 const { createCanvas } = require('canvas');
-const fs = require('graceful-fs');
+
+const { RESULT_DIR } = require('./path');
+const { writeFileSync } = require('./file');
 
 const { animationGroups } = require('./config');
 const { getImageRect } = require('./image');
@@ -95,7 +97,7 @@ class DefUnpacker {
     const buffer = this.canvas.toBuffer('image/png');
     const filename = this.filename.split('.')[0];
 
-    fs.writeFileSync(`./assests/result/${filename}.png`, buffer);
+    writeFileSync(`${RESULT_DIR}/${filename}.png`, buffer);
   }
 }
 

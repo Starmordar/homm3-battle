@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "unpack": "node ./src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "all": "npm run unpack && npm run minify && npm run cleanup",
+    "unpack": "node ./src/steps/unpack.js",
+    "minify": "node ./src/steps/minify.js",
+    "cleanup": "node ./src/steps/cleanup.js"
   },
   "keywords": [],
   "author": "",

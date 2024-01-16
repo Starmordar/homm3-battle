@@ -1,10 +1,12 @@
 const { unpackLOD } = require('homm3-unpacker');
+const { DefUnpacker } = require('../DefUnpacker');
 
-const { read } = require('./file');
-const { monsterSpriteNames } = require('./config');
-const { DefUnpacker } = require('./DefUnpacker');
+const { clearDir, read } = require('../file');
+const { monsterSpriteNames } = require('../config');
+const { RESULT_DIR, SOURCE_LOD_FILE } = require('../path');
 
 async function unpackAssetsFromLod(path) {
+  clearDir(RESULT_DIR);
   const file = await read(path);
 
   unpackLOD(file, {
@@ -17,4 +19,4 @@ async function unpackAssetsFromLod(path) {
   });
 }
 
-unpackAssetsFromLod('./assets/source/H3sprite.lod');
+unpackAssetsFromLod(SOURCE_LOD_FILE);
