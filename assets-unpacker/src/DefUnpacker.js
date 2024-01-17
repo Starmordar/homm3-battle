@@ -1,11 +1,9 @@
+const fs = require('graceful-fs');
 const { unpackDEF } = require('homm3-unpacker');
 const { createCanvas } = require('canvas');
 
-const { RESULT_DIR } = require('./path');
-const { writeFileSync } = require('./file');
 const { groupToTemplate } = require('./template');
-const { animationGroups } = require('./config');
-const { getImageRect } = require('./image');
+const { RESULT_DIR, ANIMATION_GROUPS } = require('./config');
 
 const imageWidth = 220;
 const imageHeight = 180;
@@ -14,7 +12,7 @@ class DefUnpacker {
   constructor(buffer, filename) {
     this.filename = filename;
     this.data = unpackDEF(buffer, { format: 'bitmap', padding: false });
-    this.groups = animationGroups.map((name) => name.toLowerCase());
+    this.groups = ANIMATION_GROUPS.map((name) => name.toLowerCase());
 
     this.maxCol = Math.max(...this.groups.map((name) => this.data.groups[name]?.length ?? 0));
     this.maxRow = this.groups.length;
@@ -32,7 +30,7 @@ class DefUnpacker {
   }
 
   run() {
-    const imageRect = getImageRect(this.data);
+    const imageRect = this.getImageRect();
 
     this.groups.forEach((groupName, index) => {
       const isSelection = groupName.includes('_active');
@@ -94,11 +92,37 @@ class DefUnpacker {
     }
   }
 
+  getImageRect() {
+    const images = Object.values(this.data.images);
+
+    let top = Infinity;
+    let left = Infinity;
+    let bottom = 0;
+    let right = 0;
+
+    const imageNames = Object.keys(images);
+    for (const name of imageNames) {
+      const image = images[name];
+
+      if (image.y < top) top = image.y;
+      if (image.y + image.height > bottom) bottom = image.y + image.height;
+      if (image.x < left) left = image.x;
+      if (image.x + image.width > right) right = image.x + image.width;
+    }
+
+    return {
+      x: left,
+      y: top,
+      width: right - left,
+      height: bottom - top,
+    };
+  }
+
   saveImage() {
     const buffer = this.canvas.toBuffer('image/png');
     const filename = this.filename.split('.')[0];
 
-    writeFileSync(`${RESULT_DIR}/${filename}.png`, buffer);
+    fs.writeFileSync(`${RESULT_DIR}/${filename}.png`, buffer);
   }
 }
 

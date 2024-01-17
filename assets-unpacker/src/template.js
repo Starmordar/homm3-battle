@@ -1,5 +1,5 @@
-const { appendFileSync } = require('./file');
-const { CONFIG_DIR } = require('./path');
+const fs = require('graceful-fs');
+const { CONFIG_DIR } = require('./config');
 
 function groupToTemplate(data, groups, name) {
   const frameTemplates = [];
@@ -10,7 +10,7 @@ function groupToTemplate(data, groups, name) {
   });
 
   const template = spriteTemplate(name, frameTemplates);
-  appendFileSync(`${CONFIG_DIR}/config.txt`, template);
+  fs.appendFileSync(`${CONFIG_DIR}/config.txt`, template);
 }
 
 function frameTemplate(name, x, y) {

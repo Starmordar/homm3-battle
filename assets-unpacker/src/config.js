@@ -1,4 +1,12 @@
-const animationGroups = [
+const path = require('path');
+
+const SOURCE_LOD_FILE = path.join(__dirname, '../assets/source/H3sprite.lod');
+
+const SOURCE_DIR = path.join(__dirname, '../assets/source');
+const RESULT_DIR = path.join(__dirname, '../assets/result');
+const CONFIG_DIR = path.join(__dirname, '../assets/config');
+
+const ANIMATION_GROUPS = [
   'MOVING',
   'START MOVING',
   'STOP MOVING',
@@ -24,7 +32,7 @@ const animationGroups = [
   'SHOOT DOWN',
 ];
 
-const monsterSpriteNames = [
+const MONSTER_FILE_NAMES = [
   // Castle
   'CPKMAN.def',
   'CHALBD.def',
@@ -187,4 +195,12 @@ const monsterSpriteNames = [
   'CTROLL.def',
 ];
 
-module.exports = { animationGroups, monsterSpriteNames };
+module.exports = {
+  SOURCE_LOD_FILE,
+  SOURCE_DIR,
+  RESULT_DIR,
+  CONFIG_DIR,
+
+  ANIMATION_GROUPS,
+  MONSTER_FILE_NAMES,
+};

@@ -1,17 +1,15 @@
 const { unpackLOD } = require('homm3-unpacker');
+const fs = require('graceful-fs');
 const { DefUnpacker } = require('../DefUnpacker');
 
-const { clearDir, read } = require('../file');
-const { monsterSpriteNames } = require('../config');
-const { RESULT_DIR, SOURCE_LOD_FILE } = require('../path');
+const { MONSTER_FILE_NAMES, SOURCE_LOD_FILE } = require('../config');
 
 async function unpackAssetsFromLod(path) {
-  clearDir(RESULT_DIR);
-  const file = await read(path);
+  const file = fs.readFileSync(path);
 
   unpackLOD(file, {
     def: (buffer, filename) => {
-      if (!monsterSpriteNames.includes(filename)) return;
+      if (!MONSTER_FILE_NAMES.includes(filename)) return;
 
       const unpacker = new DefUnpacker(buffer, filename);
       unpacker.run();
