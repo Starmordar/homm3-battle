@@ -3,7 +3,7 @@ const { createCanvas } = require('canvas');
 
 const { RESULT_DIR } = require('./path');
 const { writeFileSync } = require('./file');
-
+const { groupToTemplate } = require('./template');
 const { animationGroups } = require('./config');
 const { getImageRect } = require('./image');
 
@@ -44,6 +44,7 @@ class DefUnpacker {
     });
 
     this.saveImage();
+    groupToTemplate(this.data, this.groups, this.filename.split('.')[0]);
   }
 
   imagesToDraw(groupName) {

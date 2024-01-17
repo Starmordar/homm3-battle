@@ -119,7 +119,8 @@ class BattleMonsterView implements Observer {
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 
-    this.sprite.setAnimation(MONSTER_SPRITES.dead);
+    // TODO: Dead sprite
+    this.sprite.setAnimation(MONSTER_SPRITES.defend);
     this.sprite.drawFrame(this.ctx, x, y, width, height);
   }
 

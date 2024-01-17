@@ -13,7 +13,7 @@ export type StaticTextureMap = Partial<Record<TEXTURES, StaticTexture>>;
 
 export interface Frame {
   y: number;
-  x: Array<number>;
+  x: Array<number> | null;
 }
 
 export interface Texture<T extends string> extends StaticTexture {
@@ -82,4 +82,14 @@ export enum TEXTURES {
 
   wraith = 'wraith',
   wraith_mirror = 'wraith_mirror',
+
+  CBKNIG = 'CBKNIG',
+  CBLORD = 'CBLORD',
+  CHDRGN = 'CHDRGN',
+  CLICH = 'CLICH',
+  CNDRGN = 'CNDRGN',
+  CNOSFE = 'CNOSFE',
+  CPLICH = 'CPLICH',
+  CVAMP = 'CVAMP',
+  CWRAIT = 'CWRAIT',
 }
