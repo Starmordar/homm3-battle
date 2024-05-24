@@ -76,7 +76,7 @@ jobs:
       image-name: homm3-main
 
     steps:
-      - name: Copy frontend to ngnix
+      - name: Run Docker Image
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.APP_HOST }}
