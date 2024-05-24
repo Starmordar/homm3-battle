@@ -1,0 +1,89 @@
+name: Frontend React Build
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: '${{ github.workflow }}-${{ github.event.pull_request.number || github.head_ref || github.ref }}'
+  cancel-in-progress: ${{ !contains(github.ref, 'main') }}
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+
+      - name: Cache NPM
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-modules-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Linter
+        run: npm run lint
+
+      - name: Production Build
+        run: npm run build
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [validate]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: starmordar/homm3-battle:latest
+          file: .ci/Dockerfile
+          context: .
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'release-frontend') }}
+    needs: deploy
+
+    env:
+      image-name: homm3-main
+
+    steps:
+      - name: Copy frontend to ngnix
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.APP_HOST }}
+          username: ${{ secrets.SSH_HOST_USERNAME }}
+          password: ${{ secrets.SSH_HOST_PASSWORD }}
+          script: |
+            docker pull starmordar/homm3-battle:latest
+            docker stop ${{ env.image-name }}
+            docker rm -f ${{ env.image-name }}
+            docker run --restart=always --name ${{ env.image-name }} -d -p 80:80 starmordar/homm3-battle:latest
