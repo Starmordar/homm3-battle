@@ -25,7 +25,8 @@ export function slowFrames<T extends string>(
   return textureMapClone;
 }
 
-function slowFrame(frames: Array<number>, factor = 8) {
+function slowFrame(frames: Array<number> | null, factor = 8) {
+  if (frames === null) return null;
   return frames.flatMap((frame) => new Array(factor).fill(frame));
 }
 
@@ -37,7 +38,7 @@ export function mirrorFrames<T extends string>(
   const mirrored: Partial<Texture<T>['textures']> = {};
 
   for (const [key, frame] of Object.entries<Frame>(frames)) {
-    const mirroredFrames = frame.x.map((frameX) => Math.abs(maxFrameX - frameX));
+    const mirroredFrames = frame.x?.map((frameX) => Math.abs(maxFrameX - frameX)) ?? null;
     mirrored[key as T] = { y: frame.y, x: mirroredFrames };
   }
 
@@ -48,26 +49,26 @@ function maxFrame<T extends string>(frames: Texture<T>['textures']): number {
   let max = 0;
 
   for (const [_, frame] of Object.entries<Frame>(frames)) {
-    max = Math.max(max, ...frame.x);
+    max = Math.max(max, ...(frame.x ?? [0]));
   }
 
   return max;
 }
 
 export function attackAnimationByAngle({ angle, response }: { angle: number; response: boolean }) {
-  if ([0, 3].includes(angle)) return MONSTER_SPRITES.attackStraight;
+  if ([0, 3].includes(angle)) return MONSTER_SPRITES['attack straight'];
 
   const downAngles = response ? [4, 5] : [1, 2];
-  if (downAngles.includes(angle)) return MONSTER_SPRITES.attackDown;
+  if (downAngles.includes(angle)) return MONSTER_SPRITES['attack down'];
 
-  return MONSTER_SPRITES.attackUp;
+  return MONSTER_SPRITES['attack up'];
 }
 
 export function attackedAnimation(attacking: BattleMonster, attacked: BattleMonster) {
   if (attacked.model.isDeadAfterHit(attacking.model)) return MONSTER_SPRITES.death;
 
   // TODO: Shield animation
-  return MONSTER_SPRITES.getHit;
+  return MONSTER_SPRITES['getting hit'];
 }
 
 export function monsterBgSpriteByRace(race: number) {

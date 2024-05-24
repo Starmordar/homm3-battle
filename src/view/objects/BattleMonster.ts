@@ -37,6 +37,11 @@ class BattleMonsterView implements Observer {
     const { animation } = this.controller.model;
     const { width, height, offsetY } = animation.size;
 
+    if (this.sprite.currentAnimation !== MONSTER_SPRITES['start moving']) {
+      this.sprite.setAnimation(MONSTER_SPRITES['start moving']);
+      this.sprite.setNextAnimation(MONSTER_SPRITES.moving);
+    }
+
     const pixel = animationPath[this.animationIndex];
     if (!pixel) return this.endAnimation();
 
@@ -119,7 +124,8 @@ class BattleMonsterView implements Observer {
     const x = pixel.x - width / 2;
     const y = pixel.y - height + offsetY;
 
-    this.sprite.setAnimation(MONSTER_SPRITES.dead);
+    // TODO: Dead sprite
+    this.sprite.setAnimation(MONSTER_SPRITES.defend);
     this.sprite.drawFrame(this.ctx, x, y, width, height);
   }
 

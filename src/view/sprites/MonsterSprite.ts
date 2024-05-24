@@ -12,8 +12,8 @@ class MonsterSprite extends Sprite<Texture<MONSTER_SPRITES>> {
   constructor(options: Texture<MONSTER_SPRITES>) {
     super(options);
 
-    this.nextAnimation = MONSTER_SPRITES.idle;
-    this.currentAnimation = MONSTER_SPRITES.idle;
+    this.nextAnimation = MONSTER_SPRITES.standing;
+    this.currentAnimation = MONSTER_SPRITES.standing;
     this.animationSteps = this.options.textures![this.currentAnimation];
   }
 
@@ -28,7 +28,7 @@ class MonsterSprite extends Sprite<Texture<MONSTER_SPRITES>> {
     if (this.currentFrame >= this.animationSteps.x.length) {
       this.currentFrame = 0;
       this.currentAnimation = this.nextAnimation;
-      this.nextAnimation = MONSTER_SPRITES.idle;
+      this.nextAnimation = MONSTER_SPRITES.standing;
 
       this.animationSteps = this.options.textures![this.currentAnimation];
     }
@@ -39,7 +39,7 @@ class MonsterSprite extends Sprite<Texture<MONSTER_SPRITES>> {
 
     this.currentFrame = 0;
     this.currentAnimation = sprite;
-    this.nextAnimation = MONSTER_SPRITES.idle;
+    this.nextAnimation = MONSTER_SPRITES.standing;
 
     this.animationSteps = this.options.textures![this.currentAnimation];
   }

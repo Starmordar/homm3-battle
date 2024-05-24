@@ -1,0 +1,19 @@
+{
+  "name": "assets-unpacker",
+  "version": "1.0.5",
+  "description": "",
+  "scripts": {
+    "process": "npm run unpack && npm run minify && npm run cleanup",
+    "unpack": "node ./src/steps/step1-unpack.js",
+    "minify": "node ./src/steps/step2-minify.js",
+    "cleanup": "node ./src/steps/step3-cleanup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "homm3-unpacker": "^0.5.1",
+    "sharp": "^0.33.1"
+  }
+}
