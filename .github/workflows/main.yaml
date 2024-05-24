@@ -31,7 +31,7 @@ jobs:
           restore-keys: ${{ runner.os }}-modules-
 
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Linter
         run: npm run lint
