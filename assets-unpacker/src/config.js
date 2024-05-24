@@ -6,6 +6,9 @@ const SOURCE_DIR = path.join(__dirname, '../assets/source');
 const RESULT_DIR = path.join(__dirname, '../assets/result');
 const CONFIG_DIR = path.join(__dirname, '../assets/config');
 
+const FRAME_WIDTH = 220;
+const FRAME_HEIGHT = 180;
+
 const ANIMATION_GROUPS = [
   'MOVING',
   'START MOVING',
@@ -203,4 +206,7 @@ module.exports = {
 
   ANIMATION_GROUPS,
   MONSTER_FILE_NAMES,
+
+  FRAME_WIDTH,
+  FRAME_HEIGHT,
 };

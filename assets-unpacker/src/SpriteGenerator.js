@@ -1,14 +1,11 @@
 const fs = require('graceful-fs');
-const { unpackDEF } = require('homm3-unpacker');
 const { createCanvas } = require('canvas');
 
+const { unpackDEF } = require('../lib');
 const { groupToTemplate } = require('./template');
-const { RESULT_DIR, ANIMATION_GROUPS } = require('./config');
+const { FRAME_WIDTH, FRAME_HEIGHT, RESULT_DIR, ANIMATION_GROUPS } = require('./config');
 
-const imageWidth = 220;
-const imageHeight = 180;
-
-class DefUnpacker {
+class SpriteGenerator {
   constructor(buffer, filename) {
     this.filename = filename;
     this.data = unpackDEF(buffer, { format: 'bitmap', padding: false });
@@ -17,13 +14,13 @@ class DefUnpacker {
     this.maxCol = Math.max(...this.groups.map((name) => this.data.groups[name]?.length ?? 0));
     this.maxRow = this.groups.length;
 
-    const { canvas, ctx } = this.imageCanvas(this.maxCol, this.maxRow);
+    const { canvas, ctx } = this.createImageFrameCanvas(this.maxCol, this.maxRow);
     this.canvas = canvas;
     this.ctx = ctx;
   }
 
-  imageCanvas(maxCol, maxRow) {
-    const canvas = createCanvas(imageWidth * maxCol, imageHeight * maxRow);
+  createImageFrameCanvas(maxCol, maxRow) {
+    const canvas = createCanvas(FRAME_WIDTH * maxCol, FRAME_HEIGHT * maxRow);
     const ctx = canvas.getContext('2d');
 
     return { canvas, ctx };
@@ -33,11 +30,11 @@ class DefUnpacker {
     const imageRect = this.getImageRect();
 
     this.groups.forEach((groupName, index) => {
-      const isSelection = groupName.includes('_active');
+      const isActiveState = groupName.includes('_active');
       this.drawFrameGroup(imageRect, this.imagesToDraw(groupName.replace('_active', '')), index);
 
-      if (isSelection) {
-        this.drawFrameGroup(imageRect, this.selectionImagesToDraw(groupName), index);
+      if (isActiveState) {
+        this.drawFrameGroup(imageRect, this.activeImagesToDraw(groupName), index);
       }
     });
 
@@ -50,7 +47,7 @@ class DefUnpacker {
     return imageNames.map((imageName) => this.data.images[imageName]);
   }
 
-  selectionImagesToDraw(groupName) {
+  activeImagesToDraw(groupName) {
     groupName = groupName.replace('_active', '');
     const imageNames = this.data.groups[groupName] ?? [];
 
@@ -126,4 +123,4 @@ class DefUnpacker {
   }
 }
 
-module.exports = { DefUnpacker };
+module.exports = { SpriteGenerator };

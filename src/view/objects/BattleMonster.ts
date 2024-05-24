@@ -37,6 +37,11 @@ class BattleMonsterView implements Observer {
     const { animation } = this.controller.model;
     const { width, height, offsetY } = animation.size;
 
+    if (this.sprite.currentAnimation !== MONSTER_SPRITES['start moving']) {
+      this.sprite.setAnimation(MONSTER_SPRITES['start moving']);
+      this.sprite.setNextAnimation(MONSTER_SPRITES.moving);
+    }
+
     const pixel = animationPath[this.animationIndex];
     if (!pixel) return this.endAnimation();
 

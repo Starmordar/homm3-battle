@@ -1,19 +1,17 @@
 {
-  "name": "script",
-  "version": "1.0.0",
+  "name": "assets-unpacker",
+  "version": "1.0.5",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "all": "npm run unpack && npm run minify && npm run cleanup",
-    "unpack": "node ./src/steps/unpack.js",
-    "minify": "node ./src/steps/minify.js",
-    "cleanup": "node ./src/steps/cleanup.js"
+    "process": "npm run unpack && npm run minify && npm run cleanup",
+    "unpack": "node ./src/steps/step1-unpack.js",
+    "minify": "node ./src/steps/step2-minify.js",
+    "cleanup": "node ./src/steps/step3-cleanup.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@squoosh/lib": "^0.5.3",
     "canvas": "^2.11.2",
     "homm3-unpacker": "^0.5.1",
     "sharp": "^0.33.1"

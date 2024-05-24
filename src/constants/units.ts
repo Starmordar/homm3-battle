@@ -16,13 +16,13 @@ export const leftHeroArmy: Array<Creature> = [
   {
     monsterId: 61,
     position: new Hexagon(-7, 0, 7),
-    animation: { sprite: TEXTURES.CABEHE, size: { width: 240, height: 200, offsetY: 50 } },
+    animation: { sprite: TEXTURES.CBKNIG, size: { width: 240, height: 200, offsetY: 55 } },
     quantity: 12,
   },
   {
     monsterId: 61,
     position: new Hexagon(-5, -4, 9),
-    animation: { sprite: TEXTURES.CBKNIG, size: { width: 240, height: 200, offsetY: 50 } },
+    animation: { sprite: TEXTURES.CBKNIG, size: { width: 240, height: 200, offsetY: 55 } },
     quantity: 1,
   },
   {

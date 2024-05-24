@@ -1,18 +1,19 @@
-const { unpackLOD } = require('homm3-unpacker');
 const fs = require('graceful-fs');
-const { DefUnpacker } = require('../DefUnpacker');
+
+const { unpackLOD } = require('../../lib');
+const { SpriteGenerator } = require('../SpriteGenerator');
 
 const { MONSTER_FILE_NAMES, SOURCE_LOD_FILE } = require('../config');
 
-async function unpackAssetsFromLod(path) {
+function unpackAssetsFromLod(path) {
   const file = fs.readFileSync(path);
 
   unpackLOD(file, {
     def: (buffer, filename) => {
       if (!MONSTER_FILE_NAMES.includes(filename)) return;
 
-      const unpacker = new DefUnpacker(buffer, filename);
-      unpacker.run();
+      const spriteGenerator = new SpriteGenerator(buffer, filename);
+      spriteGenerator.run();
     },
   });
 }
