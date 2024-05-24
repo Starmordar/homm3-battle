@@ -3,7 +3,8 @@ FROM node:18-alpine as build-stage
 WORKDIR /app
 
 COPY package*.json /app/
-RUN npm ci
+COPY pnpm-lock.yaml /app/
+RUN pnpm install --frozen-lockfile
 
 COPY ./ /app/
 
