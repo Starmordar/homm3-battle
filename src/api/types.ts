@@ -20,10 +20,10 @@ interface HeroResponse {
   skill2: Skill;
 }
 
-type HeroesResponse = Record<string, HeroResponse>;
+export type HeroesResponse = Record<string, HeroResponse>;
 
 interface BattlefieldResponse {
   graphics: string;
 }
 
-type BattlefieldsResponse = Record<string, BattlefieldResponse>;
+export type BattlefieldsResponse = Record<string, BattlefieldResponse>;

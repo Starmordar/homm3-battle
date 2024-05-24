@@ -53,7 +53,7 @@ class ControlButton implements Renderable {
   private triggerControl(
     evt: MouseEvent,
     ctx: CanvasRenderingContext2D,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
   ) {
     if (this.disabled) return;
 

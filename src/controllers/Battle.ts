@@ -30,7 +30,7 @@ class Battle {
     attackingHex: Hexagon,
     attackedHex: Hexagon,
     path: Array<Hexagon>,
-    angle: number
+    angle: number,
   ) {
     // TODO: Fix
     if (path.length > 1) await this.model.activeUnit.animateMove(path);

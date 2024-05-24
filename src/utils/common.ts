@@ -1,4 +1,4 @@
-export function randomValueOf<T extends {}>(object: Record<string, any>): T {
+export function randomValueOf<T extends object>(object: Record<string, any>): T {
   const keys = Object.keys(object);
 
   const random = Math.floor(Math.random() * keys.length);

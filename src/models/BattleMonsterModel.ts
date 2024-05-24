@@ -141,7 +141,7 @@ class BattleMonsterModel extends Subject {
   }
 
   getHitValue(from: BattleMonsterModel, isShooting = false): number {
-    const [hitFrom, hitTo] = from.data.damage.melee;
+    const [hitFrom, _hitTo] = from.data.damage.melee;
 
     // TODO: Make use of hitTo
     const baseHit = hitFrom * from.quantity;
@@ -184,7 +184,7 @@ class BattleMonsterModel extends Subject {
     if (attack > defense) {
       result = specialityFactor * hitValue;
     } else {
-      let baseHitFactor = this.getHitFactor(from, hitValue);
+      const baseHitFactor = this.getHitFactor(from, hitValue);
       result = specialityFactor * (hitValue + baseHitFactor);
     }
 
@@ -192,13 +192,13 @@ class BattleMonsterModel extends Subject {
   }
 
   private getSpecialityFactor(
-    owner: BattleHero,
-    specialityName: string,
-    specialityMultiplier: number
+    _owner: BattleHero,
+    _specialityName: string,
+    specialityMultiplier: number,
   ): number {
     let result = 0;
     let secondaryLevel = 0;
-    let specialityFactor = 0;
+    const specialityFactor = 0;
     // const heroLevel = 10; // owner.properties.getValue('level');
     secondaryLevel = 3; //owner.secondary.get(specialityName) || 0;
 

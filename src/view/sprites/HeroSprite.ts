@@ -39,7 +39,7 @@ class HeroSprite extends Sprite<Texture<HERO_SPRITES>> {
     dx: number,
     dy: number,
     dw: number,
-    dh: number
+    dh: number,
   ) {
     ctx.drawImage(
       this.image,
@@ -50,7 +50,7 @@ class HeroSprite extends Sprite<Texture<HERO_SPRITES>> {
       dx,
       dy,
       dw,
-      dh
+      dh,
     );
   }
 }

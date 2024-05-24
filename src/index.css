@@ -12,34 +12,52 @@ body {
 }
 
 .melee_attack_0 {
-  cursor: url('./assets/cursor/melee_attack_0.png') 0 0, default;
+  cursor:
+    url('./assets/cursor/melee_attack_0.png') 0 0,
+    default;
 }
 .melee_attack_1 {
-  cursor: url('./assets/cursor/melee_attack_1.png') 0 24, default;
+  cursor:
+    url('./assets/cursor/melee_attack_1.png') 0 24,
+    default;
 }
 .melee_attack_2 {
-  cursor: url('./assets/cursor/melee_attack_2.png') 24 24, default;
+  cursor:
+    url('./assets/cursor/melee_attack_2.png') 24 24,
+    default;
 }
 .melee_attack_3 {
-  cursor: url('./assets/cursor/melee_attack_3.png') 32 0, default;
+  cursor:
+    url('./assets/cursor/melee_attack_3.png') 32 0,
+    default;
 }
 .melee_attack_4 {
-  cursor: url('./assets/cursor/melee_attack_4.png') 24 0, default;
+  cursor:
+    url('./assets/cursor/melee_attack_4.png') 24 0,
+    default;
 }
 .melee_attack_5 {
-  cursor: url('./assets/cursor/melee_attack_5.png') 0 0, default;
+  cursor:
+    url('./assets/cursor/melee_attack_5.png') 0 0,
+    default;
 }
 
 .cursor-default {
-  cursor: url('./assets/cursor/default.png') 0 0, default;
+  cursor:
+    url('./assets/cursor/default.png') 0 0,
+    default;
 }
 
 .cursor-move {
-  cursor: url('./assets/cursor/move.png') 16 16, default;
+  cursor:
+    url('./assets/cursor/move.png') 16 16,
+    default;
 }
 
 .cursor-stop {
-  cursor: url('./assets/cursor/stop.png') 16 16, default;
+  cursor:
+    url('./assets/cursor/stop.png') 16 16,
+    default;
 }
 
 #root {

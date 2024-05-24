@@ -15,7 +15,7 @@ class ResourceController {
   }
 
   load() {
-    return Promise.all([this.loadSprites(staticTextures)]);
+    return this.loadSprites(staticTextures);
   }
 
   loadSprite(key: string, options: StaticTexture): Promise<Sprite<StaticTexture>> {
@@ -28,7 +28,7 @@ class ResourceController {
 
   async loadSprites(
     options: Record<string, StaticTexture>,
-    type?: TEXTURE_TYPE
+    type?: TEXTURE_TYPE,
   ): Promise<Array<Sprite<StaticTexture>>> {
     const promises = Object.keys(options).map((key) => {
       const sprite = this.spriteFactory.create(options[key as keyof typeof options], type);

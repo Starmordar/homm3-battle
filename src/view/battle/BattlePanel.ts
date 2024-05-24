@@ -35,7 +35,7 @@ class BattlePanel implements Renderable {
   private drawControl(
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
-    controlOptions: ControlButtonOptions
+    controlOptions: ControlButtonOptions,
   ) {
     const battleControl = new ControlButton(this.battle, {
       ...controlOptions,

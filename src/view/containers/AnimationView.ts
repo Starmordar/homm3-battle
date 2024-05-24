@@ -91,7 +91,7 @@ class AnimationView extends View<ViewOptions> {
 
   private animateMonsters() {
     const sorted = this.monsterAnimations.sort((a, b) =>
-      this.graph.renderOrder(a.position, b.position)
+      this.graph.renderOrder(a.position, b.position),
     );
 
     sorted.forEach((monster) => monster.draw());

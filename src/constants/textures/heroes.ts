@@ -1,6 +1,7 @@
 import { mirrorFrames, slowFrames } from '@/utils/textures';
 import { TEXTURES, TextureFrames, TextureMap } from './types';
 import { HERO_CLASS } from '@/types/heroes';
+import config from '@/config';
 
 export enum HERO_SPRITES {
   idle = 'idle',
@@ -17,20 +18,20 @@ const frames: Partial<TextureFrames<HERO_SPRITES>> = {
 export const heroTextures: TextureMap<HERO_SPRITES> = slowFrames<HERO_SPRITES>(
   {
     [TEXTURES.hero]: {
-      url: '/src/assets/heroes/hero-sprites.png',
+      url: `${config.assetsPath}/heroes/hero-sprites.png`,
       width: 150,
       height: 175,
       textures: frames[TEXTURES.hero]!,
     },
 
     [TEXTURES.hero_mirror]: {
-      url: '/src/assets/heroes/hero-sprites-mirror.png',
+      url: `${config.assetsPath}/heroes/hero-sprites-mirror.png`,
       width: 150,
       height: 175,
       textures: mirrorFrames(frames[TEXTURES.hero]!, 19),
     },
   },
-  8
+  8,
 );
 
 export const heroClassFrameMap = {

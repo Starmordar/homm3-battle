@@ -113,7 +113,7 @@ class BackgroundView extends View<BackgroundViewOptions> {
       this.battleCanvasOffset.x - 45,
       this.battleCanvasOffset.y - 40,
       battleWidth + 90,
-      battleHeight - battlePanelHeight + 80
+      battleHeight - battlePanelHeight + 80,
     );
 
     const stroke = new Stroke({

@@ -59,7 +59,7 @@ class MonsterSprite extends Sprite<Texture<MONSTER_SPRITES>> {
       dx,
       dy,
       dw,
-      dh
+      dh,
     );
   }
 }

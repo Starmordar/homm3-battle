@@ -116,12 +116,12 @@ class LayoutView extends View<LayoutViewOptions> {
           hexUnderPoint.neighbor(cursorAngle),
           hexUnderPoint,
           path,
-          cursorAngle
+          cursorAngle,
         );
       }
     }
 
-    let lastHex = this.graph.reachableHexUnderPoint(point);
+    const lastHex = this.graph.reachableHexUnderPoint(point);
     if (!lastHex) return;
 
     const { position } = this.battle.model.activeUnit.model;
@@ -134,7 +134,7 @@ class LayoutView extends View<LayoutViewOptions> {
     attacking: Hexagon,
     attacked: Hexagon,
     path: Array<Hexagon>,
-    cursorAngle: number
+    cursorAngle: number,
   ) {
     this.battle.model.animationPending = true;
 

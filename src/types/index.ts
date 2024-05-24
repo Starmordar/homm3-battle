@@ -1,3 +1,4 @@
+import type { BattlefieldsResponse } from '@/api/types';
 import { HeroClassesResponse, HeroesResponse } from './heroes';
 
 export interface Renderable {

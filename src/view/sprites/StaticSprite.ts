@@ -13,7 +13,7 @@ class StaticSprite extends Sprite<StaticTexture> {
     dx: number,
     dy: number,
     dw: number,
-    dh: number
+    dh: number,
   ) {
     const { width: sw, height: sh } = this.options;
 

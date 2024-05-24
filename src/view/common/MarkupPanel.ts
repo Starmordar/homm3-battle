@@ -9,6 +9,7 @@ import {
 import { Textures } from '@/services/SpriteRepository';
 import type { Point } from '@/models/grid';
 import type { Bounds, Rect } from '@/types';
+import StaticSprite from '../sprites/StaticSprite';
 
 class MarkupPanel<Data> {
   private readonly ctx: CanvasRenderingContext2D;
@@ -25,7 +26,7 @@ class MarkupPanel<Data> {
     markup: Markup<Data>,
     bounds: Bounds,
     anchor: Point,
-    data: Data
+    data: Data,
   ) {
     this.ctx = ctx;
     this.data = data;
@@ -45,7 +46,7 @@ class MarkupPanel<Data> {
   private drawBackground() {
     const { x, y, width, height } = this.windowRect();
 
-    const sprite = Textures.get(this.markup.background.sprite);
+    const sprite = Textures.get<StaticSprite>(this.markup.background.sprite);
     sprite.drawFrame(this.ctx, 0, 0, x, y, width, height);
   }
 
@@ -100,7 +101,7 @@ class MarkupPanel<Data> {
 
   private populateOptions(
     child: MarkupChild<Data>,
-    parent?: MarkupChild<Data>
+    parent?: MarkupChild<Data>,
   ): MarkupChild<Data>['options'] {
     if (!parent) return child.options;
     return { ...parent.options, ...child.options };
@@ -135,7 +136,7 @@ class MarkupPanel<Data> {
     const yOffset = this.y + (top ?? 0);
     const xOffset = this.x + (left ?? 0);
 
-    const image = Textures.get(spriteKey);
+    const image = Textures.get<StaticSprite>(spriteKey);
     image.drawFrame(this.ctx, 0, 0, xOffset, yOffset, width ?? 0, height ?? 0);
   }
 }

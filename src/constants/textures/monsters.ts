@@ -1,5 +1,6 @@
 import { slowFrames } from '@/utils/textures';
 import { TEXTURES, TextureFrames, TextureMap } from './types';
+import config from '@/config';
 
 export enum MONSTER_SPRITES {
   moving = 'moving',
@@ -2077,7 +2078,7 @@ const frames: Partial<TextureFrames<MONSTER_SPRITES>> = {
   },
 };
 
-const monsterDir = '/src/assets/monsters';
+const monsterDir = `${config.assetsPath}/monsters`;
 
 export const monsterTextures: TextureMap<MONSTER_SPRITES> = slowFrames(
   {
@@ -2102,5 +2103,5 @@ export const monsterTextures: TextureMap<MONSTER_SPRITES> = slowFrames(
       textures: frames[TEXTURES['CADEVL']]!,
     },
   },
-  6
+  6,
 );

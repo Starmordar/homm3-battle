@@ -41,7 +41,7 @@ class HeroSummary implements Renderable {
       this.options.x + avatar.x,
       this.options.y + avatar.y,
       avatar.width,
-      avatar.height
+      avatar.height,
     );
 
     const stroke = new Stroke({

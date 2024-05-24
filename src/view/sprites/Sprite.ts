@@ -19,7 +19,10 @@ class Sprite<Options extends StaticTexture> {
         resolve(this);
       };
 
-      this.image.onerror = reject;
+      this.image.onerror = (reason) => {
+        console.log('reason', reason);
+        reject();
+      };
       this.image.src = url;
     });
   }

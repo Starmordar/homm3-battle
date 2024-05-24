@@ -8,7 +8,7 @@ class OrientationMatrix {
     readonly b10: number,
     readonly b01: number,
     readonly b11: number,
-    readonly startAngle: number
+    readonly startAngle: number,
   ) {
     this.f00 = f00;
     this.f10 = f10;

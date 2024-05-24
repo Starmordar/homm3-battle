@@ -33,7 +33,7 @@ class MonsterWindow implements Observer {
       markup,
       this.bounds,
       this.anchorPoint(),
-      this.controller.model
+      this.controller.model,
     );
 
     markupPanel.draw();

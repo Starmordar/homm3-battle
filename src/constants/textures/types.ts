@@ -13,7 +13,7 @@ export type StaticTextureMap = Partial<Record<TEXTURES, StaticTexture>>;
 
 export interface Frame {
   y: number;
-  x: Array<number> | null;
+  x: Array<number>;
 }
 
 export interface Texture<T extends string> extends StaticTexture {

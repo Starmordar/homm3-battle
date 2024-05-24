@@ -6,7 +6,7 @@ class Layout {
   constructor(
     readonly orientation: OrientationMatrix,
     readonly size: Point,
-    readonly origin: Point
+    readonly origin: Point,
   ) {
     this.orientation = orientation;
     this.size = size;
@@ -23,7 +23,7 @@ class Layout {
   pixelToHex(point: Point): Hexagon {
     const pt = new Point(
       (point.x - this.origin.x) / this.size.x,
-      (point.y - this.origin.y) / this.size.y
+      (point.y - this.origin.y) / this.size.y,
     );
 
     const q = this.orientation.b00 * pt.x + this.orientation.b10 * pt.y;
@@ -57,7 +57,7 @@ class Layout {
     -1.0 / 3.0,
     0.0,
     2.0 / 3.0,
-    0.5
+    0.5,
   );
 
   static flatOnTop: OrientationMatrix = new OrientationMatrix(
@@ -69,7 +69,7 @@ class Layout {
     0.0,
     -1.0 / 3.0,
     Math.sqrt(3.0) / 3.0,
-    0.0
+    0.0,
   );
 }
 

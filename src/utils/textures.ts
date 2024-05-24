@@ -4,7 +4,7 @@ import { Frame, TEXTURES, Texture, TextureMap } from '@/constants/textures/types
 
 export function slowFrames<T extends string>(
   textureMap: TextureMap<T>,
-  factor: number
+  factor: number,
 ): TextureMap<T> {
   const textureMapClone = structuredClone(textureMap);
 
@@ -17,7 +17,7 @@ export function slowFrames<T extends string>(
 
       texture.textures[textureKey as T] = {
         y: animation.y,
-        x: slowFrame(animation.x, factor),
+        x: slowFrame(animation.x, factor) as Array<number>,
       };
     }
   }
@@ -25,14 +25,14 @@ export function slowFrames<T extends string>(
   return textureMapClone;
 }
 
-function slowFrame(frames: Array<number> | null, factor = 8) {
+function slowFrame(frames: Array<number> | null, factor = 8): Array<number> | null {
   if (frames === null) return null;
   return frames.flatMap((frame) => new Array(factor).fill(frame));
 }
 
 export function mirrorFrames<T extends string>(
   frames: Texture<T>['textures'],
-  max?: number
+  max?: number,
 ): Texture<T>['textures'] {
   const maxFrameX = max ?? maxFrame(frames);
   const mirrored: Partial<Texture<T>['textures']> = {};
@@ -71,12 +71,12 @@ export function attackedAnimation(attacking: BattleMonster, attacked: BattleMons
   return MONSTER_SPRITES['getting hit'];
 }
 
-export function monsterBgSpriteByRace(race: number) {
+export function monsterBgSpriteByRace(_race: number) {
   // TODO: Add all races
   return TEXTURES.necropolis_monster_bg;
 }
 
-export function monsterSpriteById(id: number) {
+export function monsterSpriteById(_id: number) {
   // TODO: Add all ids
   return TEXTURES.wraith_static;
 }

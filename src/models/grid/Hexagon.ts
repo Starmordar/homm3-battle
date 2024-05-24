@@ -1,6 +1,10 @@
 class Hexagon {
   // Cube coordinates derived from x,y,z cartesian coordinates, and use three axes q,r,s 120° apart.
-  constructor(readonly q: number, readonly r: number, readonly s: number) {
+  constructor(
+    readonly q: number,
+    readonly r: number,
+    readonly s: number,
+  ) {
     if (Math.round(q + r + s) !== 0) throw new Error('Invalid q + r + s must be 0');
   }
 
@@ -64,7 +68,7 @@ class Hexagon {
     return new Hexagon(
       this.q * (1.0 - t) + hex.q * t,
       this.r * (1.0 - t) + hex.r * t,
-      this.s * (1.0 - t) + hex.s * t
+      this.s * (1.0 - t) + hex.s * t,
     );
   }
 

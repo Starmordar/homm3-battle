@@ -84,7 +84,7 @@ export function getAngle({ x, y }: Point, corners: Array<Point>, center: Point) 
 export function getHexReachables(
   startPosition: Hexagon,
   obstacles: Array<Hexagon>,
-  range: number
+  range: number,
 ): {
   fringes: Array<Hexagon>;
   path: Map<string, Hexagon | null>;
