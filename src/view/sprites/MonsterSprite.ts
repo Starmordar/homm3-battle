@@ -34,10 +34,10 @@ class MonsterSprite extends Sprite<Texture<MONSTER_SPRITES>> {
     }
   }
 
-  setAnimation(sprite: MONSTER_SPRITES) {
+  setAnimation(sprite: MONSTER_SPRITES, options?: { lastFrame?: boolean }) {
     if (!this.options.textures?.[sprite]) return;
 
-    this.currentFrame = 0;
+    this.currentFrame = options?.lastFrame ? this.animationSteps.x.length - 1 : 0;
     this.currentAnimation = sprite;
     this.nextAnimation = MONSTER_SPRITES.standing;
 

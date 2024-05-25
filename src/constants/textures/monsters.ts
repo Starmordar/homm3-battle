@@ -2082,11 +2082,11 @@ const monsterDir = `${config.assetsPath}/monsters`;
 
 export const monsterTextures: TextureMap<MONSTER_SPRITES> = slowFrames(
   {
-    [TEXTURES.CBKNIG]: {
-      url: `${monsterDir}/CNOSFE.webp`,
+    [TEXTURES.CAELEM]: {
+      url: `${monsterDir}/CAELEM.webp`,
       width: 220,
       height: 180,
-      textures: frames[TEXTURES['CBKNIG']]!,
+      textures: frames[TEXTURES['CAELEM']]!,
     },
 
     [TEXTURES.CABEHE]: {
