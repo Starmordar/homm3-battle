@@ -9,7 +9,9 @@ function minify(assetsPath: string) {
   return Promise.all(
     files.map((fileName) => {
       const filePath = path.join(assetsPath, fileName);
-      return sharp(filePath).toFile(`${filePath.split('.')[0]}.webp`);
+      return sharp(filePath)
+        .webp({ lossless: true })
+        .toFile(`${filePath.split('.')[0]}.webp`);
     }),
   );
 }
