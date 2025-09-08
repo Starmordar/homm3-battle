@@ -1,7 +1,6 @@
 {
   "name": "sprite-extractor",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "extract": "ts-node ./src/index.ts",
     "lint": "eslint . --ext .ts"
