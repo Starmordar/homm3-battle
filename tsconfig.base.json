@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+  },
+  "exclude": ["**/node_modules"]
+}

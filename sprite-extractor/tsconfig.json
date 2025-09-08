@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2022",
+    "lib": ["es2024", "ESNext.Array", "ESNext.Iterator", "ESNext.Collection"],
+    "types": ["node"],
+  },
+  "include": ["src"]
+}
