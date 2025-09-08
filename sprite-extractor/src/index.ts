@@ -1,8 +1,4 @@
-const str = "123";
+import { SPRITES_SOURCE_PATH } from './config';
+import { extractAssetsFromLod } from './extract-assets';
 
-const numbers = [3, 1, 4, 1, 5, 9];
-
-const sorted = numbers.toSorted();
-
-console.log("str :>> ", str);
-console.log("sorted :>> ", sorted);
+extractAssetsFromLod(SPRITES_SOURCE_PATH);
