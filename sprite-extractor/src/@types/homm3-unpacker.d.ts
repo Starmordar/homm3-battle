@@ -6,8 +6,8 @@ declare module 'homm3-unpacker' {
     },
   ): void;
 
-  export function unpackDEF<T extends object>(
+  export function unpackDEF(
     buffer: Buffer,
     options?: { format?: 'bitmap' | 'raw'; padding?: boolean },
-  ): T;
+  ): unknown;
 }

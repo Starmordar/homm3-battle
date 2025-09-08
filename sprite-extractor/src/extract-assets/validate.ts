@@ -1,38 +1,42 @@
-interface SourceImage {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-  selection: ArrayBuffer;
-  data: ArrayBuffer;
+import z from 'zod';
+
+const SourcePaletteSchema = z.object({
+  r: z.number(),
+  g: z.number(),
+  b: z.number(),
+  a: z.number(),
+});
+
+const SourceImageSchema = z.object({
+  width: z.number(),
+  height: z.number(),
+  x: z.number(),
+  y: z.number(),
+  selection: z.instanceof(ArrayBuffer).optional(),
+  data: z.instanceof(ArrayBuffer),
+});
+
+const SourceDataSchema = z.object({
+  type: z.string(),
+  fullWidth: z.number(),
+  fullHeight: z.number(),
+  palette: z.array(SourcePaletteSchema),
+  groups: z.record(z.string(), z.array(z.string())),
+  images: z.record(z.string(), SourceImageSchema),
+});
+
+type SourceData = z.infer<typeof SourceDataSchema>;
+type ImageData = z.infer<typeof SourceImageSchema>;
+
+function isSourceDataValid(data: unknown, filename: string): data is SourceData {
+  const parseResult = SourceDataSchema.safeParse(data);
+
+  if (!parseResult.success) {
+    console.warn(`[WARNING]: Source data format is invalid for ${filename}`, parseResult.error);
+  }
+
+  return parseResult.success;
 }
 
-interface SourcePalette {
-  r: number;
-  g: number;
-  b: number;
-  a: number;
-}
-
-interface SourceData {
-  type: string;
-  fullWidth: number;
-  fullHeight: number;
-  palette: SourcePalette[];
-  groups: Record<string, string[]>;
-  images: Record<string, SourceImage>;
-}
-
-function validateSourceData(data: unknown): data is SourceData {
-  return (
-    typeof data === 'object' &&
-    data !== null &&
-    typeof (data as SourceData).type === 'string' &&
-    typeof (data as SourceData).fullWidth === 'number' &&
-    typeof (data as SourceData).fullHeight === 'number' &&
-    Array.isArray((data as SourceData).palette)
-  );
-}
-
-export type { SourceData, SourceImage };
-export { validateSourceData };
+export type { SourceData, ImageData };
+export { isSourceDataValid };

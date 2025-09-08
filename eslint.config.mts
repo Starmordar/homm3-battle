@@ -15,23 +15,6 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
-      "import/order": [
-      "error",
-      {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index",
-          "object",
-          "type"
-        ],
-        "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
-      }
-    ],
       'prettier/prettier': [
         'error',
         {

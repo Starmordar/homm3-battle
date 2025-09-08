@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 
 import { unpackLOD } from 'homm3-unpacker';
-// const { SpriteBuilder } = require('../utils/builder/SpriteBuilder');
 // const { ConfigBuilder } = require('../utils/builder/ConfigBuilder');
 
 import { CREATURE_FILE_NAMES } from '../config';
@@ -23,8 +22,10 @@ function extractAssetsFromLod(path: string) {
       if (!CREATURE_FILE_NAMES.includes(filename)) return;
       console.log('filename :>> ', filename);
 
-      // const spriteBuilder = new SpriteBuilder(buffer, filename);
-      //   spriteBuilder.build();
+      const spriteBuilder = new SpriteBuilder(buffer, filename);
+      const status = spriteBuilder.execute();
+
+      if (status === 'error') return;
 
       //   const baseFilename = filename.split('.')[0];
       //   const configBuilder = new ConfigBuilder(
