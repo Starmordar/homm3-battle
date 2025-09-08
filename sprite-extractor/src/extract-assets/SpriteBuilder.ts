@@ -1,19 +1,12 @@
 import fs from 'node:fs';
 
-import { unpackDEF } from 'homm3-unpacker';
 import type { CanvasRenderingContext2D } from 'canvas';
 import { createCanvas } from 'canvas';
 
 import type { ImageData } from './validate';
-import { isSourceDataValid, type SourceData } from './validate';
+import { type SourceData } from './validate';
 
-import {
-  FRAME_WIDTH,
-  FRAME_HEIGHT,
-  // OUTPUT_ASSETS_PATH,
-  CREATURE_ANIMATION_PHASES,
-  OUTPUT_ASSETS_PATH,
-} from '../config';
+import { FRAME_WIDTH, FRAME_HEIGHT, ANIMATION_GROUPS, OUTPUT_ASSETS_PATH } from '../config';
 
 interface ImageRect {
   x: number;
@@ -22,40 +15,33 @@ interface ImageRect {
   height: number;
 }
 
-const animationGroups = CREATURE_ANIMATION_PHASES.map((name) => name.toLowerCase());
-
 class SpriteBuilder {
-  private filename: string;
   private sourceData: SourceData;
+  private filename: string;
 
   private maxCol: number = 0;
   private maxRow: number = 0;
-
   private canvas!: ReturnType<typeof createCanvas>;
   private ctx!: CanvasRenderingContext2D;
 
-  constructor(buffer: Buffer, filename: string) {
+  constructor(sourceData: SourceData, filename: string) {
     this.filename = filename;
-    this.sourceData = unpackDEF(buffer, { format: 'bitmap', padding: false }) as SourceData;
+    this.sourceData = sourceData;
   }
 
   execute() {
-    if (!isSourceDataValid(this.sourceData, this.filename)) return 'error';
-
     this.computeCanvasSize();
     this.initializeCanvas();
 
     this.drawFramesToCanvas();
     this.saveSpriteImage();
-
-    return 'success';
   }
 
   computeCanvasSize() {
-    const colCounts = animationGroups.map((name) => this.sourceData.groups[name]?.length ?? 0);
+    const colCounts = ANIMATION_GROUPS.map((name) => this.sourceData.groups[name]?.length ?? 0);
 
     this.maxCol = Math.max(...colCounts);
-    this.maxRow = animationGroups.length;
+    this.maxRow = ANIMATION_GROUPS.length;
   }
 
   initializeCanvas() {
@@ -90,7 +76,7 @@ class SpriteBuilder {
   drawFramesToCanvas() {
     const imageRect = this.getImageRect();
 
-    animationGroups.forEach((group, index) => {
+    ANIMATION_GROUPS.forEach((group, index) => {
       const isActiveGroup = group.includes('_active');
       this.drawGroupFrames(imageRect, this.getFramesToDraw(group.replace('_active', '')), index);
 
@@ -159,5 +145,4 @@ class SpriteBuilder {
   }
 }
 
-export type { SourceData };
 export { SpriteBuilder };

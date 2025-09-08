@@ -1,10 +1,11 @@
 import fs from 'node:fs';
 
-import { unpackLOD } from 'homm3-unpacker';
-// const { ConfigBuilder } = require('../utils/builder/ConfigBuilder');
+import { unpackDEF, unpackLOD } from 'homm3-unpacker';
 
 import { CREATURE_FILE_NAMES } from '../config';
 import { SpriteBuilder } from './SpriteBuilder';
+import { ConfigBuilder } from './ConfigBuilder';
+import { isSourceDataValid } from './validate';
 
 function getSourceFileContent(path: string) {
   if (!fs.existsSync(path)) {
@@ -20,20 +21,20 @@ function extractAssetsFromLod(path: string) {
   unpackLOD(sourceFile, {
     def: (buffer, filename) => {
       if (!CREATURE_FILE_NAMES.includes(filename)) return;
-      console.log('filename :>> ', filename);
 
-      const spriteBuilder = new SpriteBuilder(buffer, filename);
-      const status = spriteBuilder.execute();
+      console.info(`Start processing ${filename}...`);
 
-      if (status === 'error') return;
+      const sourceData = unpackDEF(buffer, { format: 'bitmap', padding: false });
+      if (!isSourceDataValid(sourceData, filename)) return;
 
-      //   const baseFilename = filename.split('.')[0];
-      //   const configBuilder = new ConfigBuilder(
-      //     spriteBuilder.sourceData,
-      //     spriteBuilder.animationPhases,
-      //     baseFilename,
-      //   );
-      //   configBuilder.build();
+      const spriteBuilder = new SpriteBuilder(sourceData, filename);
+      spriteBuilder.execute();
+
+      const baseFilename = filename.split('.')[0];
+      const configBuilder = new ConfigBuilder(sourceData, baseFilename);
+      configBuilder.execute();
+
+      console.info(`Finished processing ${filename}`);
     },
   });
 }
