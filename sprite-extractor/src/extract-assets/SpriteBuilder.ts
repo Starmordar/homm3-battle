@@ -2,32 +2,14 @@
 // import { createCanvas } from 'canvas';
 
 import { unpackDEF } from 'homm3-unpacker';
+import type { SourceData } from './validate';
 
-import {
+import { 
   // FRAME_WIDTH,
   // FRAME_HEIGHT,
   // OUTPUT_ASSETS_PATH,
   CREATURE_ANIMATION_PHASES,
 } from '../config';
-
-interface SourceData {
-  type: string;
-  fullWidth: number;
-  fullHeight: number;
-  palette: Array<{ r: number; g: number; b: number; a: number }>;
-  groups: Record<string, string[]>;
-  images: Record<
-    string,
-    {
-      width: number;
-      height: number;
-      x: number;
-      y: number;
-      selection: ArrayBuffer;
-      data: ArrayBuffer;
-    }
-  >;
-}
 
 class SpriteBuilder {
   private filename: string;

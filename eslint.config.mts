@@ -15,12 +15,44 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+      "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
       'prettier/prettier': [
         'error',
         {
           singleQuote: true,
           printWidth: 100,
         },
+      ],
+    },
+  },
+  {
+    files: ['sprite-extractor/src/**/*.{ts,tsx}'],
+    extends: [tseslint.configs.recommendedTypeChecked],
+    languageOptions: {
+      globals: { ...globals.node },
+      parserOptions: { projectService: true, tsconfigRootDir: '/sprite-extractor' },
+    },
+    rules: {
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { fixStyle: 'separate-type-imports' },
       ],
     },
   },
