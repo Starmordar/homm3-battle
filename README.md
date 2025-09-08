@@ -10,9 +10,10 @@ This tool extracts sprite images and animation config files from a Heroes of Mig
 The file is usually named `H3Sprites.lod`. Rename it to `sprites.lod` and place it in the `input/` directory at the root of this project.
 
 **Run the extraction**
-   ```sh
+```sh
    npm install
    npm run extract
-   ```
-   - Extracted sprite images will be in `output/assets/`
-   - Animation config files will be in `output/config/`
+```
+
+- Extracted sprite images will be in `output/assets/`
+- Animation config files will be in `output/config/`
