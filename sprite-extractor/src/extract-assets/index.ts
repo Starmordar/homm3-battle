@@ -3,8 +3,9 @@ import fs from 'node:fs';
 import { unpackDEF, unpackLOD } from 'homm3-unpacker';
 
 import { CREATURE_FILE_NAMES } from '../config';
-import { SpriteBuilder } from './SpriteBuilder';
+
 import { ConfigBuilder } from './ConfigBuilder';
+import { SpriteBuilder } from './SpriteBuilder';
 import { isSourceDataValid } from './validate';
 
 function getSourceFileContent(path: string) {

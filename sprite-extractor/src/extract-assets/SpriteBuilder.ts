@@ -1,12 +1,10 @@
 import fs from 'node:fs';
 
-import type { CanvasRenderingContext2D } from 'canvas';
-import { createCanvas } from 'canvas';
-
-import type { ImageData } from './validate';
-import { type SourceData } from './validate';
+import { createCanvas, type CanvasRenderingContext2D } from 'canvas';
 
 import { FRAME_WIDTH, FRAME_HEIGHT, ANIMATION_GROUPS, OUTPUT_ASSETS_PATH } from '../config';
+
+import type { ImageData, SourceData } from './validate';
 
 interface ImageRect {
   x: number;

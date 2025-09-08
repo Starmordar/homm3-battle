@@ -1,6 +1,8 @@
 import fs from 'node:fs';
-import type { SourceData } from './validate';
+
 import { ANIMATION_GROUPS, OUTPUT_CONFIG_PATH } from '../config';
+
+import type { SourceData } from './validate';
 
 class ConfigBuilder {
   private sourceData: SourceData;

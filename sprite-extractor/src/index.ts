@@ -1,7 +1,7 @@
 import { OUTPUT_ASSETS_PATH, OUTPUT_PATH, SPRITES_SOURCE_PATH } from './config';
-import { clearOutput } from './pre-processes';
 import { extractAssetsFromLod } from './extract-assets';
 import { unlinkPng, minify } from './post-processes';
+import { clearOutput } from './pre-processes';
 
 async function run() {
   clearOutput(OUTPUT_PATH);

@@ -1,8 +1,9 @@
 import js from '@eslint/js';
+import { defineConfig } from 'eslint/config';
+import importPlugin from 'eslint-plugin-import';
+import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import { defineConfig } from 'eslint/config';
-import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 
 export default defineConfig([
   {
@@ -13,8 +14,31 @@ export default defineConfig([
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
     },
+    settings: {
+      'import/resolver': { typescript: true, node: true },
+    },
     rules: {
+      '@typescript-eslint/consistent-type-definitions': 'error',
+      '@typescript-eslint/consistent-generic-constructors': ['error', 'type-annotation'],
+      '@typescript-eslint/member-ordering': 'error',
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+            'object',
+            'type',
+          ],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
       'prettier/prettier': [
         'error',
         {
@@ -41,4 +65,5 @@ export default defineConfig([
   },
   tseslint.configs.recommended,
   prettierPluginRecommended,
+  importPlugin.flatConfigs.recommended,
 ]);

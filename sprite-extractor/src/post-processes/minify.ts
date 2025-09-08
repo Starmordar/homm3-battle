@@ -1,7 +1,7 @@
 import fs from 'node:fs';
+import path from 'node:path';
 
 import sharp from 'sharp';
-import path from 'node:path';
 
 function minify(assetsPath: string) {
   const files = fs.readdirSync(assetsPath);
