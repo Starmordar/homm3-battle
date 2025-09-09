@@ -7,6 +7,10 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@/*": ["./src/*"],
+    }
   },
   "include": ["src"]
 }
