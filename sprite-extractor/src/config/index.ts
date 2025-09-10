@@ -7,8 +7,7 @@ const OUTPUT_PATH = path.join(process.cwd(), 'output');
 const OUTPUT_ASSETS_PATH = path.join(OUTPUT_PATH, 'assets');
 const OUTPUT_CONFIG_PATH = path.join(OUTPUT_PATH, 'config');
 
-const FRAME_WIDTH = 220;
-const FRAME_HEIGHT = 180;
+const FRAME_PADDING = 10;
 
 const CREATURE_ANIMATION_PHASES = [
   'MOVING',
@@ -40,7 +39,7 @@ const ANIMATION_GROUPS = CREATURE_ANIMATION_PHASES.map((name) => name.toLowerCas
 
 const CREATURE_FILE_NAMES = [
   // // Castle
-  // 'CPKMAN.def',
+  'CPKMAN.def',
   // 'CHALBD.def',
   // 'CLCBOW.def',
   // 'CHCBOW.def',
@@ -53,7 +52,7 @@ const CREATURE_FILE_NAMES = [
   // 'CCAVLR.def',
   // 'CCHAMP.def',
   // 'CANGEL.def',
-  // 'CRANGL.def',
+  'CRANGL.def',
 
   // // Dungeon
   // 'CTROGL.def',
@@ -133,7 +132,7 @@ const CREATURE_FILE_NAMES = [
   // 'CUNICO.def',
   // 'CWUNIC.def',
   // 'CGDRAG.def',
-  // 'CDDRAG.def',
+  'CDDRAG.def',
 
   // // Stronghold
   // 'CGOBLI.def',
@@ -198,7 +197,7 @@ const CREATURE_FILE_NAMES = [
   // 'CMUMMY.def',
   // 'CNOMAD.def',
   // 'CROGUE.def',
-  'CTROLL.def',
+  // 'CTROLL.def',
 ];
 
 export {
@@ -209,6 +208,5 @@ export {
   CREATURE_FILE_NAMES,
   CREATURE_ANIMATION_PHASES,
   ANIMATION_GROUPS,
-  FRAME_WIDTH,
-  FRAME_HEIGHT,
+  FRAME_PADDING,
 };

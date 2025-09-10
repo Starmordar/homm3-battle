@@ -35,34 +35,62 @@ import { AnimatedSprite, Application, Assets, Container } from 'pixi.js';
   const container = new Container();
   app.stage.addChild(container);
 
-  // container.x = 0;
-  // container.y = app.screen.height / 2;
-
-  // container.pivot.x = container.width / 2;
-  // container.pivot.y = container.height / 2;
   const dragonSheet = await Assets.load('spritesheets/CDDRAG.json');
-  const dragonSprite = new AnimatedSprite(dragonSheet.animations['move']);
-
-  dragonSprite.anchor.set(0.5);
-  dragonSprite.animationSpeed = 0.05;
-  dragonSprite.x = (app.screen.width - dragonSprite.width) / 2;
+  const dragonSprite = new AnimatedSprite(dragonSheet.animations['start moving']);
+  dragonSprite.animationSpeed = 0.1;
+  dragonSprite.x = dragonSprite.width / 2;
   dragonSprite.y = app.screen.height / 2;
+  dragonSprite.loop = false;
   dragonSprite.play();
   app.stage.addChild(dragonSprite);
 
-  // const dragonTexture = await Assets.load('assets/CDDRAG.webp');
-  // for (let i = 0; i < 4; i++) {
-  //   const dragon = new Sprite(dragonTexture);
+  dragonSprite.onComplete = () => {
+    dragonSprite.textures = dragonSheet.animations['moving'];
+    dragonSprite.loop = true;
+    dragonSprite.play();
 
-  //   dragon.x = (i % 4) * 220;
-  //   dragon.y = Math.floor(i / 4) * 40;
-  //   container.addChild(dragon);
-  // }
+    setTimeout(() => {
+      dragonSprite.textures = dragonSheet.animations['stop moving'];
+      dragonSprite.loop = false;
+      dragonSprite.play();
+      dragonSprite.onComplete = () => {
+        dragonSprite.textures = dragonSheet.animations['standing_active'];
+        dragonSprite.loop = true;
+        dragonSprite.play();
+      };
+    }, 2000);
+  };
 
-  // Listen for animate update
-  // app.ticker.add((time) => {
-  //   // Continuously rotate the container!
-  //   // * use delta to create frame-independent transform *
-  //   // container.rotation -= 0.01 * time.deltaTime;
-  // });
+  const angelSheet = await Assets.load('spritesheets/CRANGL.json');
+  console.log('angelSheet.animations :>> ', angelSheet.animations);
+  const angelSprite = new AnimatedSprite([
+    // ...angelSheet.animations['start moving'],
+    ...angelSheet.animations['moving'],
+    // ...angelSheet.animations['stop moving'],
+  ]);
+
+  angelSprite.animationSpeed = 0.1;
+  angelSprite.x = angelSprite.width / 2;
+  angelSprite.y = app.screen.height / 2 + 100;
+  angelSprite.play();
+  app.stage.addChild(angelSprite);
+
+  const picMan = await Assets.load('spritesheets/CPKMAN.json');
+  console.log('picMan.animations :>> ', picMan.animations);
+  const picManSprite = new AnimatedSprite([
+    ...picMan.animations['start moving'],
+    ...picMan.animations['moving'],
+    ...picMan.animations['stop moving'],
+  ]);
+
+  picManSprite.animationSpeed = 0.1;
+  picManSprite.x = picManSprite.width / 2 + 50;
+  picManSprite.y = app.screen.height / 2 + 200;
+  picManSprite.play();
+  app.stage.addChild(picManSprite);
+
+  setTimeout(() => {
+    angelSprite.textures = angelSheet.animations['defend'];
+    angelSprite.play();
+  }, 1000);
 })();

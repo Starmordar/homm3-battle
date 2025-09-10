@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 import { createCanvas, type CanvasRenderingContext2D } from 'canvas';
 
-import { FRAME_WIDTH, FRAME_HEIGHT, ANIMATION_GROUPS, OUTPUT_ASSETS_PATH } from '../config';
+import { ANIMATION_GROUPS, OUTPUT_ASSETS_PATH, FRAME_PADDING } from '../config';
 
 import type { ImageData, SourceData } from './validate';
 
@@ -19,6 +19,9 @@ class SpriteBuilder {
 
   private maxCol: number = 0;
   private maxRow: number = 0;
+  private frameWidth: number = 0;
+  private frameHeight: number = 0;
+
   private canvas!: ReturnType<typeof createCanvas>;
   private ctx!: CanvasRenderingContext2D;
 
@@ -37,13 +40,17 @@ class SpriteBuilder {
 
   computeCanvasSize() {
     const colCounts = ANIMATION_GROUPS.map((name) => this.sourceData.groups[name]?.length ?? 0);
+    const imagesData = Object.values(this.sourceData.images);
+
+    this.frameWidth = Math.max(...imagesData.map((img) => img.width)) + FRAME_PADDING;
+    this.frameHeight = Math.max(...imagesData.map((img) => img.height)) + FRAME_PADDING;
 
     this.maxCol = Math.max(...colCounts);
     this.maxRow = ANIMATION_GROUPS.length;
   }
 
   initializeCanvas() {
-    const canvas = createCanvas(FRAME_WIDTH * this.maxCol, FRAME_HEIGHT * this.maxRow);
+    const canvas = createCanvas(this.frameWidth * this.maxCol, this.frameHeight * this.maxRow);
     const ctx = canvas.getContext('2d');
 
     this.canvas = canvas;
@@ -97,9 +104,10 @@ class SpriteBuilder {
     const cols = this.ctx.canvas.width / this.maxCol;
 
     const row =
-      Math.floor(rows / 2 - rect.height / 2 + (image.y || 0) - rect.y) + colIndex * FRAME_HEIGHT;
+      Math.floor(rows / 2 - rect.height / 2 + (image.y || 0) - rect.y) +
+      colIndex * this.frameHeight;
     const col =
-      Math.floor(cols / 2 - rect.width / 2 + (image.x || 0) - rect.x) + rowIndex * FRAME_WIDTH;
+      Math.floor(cols / 2 - rect.width / 2 + (image.x || 0) - rect.x) + rowIndex * this.frameWidth;
 
     const view = new Uint8Array(image.data);
 
