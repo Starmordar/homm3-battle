@@ -1,41 +1,30 @@
-import type { CreatureEntity } from '@/entities/CreatureEntity';
+import { AnimationComponent } from '@/components/AnimationComponet';
 
-class RenderSystem {
-  context: CanvasRenderingContext2D;
-  entities: CreatureEntity[] = [];
+import type { System } from './System';
+import type { Entity } from '@/entities/Entity';
+import type { Container } from 'pixi.js';
 
-  constructor(context: CanvasRenderingContext2D) {
-    this.context = context;
+class RenderSystem implements System {
+  container: Container;
+  entities: Entity[] = [];
+
+  constructor(container: Container) {
+    this.container = container;
   }
 
-  addEntity(entity: CreatureEntity) {
+  addEntity(entity: Entity) {
     this.entities.push(entity);
+    this.addToDisplay(entity);
   }
 
-  public update() {
-    for (const entity of this.entities) {
-      const position = entity.position;
-      const display = entity.display;
+  addToDisplay(entity: Entity) {
+    const animation = entity.get(AnimationComponent);
+    if (!animation) return;
 
-      const img = new Image();
-      img.src = display.displayObject.path;
-
-      img.onload = () => {
-        console.log('on load', img);
-        this.context.drawImage(
-          img,
-          0,
-          0,
-          220,
-          180,
-          position.position.x,
-          position.position.y,
-          220,
-          180,
-        );
-      };
-    }
+    this.container.addChild(animation.animatedSprite);
   }
+
+  public update() {}
 }
 
 export { RenderSystem };

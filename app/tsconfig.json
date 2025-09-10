@@ -8,9 +8,10 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "strictPropertyInitialization": false,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-    }
+      "@/*": ["src/*"],
+    },
   },
   "include": ["src"]
 }

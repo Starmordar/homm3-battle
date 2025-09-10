@@ -67,6 +67,24 @@ export default defineConfig([
       ],
     },
   },
+  {
+    files: ['app/src/**/*.{ts,tsx}'],
+    extends: [],
+    languageOptions: {
+      globals: { ...globals.node },
+      parserOptions: { projectService: true, tsconfigRootDir: '/app' },
+    },
+    settings: {
+      'import/resolver': { typescript: { project: './app/tsconfig.json' } },
+    },
+    rules: {
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { fixStyle: 'separate-type-imports' },
+      ],
+    },
+  },
   tseslint.configs.recommended,
   prettierPluginRecommended,
   importPlugin.flatConfigs.recommended,
