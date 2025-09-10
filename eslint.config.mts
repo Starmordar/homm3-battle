@@ -21,6 +21,10 @@ export default defineConfig([
       '@typescript-eslint/consistent-type-definitions': 'error',
       '@typescript-eslint/consistent-generic-constructors': ['error', 'type-annotation'],
       '@typescript-eslint/member-ordering': 'error',
+      '@typescript-eslint/ban-ts-comment': [
+        'error',
+        { 'ts-expect-error': 'allow-with-description' },
+      ],
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
       'import/order': [
         'error',
