@@ -32,7 +32,7 @@ class Entity {
   }
 
   get<T extends object>(componentClass: Constructor<T>): T | null {
-    return this.components.get(componentClass.name) as T | null;
+    return (this.components.get(componentClass.name) as T) ?? null;
   }
 
   getAll() {
