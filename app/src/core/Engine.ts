@@ -65,7 +65,7 @@ class Engine {
   }
 
   getNodeList<T extends Node>(nodeClass: Constructor<T>): NodeList<T> {
-    const family = this.families.get(nodeClass.name);
+    const family = this.families.get(nodeClass.name) as ComponentMatchingFamily<T> | undefined;
     if (family) return family.nodeList;
 
     const newFamily = new ComponentMatchingFamily(this, nodeClass);
@@ -75,7 +75,7 @@ class Engine {
       newFamily.onAddEntity(entity);
     }
 
-    return newFamily.nodeList;
+    return newFamily.nodeList as unknown as NodeList<T>;
   }
 
   addSystem(system: System) {

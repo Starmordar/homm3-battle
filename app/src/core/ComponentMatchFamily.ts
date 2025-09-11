@@ -35,11 +35,12 @@ class ComponentMatchingFamily<NodeType extends Node = Node> {
     if (this.entities.has(entity)) return;
     if (!this.hasAllRequiredComponents(entity)) return;
 
-    const node = new Node();
+    const node = new Node() as NodeType;
     node.entity = entity;
 
     for (const [componentClass, componentKey] of this.requiredComponents) {
-      node[componentKey as keyof typeof Node] = entity.get(componentClass);
+      // @ts-expect-error Adding new fields to a base Node class leads to TS error
+      node[componentKey] = entity.get(componentClass);
     }
 
     this.entities.add(entity);
