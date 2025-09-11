@@ -1,6 +1,8 @@
 import type { Entity } from '@/entities/Entity';
 import type { System } from '@/systems/System';
 
+// Featch families of nodes, what is the nodes - ???
+// Nodes - Group of components together, group of components that a system works with
 class Engine {
   public updatePenging: boolean = false;
 
@@ -15,6 +17,9 @@ class Engine {
 
     this.entityNames.set(entity.name, entity);
     this.entities.push(entity);
+
+    entity.onComponentAdded = this.onComponentAdded.bind(this);
+    entity.onComponentRemoved = this.onComponentRemoved.bind(this);
   }
 
   removeEntity(entity: Entity) {
@@ -34,6 +39,14 @@ class Engine {
 
   getEntityByName(entityName: string) {
     return this.entityNames.get(entityName);
+  }
+
+  onComponentAdded(entity: Entity, component: string) {
+    console.log('entity, component :>> ', entity, component);
+  }
+
+  onComponentRemoved(entity: Entity, component: string) {
+    console.log('entity, component :>> ', entity, component);
   }
 
   addSystem(system: System) {

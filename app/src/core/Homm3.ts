@@ -1,3 +1,4 @@
+import { PositionComponent } from '@/components/PositionComponent';
 import { AnimationSystem } from '@/systems/AnimationSystem';
 import { RenderSystem } from '@/systems/RenderSystem';
 
@@ -30,6 +31,9 @@ class Homm3 {
     });
     renderSystem.addEntity(creature1);
     animationSystem.addEntity(creature1);
+
+    creature1.add(new PositionComponent(300, 300, 0));
+    console.log('PositionComponent:', creature1.get(PositionComponent));
 
     const creature2 = await creator.createCreature({
       sprite: 'spritesheets/CRANGL.json',
