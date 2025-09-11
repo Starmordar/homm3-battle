@@ -1,17 +1,17 @@
-import { AnimationComponent } from '@/components/AnimationComponet';
-import { PositionComponent } from '@/components/PositionComponent';
+import { ComponentMetaKey, type Meta } from '@/decorators/withComponentMeta';
 
-import { Node } from './Node';
+import { Node, type NodeType } from './Node';
 import { NodeList } from './NodeList';
 
 import type { Engine } from './Engine';
 import type { Entity } from './Entity';
+import type { Constructor } from '@/types';
 
 class ComponentMatchingFamily {
   public nodeList: NodeList = new NodeList();
 
   private entities: Entity[] = [];
-  private components: unknown[] = [];
+  private components: Map<Constructor, string> = new Map();
 
   //   private nodeName: string;
   private engine: Engine;
@@ -20,16 +20,10 @@ class ComponentMatchingFamily {
   constructor(engine: Engine, nodeClass: new (...args: any[]) => any) {
     this.engine = engine;
 
-    // const instance = new nodeClass();
-    // const instanceFields = Object.keys(instance);
-
-    const components = Object.getOwnPropertyNames(nodeClass.prototype);
-    console.log('components :>> ', components);
-    console.log('Reflect', Reflect.getMetadataKeys(nodeClass, 'design:type'));
-    // console.log('Component properties:', Object.getPrototypeOf(instance).constructor.__components);
-
-    // console.log('nodeClass :>> ', instanceFields, Object.getOwnPropertyDescriptors(instance));
-    // this.nodeClass = nodeClass;
+    const componentsData: Meta = Reflect.getMetadata(ComponentMetaKey, nodeClass.prototype);
+    for (const [componentKey, componentClass] of componentsData) {
+      this.components.set(componentClass, componentKey);
+    }
   }
 
   onAddEntity(entity: Entity) {
@@ -44,11 +38,12 @@ class ComponentMatchingFamily {
     if (this.entities.find((en) => en === entity)) return;
     // TODO: check if entity has all required components
 
-    const newNode = new Node();
+    const newNode = new Node() as NodeType;
     newNode.entity = entity;
 
-    newNode.position = entity.get(PositionComponent);
-    newNode.animation = entity.get(AnimationComponent);
+    for (const [componentClass, componentKey] of this.components) {
+      newNode[componentKey] = entity.get(componentClass);
+    }
 
     this.entities.push(entity);
     this.nodeList.add(newNode);

@@ -1,15 +1,13 @@
 import { AnimationComponent } from '@/components/AnimationComponet';
 import { PositionComponent } from '@/components/PositionComponent';
 import { Node } from '@/core/Node';
-// import { nodeComponent } from '@/decorators/nodeComponent';
+import { withComponentMetadata } from '@/decorators/withComponentMeta';
 
 class AnimatedPositionNode extends Node {
-  // @nodeComponent
-  @Reflect.metadata('design:type', PositionComponent)
+  @withComponentMetadata(PositionComponent)
   public position: PositionComponent;
 
-  // @nodeComponent
-  @Reflect.metadata('design:type', AnimationComponent)
+  @withComponentMetadata(AnimationComponent)
   public animation: AnimationComponent;
 }
 

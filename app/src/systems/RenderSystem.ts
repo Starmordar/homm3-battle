@@ -28,7 +28,6 @@ class RenderSystem implements System {
 
   public update() {
     for (const node of this.nodes) {
-      console.log('node :>> ', node);
       const position = node.position;
       const animation = node.animation;
 
