@@ -12,7 +12,7 @@ type NodeName = string;
 class Engine {
   public updatePenging: boolean = false;
 
-  private entities: Entity[] = [];
+  private entities: Set<Entity> = new Set();
   private entityNames: Map<EntityName, Entity> = new Map();
   private systems: System[] = [];
   private families: Map<NodeName, ComponentMatchingFamily> = new Map();
@@ -23,7 +23,7 @@ class Engine {
     }
 
     this.entityNames.set(entity.name, entity);
-    this.entities.push(entity);
+    this.entities.add(entity);
 
     entity.onComponentAdded = this.onComponentAdded.bind(this);
     entity.onComponentRemoved = this.onComponentRemoved.bind(this);
@@ -45,9 +45,8 @@ class Engine {
       family.onRemoveEntity(entity);
     }
 
-    const entityIndex = this.entities.findIndex(({ name }) => name === entity.name);
     this.entityNames.delete(entity.name);
-    this.entities.splice(entityIndex, 1);
+    this.entities.delete(entity);
   }
 
   getEntityByName(entityName: string) {
