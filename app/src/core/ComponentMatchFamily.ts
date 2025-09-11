@@ -27,11 +27,27 @@ class ComponentMatchingFamily<NodeType extends Node = Node> {
     this.addEntityToFamily(entity);
   }
 
+  onRemoveEntity(entity: Entity) {
+    this.removeEntityFromFamily(entity);
+  }
+
   onComponentAddToEntity(entity: Entity) {
     this.addEntityToFamily(entity);
   }
 
-  addEntityToFamily(entity: Entity) {
+  onComponentRemovedFromEntity(entity: Entity, component: Constructor) {
+    if (!this.requiredComponents.has(component)) return;
+    this.removeEntityFromFamily(entity);
+  }
+
+  private removeEntityFromFamily(entity: Entity) {
+    if (!this.entities.has(entity)) return;
+
+    this.entities.delete(entity);
+    this.nodeList.removeByEntity(entity);
+  }
+
+  private addEntityToFamily(entity: Entity) {
     if (this.entities.has(entity)) return;
     if (!this.hasAllRequiredComponents(entity)) return;
 
@@ -39,16 +55,12 @@ class ComponentMatchingFamily<NodeType extends Node = Node> {
     node.entity = entity;
 
     for (const [componentClass, componentKey] of this.requiredComponents) {
-      // @ts-expect-error Adding new fields to a base Node class leads to TS error
+      // @ts-expect-error Adding new fields to a base Node class leading to TS error
       node[componentKey] = entity.get(componentClass);
     }
 
     this.entities.add(entity);
     this.nodeList.add(node as NodeType);
-  }
-
-  onComponentRemovedFromEntity(entity: Entity, componentName: string) {
-    console.log('onComponentRemovedFromEntity: entity, componentName :>> ', entity, componentName);
   }
 
   private hasAllRequiredComponents(entity: Entity) {

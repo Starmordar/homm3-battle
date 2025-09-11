@@ -1,3 +1,4 @@
+import type { Entity } from './Entity';
 import type { Node } from './Node';
 
 class NodeList<NodeType extends Node> {
@@ -8,7 +9,20 @@ class NodeList<NodeType extends Node> {
 
   add(node: NodeType) {
     this.nodes.push(node);
-    if (this.nodeAdded) this.nodeAdded(node);
+    this.nodeAdded?.(node);
+  }
+
+  removeByEntity(entity: Entity) {
+    let deletedNode: NodeType | null = null;
+
+    const nodes = this.nodes.filter((node) => {
+      const isEqual = node.entity === entity;
+      if (isEqual) deletedNode = node;
+      return !isEqual;
+    });
+
+    this.nodes = nodes;
+    this.nodeRemoved?.(deletedNode!);
   }
 }
 

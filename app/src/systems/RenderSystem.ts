@@ -23,6 +23,7 @@ class RenderSystem implements System {
     }
 
     nodeList.nodeAdded = this.addToDisplay.bind(this);
+    nodeList.nodeRemoved = this.removeFromDisplay.bind(this);
     this.nodes = nodeList.nodes;
   }
 
@@ -30,8 +31,6 @@ class RenderSystem implements System {
     for (const node of this.nodes) {
       const position = node.position;
       const animation = node.animation;
-
-      // console.log('position, animation :>> ', position, animation);
 
       if (!position || !animation) continue;
 
@@ -50,8 +49,13 @@ class RenderSystem implements System {
 
   private addToDisplay(node: AnimatedPositionNode) {
     const animation = node.animation;
-    console.log('added');
     this.container.addChild(animation.animatedSprite);
+  }
+
+  private removeFromDisplay(node: AnimatedPositionNode) {
+    console.log('node :>> ', node);
+    const animation = node.animation;
+    this.container.removeChild(animation.animatedSprite);
   }
 }
 

@@ -21,15 +21,17 @@ class Homm3 {
 
     this.engine.addSystem(new RenderSystem(this.app.stage));
 
-    await creator.createCreature({
+    const dragon = await creator.createCreature({
       sprite: 'spritesheets/CDDRAG.json',
       position: { x: 250, y: this.app.screen.height / 2 + 200 },
     });
+    console.log('dragon :>> ', dragon);
 
-    await creator.createCreature({
+    const angel = await creator.createCreature({
       sprite: 'spritesheets/CRANGL.json',
       position: { x: 450, y: this.app.screen.height / 2 + 200 },
     });
+    console.log('angel :>> ', angel);
   }
 
   start() {

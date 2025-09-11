@@ -17,7 +17,7 @@ class EntityCreator {
   public async createCreature({ sprite, position }: { sprite: string; position: Point }) {
     const assets = await Assets.load(sprite);
 
-    const entity = new Entity()
+    const entity = new Entity(sprite)
       .add(new PositionComponent(position.x, position.y, 0))
       .add(new AnimationComponent(new AnimatedSprite(assets.animations['moving'])));
 

@@ -4,8 +4,8 @@ class Entity {
   static entityId = 0;
 
   public name: string;
-  public onComponentAdded?: (entity: this, componentName: string) => void;
-  public onComponentRemoved?: (entity: this, componentName: string) => void;
+  public onComponentAdded?: ((entity: this) => void) | null = null;
+  public onComponentRemoved?: ((entity: this, component: Constructor) => void) | null = null;
 
   private components: Map<string, object> = new Map();
 
@@ -18,7 +18,7 @@ class Entity {
     if (this.has(constructor)) this.remove(constructor);
 
     this.components.set(constructor.name, component);
-    this.onComponentAdded?.(this, constructor.name);
+    this.onComponentAdded?.(this);
     return this;
   }
 
@@ -27,7 +27,7 @@ class Entity {
     if (!component) return null;
 
     this.components.delete(componentClass.name);
-    this.onComponentRemoved?.(this, componentClass.name);
+    this.onComponentRemoved?.(this, componentClass);
     return component;
   }
 

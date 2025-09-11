@@ -35,17 +35,19 @@ class Engine {
 
   removeEntity(entity: Entity) {
     if (!this.entityNames.has(entity.name)) {
-      throw new Error(`removeEntity(): The entity name was not found ${entity.name}`);
+      throw new Error(`removeEntity: The entity with the ${entity.name} name was not found`);
+    }
+
+    entity.onComponentAdded = null;
+    entity.onComponentRemoved = null;
+
+    for (const [, family] of this.families) {
+      family.onRemoveEntity(entity);
     }
 
     const entityIndex = this.entities.findIndex(({ name }) => name === entity.name);
-
-    this.entityNames.delete(this.entities[entityIndex].name);
+    this.entityNames.delete(entity.name);
     this.entities.splice(entityIndex, 1);
-  }
-
-  removeAllEntities() {
-    this.entities = [];
   }
 
   getEntityByName(entityName: string) {
@@ -58,9 +60,9 @@ class Engine {
     }
   }
 
-  onComponentRemoved(entity: Entity, componentName: string) {
+  onComponentRemoved(entity: Entity, componentClass: Constructor) {
     for (const [, family] of this.families) {
-      family.onComponentRemovedFromEntity(entity, componentName);
+      family.onComponentRemovedFromEntity(entity, componentClass);
     }
   }
 
