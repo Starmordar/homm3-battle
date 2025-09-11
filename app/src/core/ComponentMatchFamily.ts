@@ -10,10 +10,9 @@ import type { Constructor } from '@/types';
 class ComponentMatchingFamily {
   public nodeList: NodeList = new NodeList();
 
-  private entities: Entity[] = [];
-  private components: Map<Constructor, string> = new Map();
+  private entities: Set<Entity> = new Set();
+  private requiredComponents: Map<Constructor, string> = new Map();
 
-  //   private nodeName: string;
   private engine: Engine;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,7 +21,7 @@ class ComponentMatchingFamily {
 
     const componentsData: Meta = Reflect.getMetadata(ComponentMetaKey, nodeClass.prototype);
     for (const [componentKey, componentClass] of componentsData) {
-      this.components.set(componentClass, componentKey);
+      this.requiredComponents.set(componentClass, componentKey);
     }
   }
 
@@ -35,18 +34,26 @@ class ComponentMatchingFamily {
   }
 
   addEntityToFamily(entity: Entity) {
-    if (this.entities.find((en) => en === entity)) return;
-    // TODO: check if entity has all required components
+    if (this.entities.has(entity)) return;
+    if (!this.hasAllRequiredComponents(entity)) return;
 
-    const newNode = new Node() as NodeType;
-    newNode.entity = entity;
+    const node = new Node() as NodeType;
+    node.entity = entity;
 
-    for (const [componentClass, componentKey] of this.components) {
-      newNode[componentKey] = entity.get(componentClass);
+    for (const [componentClass, componentKey] of this.requiredComponents) {
+      node[componentKey] = entity.get(componentClass);
     }
 
-    this.entities.push(entity);
-    this.nodeList.add(newNode);
+    this.entities.add(entity);
+    this.nodeList.add(node);
+  }
+
+  hasAllRequiredComponents(entity: Entity) {
+    for (const [componentClass] of this.requiredComponents) {
+      if (!entity.has(componentClass)) return false;
+    }
+
+    return true;
   }
 
   onComponentRemovedFromEntity(entity: Entity, componentName: string) {
