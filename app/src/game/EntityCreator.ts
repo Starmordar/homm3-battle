@@ -2,9 +2,9 @@ import { AnimatedSprite, Assets } from 'pixi.js';
 
 import { AnimationComponent } from '@/components/AnimationComponet';
 import { PositionComponent } from '@/components/PositionComponent';
-import { Entity } from '@/entities/Entity';
+import { Entity } from '@/core/Entity';
 
-import type { Engine } from './Engine';
+import type { Engine } from '../core/Engine';
 import type { Point } from '@/types';
 
 class EntityCreator {

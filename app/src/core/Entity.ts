@@ -5,8 +5,8 @@ class Entity {
   static entityId = 0;
 
   public name: string;
-  public onComponentAdded?: (entity: this, component: string) => void;
-  public onComponentRemoved?: (entity: this, component: string) => void;
+  public onComponentAdded?: (entity: this, componentName: string) => void;
+  public onComponentRemoved?: (entity: this, componentName: string) => void;
 
   private components: Map<string, unknown> = new Map();
 

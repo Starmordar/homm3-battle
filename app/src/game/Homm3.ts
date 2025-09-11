@@ -1,8 +1,8 @@
 import { PositionComponent } from '@/components/PositionComponent';
-import { AnimationSystem } from '@/systems/AnimationSystem';
 import { RenderSystem } from '@/systems/RenderSystem';
 
-import { Engine } from './Engine';
+import { Engine } from '../core/Engine';
+
 import { EntityCreator } from './EntityCreator';
 
 import type { Application } from 'pixi.js';
@@ -21,26 +21,22 @@ class Homm3 {
     const creator = new EntityCreator(this.engine);
 
     const renderSystem = new RenderSystem(this.app.stage);
-    const animationSystem = new AnimationSystem(this.app.stage);
     this.engine.addSystem(renderSystem);
-    this.engine.addSystem(animationSystem);
 
     const creature1 = await creator.createCreature({
       sprite: 'spritesheets/CDDRAG.json',
       position: { x: 250, y: this.app.screen.height / 2 + 200 },
     });
-    renderSystem.addEntity(creature1);
-    animationSystem.addEntity(creature1);
+    // renderSystem.addEntity(creature1);
 
     creature1.add(new PositionComponent(300, 300, 0));
-    console.log('PositionComponent:', creature1.get(PositionComponent));
+    // creature1.remove(PositionComponent);
 
     const creature2 = await creator.createCreature({
       sprite: 'spritesheets/CRANGL.json',
       position: { x: 450, y: this.app.screen.height / 2 + 200 },
     });
-    renderSystem.addEntity(creature2);
-    animationSystem.addEntity(creature2);
+    // renderSystem.addEntity(creature2);
   }
 
   start() {

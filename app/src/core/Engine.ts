@@ -1,14 +1,18 @@
-import type { Entity } from '@/entities/Entity';
-import type { System } from '@/systems/System';
+import { ComponentMatchingFamily } from './ComponentMatchFamily';
 
-// Featch families of nodes, what is the nodes - ???
-// Nodes - Group of components together, group of components that a system works with
+import type { Entity } from '@/core/Entity';
+import type { System } from '@/core/System';
+
+type EntityName = string;
+type NodeName = string;
+
 class Engine {
   public updatePenging: boolean = false;
 
   private entities: Entity[] = [];
-  private entityNames: Map<string, Entity> = new Map();
+  private entityNames: Map<EntityName, Entity> = new Map();
   private systems: System[] = [];
+  private families: Map<NodeName, ComponentMatchingFamily> = new Map();
 
   addEntity(entity: Entity) {
     if (this.entityNames.has(entity.name)) {
@@ -41,16 +45,35 @@ class Engine {
     return this.entityNames.get(entityName);
   }
 
-  onComponentAdded(entity: Entity, component: string) {
-    console.log('entity, component :>> ', entity, component);
+  onComponentAdded(entity: Entity, componentName: string) {
+    for (const [, family] of this.families) {
+      family.onComponentAddToEntity(entity, componentName);
+    }
   }
 
-  onComponentRemoved(entity: Entity, component: string) {
-    console.log('entity, component :>> ', entity, component);
+  onComponentRemoved(entity: Entity, componentName: string) {
+    for (const [, family] of this.families) {
+      family.onComponentRemovedFromEntity(entity, componentName);
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getNodeList<T>(nodeClass: new (...args: any[]) => T) {
+    const nodeList = this.families.get(nodeClass.name);
+    if (nodeList) return nodeList.nodeList;
+
+    const newFamily = new ComponentMatchingFamily(this, nodeClass);
+    this.families.set(nodeClass.name, newFamily);
+
+    for (const entity of this.entities) {
+      newFamily.onAddEntity(entity);
+    }
+
+    return newFamily.nodeList;
   }
 
   addSystem(system: System) {
-    system.addToEngine?.();
+    system.addToEngine(this);
     this.systems.push(system);
   }
 
@@ -61,7 +84,7 @@ class Engine {
       throw new Error(`removeSystem(): The system was not found: ${system.constructor.name}`);
     }
 
-    system.removeFromEngine?.();
+    system.removeFromEngine(this);
     this.systems.splice(systemIndex, 1);
   }
 

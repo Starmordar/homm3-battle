@@ -1,7 +1,8 @@
 import './style.css';
 import { Application } from 'pixi.js';
 
-import { Homm3 } from './core/Homm3';
+import 'reflect-metadata';
+import { Homm3 } from './game/Homm3';
 
 (async () => {
   const app = new Application();

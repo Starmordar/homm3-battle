@@ -26,6 +26,13 @@ export default defineConfig([
         { 'ts-expect-error': 'allow-with-description' },
       ],
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+        },
+      ],
       'import/order': [
         'error',
         {
