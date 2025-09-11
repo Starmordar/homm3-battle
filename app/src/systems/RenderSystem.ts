@@ -50,10 +50,7 @@ class RenderSystem implements System {
 
   private addToDisplay(node: AnimatedPositionNode) {
     const animation = node.animation;
-    if (!animation) return;
-
     console.log('added');
-
     this.container.addChild(animation.animatedSprite);
   }
 }

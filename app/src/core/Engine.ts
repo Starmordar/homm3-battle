@@ -1,7 +1,10 @@
 import { ComponentMatchingFamily } from './ComponentMatchFamily';
 
+import type { Node } from './Node';
+import type { NodeList } from './NodeList';
 import type { Entity } from '@/core/Entity';
 import type { System } from '@/core/System';
+import type { Constructor } from '@/types';
 
 type EntityName = string;
 type NodeName = string;
@@ -16,7 +19,7 @@ class Engine {
 
   addEntity(entity: Entity) {
     if (this.entityNames.has(entity.name)) {
-      throw new Error(`addEntity(): The entity name is already in use ${entity.name}`);
+      throw new Error(`addEntity: The entity with the same name is already in use ${entity.name}`);
     }
 
     this.entityNames.set(entity.name, entity);
@@ -24,6 +27,10 @@ class Engine {
 
     entity.onComponentAdded = this.onComponentAdded.bind(this);
     entity.onComponentRemoved = this.onComponentRemoved.bind(this);
+
+    for (const [, family] of this.families) {
+      family.onAddEntity(entity);
+    }
   }
 
   removeEntity(entity: Entity) {
@@ -45,9 +52,9 @@ class Engine {
     return this.entityNames.get(entityName);
   }
 
-  onComponentAdded(entity: Entity, componentName: string) {
+  onComponentAdded(entity: Entity) {
     for (const [, family] of this.families) {
-      family.onComponentAddToEntity(entity, componentName);
+      family.onComponentAddToEntity(entity);
     }
   }
 
@@ -57,10 +64,9 @@ class Engine {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getNodeList<T>(nodeClass: new (...args: any[]) => T) {
-    const nodeList = this.families.get(nodeClass.name);
-    if (nodeList) return nodeList.nodeList;
+  getNodeList<T extends Node>(nodeClass: Constructor<T>): NodeList<T> {
+    const family = this.families.get(nodeClass.name);
+    if (family) return family.nodeList;
 
     const newFamily = new ComponentMatchingFamily(this, nodeClass);
     this.families.set(nodeClass.name, newFamily);

@@ -1,4 +1,3 @@
-import { PositionComponent } from '@/components/PositionComponent';
 import { RenderSystem } from '@/systems/RenderSystem';
 
 import { Engine } from '../core/Engine';
@@ -20,23 +19,17 @@ class Homm3 {
     this.engine = new Engine();
     const creator = new EntityCreator(this.engine);
 
-    const renderSystem = new RenderSystem(this.app.stage);
-    this.engine.addSystem(renderSystem);
+    this.engine.addSystem(new RenderSystem(this.app.stage));
 
-    const creature1 = await creator.createCreature({
+    await creator.createCreature({
       sprite: 'spritesheets/CDDRAG.json',
       position: { x: 250, y: this.app.screen.height / 2 + 200 },
     });
-    // renderSystem.addEntity(creature1);
 
-    creature1.add(new PositionComponent(300, 300, 0));
-    // creature1.remove(PositionComponent);
-
-    const creature2 = await creator.createCreature({
+    await creator.createCreature({
       sprite: 'spritesheets/CRANGL.json',
       position: { x: 450, y: this.app.screen.height / 2 + 200 },
     });
-    // renderSystem.addEntity(creature2);
   }
 
   start() {

@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Component<T> = new (...args: any[]) => T;
+import type { Constructor } from '@/types';
 
 class Entity {
   static entityId = 0;
@@ -8,14 +7,14 @@ class Entity {
   public onComponentAdded?: (entity: this, componentName: string) => void;
   public onComponentRemoved?: (entity: this, componentName: string) => void;
 
-  private components: Map<string, unknown> = new Map();
+  private components: Map<string, object> = new Map();
 
   constructor(name?: string) {
     this.name = name ?? `entityId-${++Entity.entityId}`;
   }
 
   add<T extends object>(component: T): this {
-    const constructor = component.constructor as Component<T>;
+    const constructor = component.constructor as Constructor<T>;
     if (this.has(constructor)) this.remove(constructor);
 
     this.components.set(constructor.name, component);
@@ -23,7 +22,7 @@ class Entity {
     return this;
   }
 
-  remove<T>(componentClass: Component<T>): T | null {
+  remove<T extends object>(componentClass: Constructor<T>): T | null {
     const component = this.get<T>(componentClass);
     if (!component) return null;
 
@@ -32,7 +31,7 @@ class Entity {
     return component;
   }
 
-  get<T>(componentClass: Component<T>): T | null {
+  get<T extends object>(componentClass: Constructor<T>): T | null {
     return this.components.get(componentClass.name) as T | null;
   }
 
@@ -40,7 +39,7 @@ class Entity {
     return this.components;
   }
 
-  has(componentClass: Component<unknown>): boolean {
+  has(componentClass: Constructor<object>): boolean {
     return this.components.has(componentClass.name);
   }
 }

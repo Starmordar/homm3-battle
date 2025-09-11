@@ -1,13 +1,10 @@
-interface MetaValue {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): any;
-}
+import type { Constructor } from '@/types';
 
-type Meta = Map<string, MetaValue>;
+type Meta = Map<string, Constructor>;
 
 const ComponentMetaKey = Symbol('node:component');
 
-function withComponentMetadata(metadata: MetaValue) {
+function withComponentMetadata(metadata: Constructor) {
   return function (target: object, propertyKey: string) {
     const components: Meta = Reflect.getMetadata(ComponentMetaKey, target) || new Map();
     components.set(propertyKey, metadata);

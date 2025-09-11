@@ -1,12 +1,12 @@
 import type { Node } from './Node';
 
-class NodeList {
-  public nodes: Node[] = [];
+class NodeList<NodeType extends Node> {
+  public nodes: NodeType[] = [];
 
-  public nodeAdded: (node: Node) => void;
-  public nodeRemoved: (node: Node) => void;
+  public nodeAdded: (node: NodeType) => void;
+  public nodeRemoved: (node: NodeType) => void;
 
-  add(node: Node) {
+  add(node: NodeType) {
     this.nodes.push(node);
     if (this.nodeAdded) this.nodeAdded(node);
   }

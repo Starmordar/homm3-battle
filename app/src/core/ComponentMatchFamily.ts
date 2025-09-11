@@ -1,22 +1,20 @@
 import { ComponentMetaKey, type Meta } from '@/decorators/withComponentMeta';
 
-import { Node, type NodeType } from './Node';
+import { Node } from './Node';
 import { NodeList } from './NodeList';
 
 import type { Engine } from './Engine';
 import type { Entity } from './Entity';
 import type { Constructor } from '@/types';
 
-class ComponentMatchingFamily {
-  public nodeList: NodeList = new NodeList();
+class ComponentMatchingFamily<NodeType extends Node = Node> {
+  public nodeList: NodeList<NodeType> = new NodeList();
 
   private entities: Set<Entity> = new Set();
   private requiredComponents: Map<Constructor, string> = new Map();
-
   private engine: Engine;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(engine: Engine, nodeClass: new (...args: any[]) => any) {
+  constructor(engine: Engine, nodeClass: Constructor) {
     this.engine = engine;
 
     const componentsData: Meta = Reflect.getMetadata(ComponentMetaKey, nodeClass.prototype);
@@ -29,7 +27,7 @@ class ComponentMatchingFamily {
     this.addEntityToFamily(entity);
   }
 
-  onComponentAddToEntity(entity: Entity, _componentName: string) {
+  onComponentAddToEntity(entity: Entity) {
     this.addEntityToFamily(entity);
   }
 
@@ -37,27 +35,27 @@ class ComponentMatchingFamily {
     if (this.entities.has(entity)) return;
     if (!this.hasAllRequiredComponents(entity)) return;
 
-    const node = new Node() as NodeType;
+    const node = new Node();
     node.entity = entity;
 
     for (const [componentClass, componentKey] of this.requiredComponents) {
-      node[componentKey] = entity.get(componentClass);
+      node[componentKey as keyof typeof Node] = entity.get(componentClass);
     }
 
     this.entities.add(entity);
-    this.nodeList.add(node);
+    this.nodeList.add(node as NodeType);
   }
 
-  hasAllRequiredComponents(entity: Entity) {
+  onComponentRemovedFromEntity(entity: Entity, componentName: string) {
+    console.log('onComponentRemovedFromEntity: entity, componentName :>> ', entity, componentName);
+  }
+
+  private hasAllRequiredComponents(entity: Entity) {
     for (const [componentClass] of this.requiredComponents) {
       if (!entity.has(componentClass)) return false;
     }
 
     return true;
-  }
-
-  onComponentRemovedFromEntity(entity: Entity, componentName: string) {
-    console.log('onComponentRemovedFromEntity: entity, componentName :>> ', entity, componentName);
   }
 }
 
