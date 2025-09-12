@@ -1,15 +1,14 @@
 import { expect, describe, test } from 'vitest';
 
+import { Archetype } from '@/core/Archetype';
+import { Aspect } from '@/core/Aspect';
+import { Entity } from '@/core/Entity';
 import {
   ValueComponent,
   PositionComponent,
   PositionAspect,
   PositionAndValueAspect,
-} from '@/core/test/Components';
-
-import { Archetype } from './Archetype';
-import { Aspect } from './Aspect';
-import { Entity } from './Entity';
+} from '@/test/mock/Components';
 
 describe('Archetype', () => {
   test('should match components by archetype', () => {

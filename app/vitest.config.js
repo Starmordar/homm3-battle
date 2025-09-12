@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    setupFiles: ['./src/test/vite.setup.ts'],
+    setupFiles: ['./src/test/config/vite.setup.ts'],
   },
   resolve: {
     alias: {

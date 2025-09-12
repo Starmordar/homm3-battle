@@ -1,8 +1,7 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { ValueComponent } from '@/core/test/Components';
-
-import { Entity } from './Entity';
+import { Entity } from '@/core/Entity';
+import { ValueComponent } from '@/test/mock/Components';
 
 describe('Entity', () => {
   test('should create an entity with a unique name', () => {
