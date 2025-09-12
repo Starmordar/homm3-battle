@@ -3,7 +3,6 @@ import { ComponentMetaKey, type Meta } from '@/decorators/withComponentMeta';
 import { Node } from './Node';
 import { NodeList } from './NodeList';
 
-import type { Engine } from './Engine';
 import type { Entity } from './Entity';
 import type { Constructor } from '@/types';
 
@@ -12,12 +11,15 @@ class ComponentMatchingFamily<NodeType extends Node = Node> {
 
   private entities: Set<Entity> = new Set();
   private requiredComponents: Map<Constructor, string> = new Map();
-  private engine: Engine;
 
-  constructor(engine: Engine, nodeClass: Constructor) {
-    this.engine = engine;
-
+  constructor(nodeClass: Constructor<NodeType>) {
     const componentsData: Meta = Reflect.getMetadata(ComponentMetaKey, nodeClass.prototype);
+    if (!componentsData) {
+      throw new Error(
+        `ComponentMatchingFamily: The node class ${nodeClass.name} is missing @withComponentMeta decorator`,
+      );
+    }
+
     for (const [componentKey, componentClass] of componentsData) {
       this.requiredComponents.set(componentClass, componentKey);
     }

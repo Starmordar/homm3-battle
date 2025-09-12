@@ -69,8 +69,9 @@ class Engine {
     const family = this.families.get(nodeClass.name) as ComponentMatchingFamily<T> | undefined;
     if (family) return family.nodeList;
 
-    const newFamily = new ComponentMatchingFamily(this, nodeClass);
-    this.families.set(nodeClass.name, newFamily);
+    const newFamily = new ComponentMatchingFamily(nodeClass);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.families.set(nodeClass.name, newFamily as any);
 
     for (const entity of this.entities) {
       newFamily.onAddEntity(entity);

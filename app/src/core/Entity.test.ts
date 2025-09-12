@@ -1,8 +1,6 @@
-import { describe } from 'node:test';
+import { describe, expect, test, vi } from 'vitest';
 
-import { expect, test, vi } from 'vitest';
-
-import { TestComponent } from '@/test/utils/TestComponent';
+import { TestComponent } from '@/core/test/utils/TestComponent';
 
 import { Entity } from './Entity';
 
