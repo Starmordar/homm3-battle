@@ -1,9 +1,9 @@
 import { AnimationComponent } from '@/components/AnimationComponet';
 import { PositionComponent } from '@/components/PositionComponent';
-import { Node } from '@/core/Node';
-import { withComponentMetadata } from '@/decorators/withComponentMeta';
+import { Aspect } from '@/core/Aspect';
+import { withComponentMetadata } from '@/core/withComponentMeta';
 
-class AnimatedPositionNode extends Node {
+class AnimatedPositionAspect extends Aspect {
   @withComponentMetadata(PositionComponent)
   public position: PositionComponent;
 
@@ -11,4 +11,4 @@ class AnimatedPositionNode extends Node {
   public animation: AnimationComponent;
 }
 
-export { AnimatedPositionNode };
+export { AnimatedPositionAspect };

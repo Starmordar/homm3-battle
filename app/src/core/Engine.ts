@@ -1,13 +1,13 @@
-import { ComponentMatchingFamily } from './ComponentMatchFamily';
+import { Archetype } from './Archetype';
 
-import type { Node } from './Node';
-import type { NodeList } from './NodeList';
+import type { Aspect } from './Aspect';
+import type { AspectList } from './AspectList';
 import type { Entity } from '@/core/Entity';
 import type { System } from '@/core/System';
-import type { Constructor } from '@/types';
+import type { Ctor } from '@/types';
 
 type EntityName = string;
-type NodeName = string;
+type AspectName = string;
 
 class Engine {
   public updatePenging: boolean = false;
@@ -15,7 +15,7 @@ class Engine {
   private entities: Set<Entity> = new Set();
   private entityNames: Map<EntityName, Entity> = new Map();
   private systems: System[] = [];
-  private families: Map<NodeName, ComponentMatchingFamily> = new Map();
+  private aspectArchetypes: Map<AspectName, Archetype> = new Map();
 
   addEntity(entity: Entity) {
     if (this.entityNames.has(entity.name)) {
@@ -28,8 +28,8 @@ class Engine {
     entity.onComponentAdded = this.onComponentAdded.bind(this);
     entity.onComponentRemoved = this.onComponentRemoved.bind(this);
 
-    for (const [, family] of this.families) {
-      family.onAddEntity(entity);
+    for (const [, archetype] of this.aspectArchetypes) {
+      archetype.onAddEntity(entity);
     }
   }
 
@@ -41,8 +41,8 @@ class Engine {
     entity.onComponentAdded = null;
     entity.onComponentRemoved = null;
 
-    for (const [, family] of this.families) {
-      family.onRemoveEntity(entity);
+    for (const [, archetype] of this.aspectArchetypes) {
+      archetype.onRemoveEntity(entity);
     }
 
     this.entityNames.delete(entity.name);
@@ -54,30 +54,30 @@ class Engine {
   }
 
   onComponentAdded(entity: Entity) {
-    for (const [, family] of this.families) {
-      family.onComponentAddToEntity(entity);
+    for (const [, archetype] of this.aspectArchetypes) {
+      archetype.onComponentAddToEntity(entity);
     }
   }
 
-  onComponentRemoved(entity: Entity, componentClass: Constructor) {
-    for (const [, family] of this.families) {
-      family.onComponentRemovedFromEntity(entity, componentClass);
+  onComponentRemoved(entity: Entity, componentClass: Ctor) {
+    for (const [, archetype] of this.aspectArchetypes) {
+      archetype.onComponentRemoveFromEntity(entity, componentClass);
     }
   }
 
-  getNodeList<T extends Node>(nodeClass: Constructor<T>): NodeList<T> {
-    const family = this.families.get(nodeClass.name) as ComponentMatchingFamily<T> | undefined;
-    if (family) return family.nodeList;
+  getAspectList<T extends Aspect>(aspectClass: Ctor<T>): AspectList<T> {
+    const archetype = this.aspectArchetypes.get(aspectClass.name) as Archetype<T> | undefined;
+    if (archetype) return archetype.aspectList;
 
-    const newFamily = new ComponentMatchingFamily(nodeClass);
+    const newArchetype = new Archetype(aspectClass);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.families.set(nodeClass.name, newFamily as any);
+    this.aspectArchetypes.set(aspectClass.name, newArchetype as any);
 
     for (const entity of this.entities) {
-      newFamily.onAddEntity(entity);
+      newArchetype.onAddEntity(entity);
     }
 
-    return newFamily.nodeList as unknown as NodeList<T>;
+    return newArchetype.aspectList as unknown as AspectList<T>;
   }
 
   addSystem(system: System) {

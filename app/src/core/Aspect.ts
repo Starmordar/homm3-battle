@@ -1,7 +1,7 @@
 import type { Entity } from './Entity';
 
-class Node {
+class Aspect {
   public entity: Entity;
 }
 
-export { Node };
+export { Aspect };

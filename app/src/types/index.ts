@@ -9,4 +9,7 @@ interface Constructor<T extends object = {}> {
   new (...args: any[]): T;
 }
 
-export type { Constructor, Point };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Ctor<T extends object = object> = new (...args: any[]) => T;
+
+export type { Ctor, Constructor, Point };

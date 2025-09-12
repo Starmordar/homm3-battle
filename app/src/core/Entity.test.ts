@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 
-import { TestComponent } from '@/core/test/utils/TestComponent';
+import { ValueComponent } from '@/core/test/Components';
 
 import { Entity } from './Entity';
 
@@ -21,33 +21,33 @@ describe('Entity', () => {
 
   test('should check for component existence', () => {
     const entity = new Entity();
-    const component = new TestComponent(1);
+    const component = new ValueComponent(1);
     entity.add(component);
 
-    expect(entity.has(TestComponent)).toBe(true);
-    entity.remove(TestComponent);
-    expect(entity.has(TestComponent)).toBe(false);
+    expect(entity.has(ValueComponent)).toBe(true);
+    entity.remove(ValueComponent);
+    expect(entity.has(ValueComponent)).toBe(false);
   });
 
   test('should add and retrieve components', () => {
     const entity = new Entity();
-    const component = new TestComponent(1);
+    const component = new ValueComponent(1);
     entity.add(component);
 
-    const componentsList = entity.get(TestComponent);
+    const componentsList = entity.get(ValueComponent);
     expect(componentsList).toBe(component);
     expect(componentsList?.value).toBe(1);
   });
 
   test('should override existing component of the same type', () => {
     const entity = new Entity();
-    const component1 = new TestComponent(1);
-    const component2 = new TestComponent(2);
+    const component1 = new ValueComponent(1);
+    const component2 = new ValueComponent(2);
 
     entity.add(component1);
     entity.add(component2);
 
-    const componentsList = entity.get(TestComponent);
+    const componentsList = entity.get(ValueComponent);
     expect(componentsList).toBe(component2);
     expect(componentsList?.value).toBe(2);
     expect(entity.getAll().size).toBe(1);
@@ -55,7 +55,7 @@ describe('Entity', () => {
 
   test('should trigger callback on component addition', () => {
     const entity = new Entity();
-    const component = new TestComponent(1);
+    const component = new ValueComponent(1);
 
     const onComponentAdded = vi.fn();
     entity.onComponentAdded = onComponentAdded;
@@ -66,29 +66,34 @@ describe('Entity', () => {
 
   test('should remove components', () => {
     const entity = new Entity();
-    const component = new TestComponent(1);
+    const component = new ValueComponent(1);
     entity.add(component);
 
-    const removedComponent = entity.remove(TestComponent);
+    const removedComponent = entity.remove(ValueComponent);
     expect(removedComponent).toBe(component);
-    expect(entity.get(TestComponent)).toBeNull();
+    expect(entity.get(ValueComponent)).toBeNull();
   });
 
   test('should return null when removing non-existent component', () => {
     const entity = new Entity();
-    const removedComponent = entity.remove(TestComponent);
+    const removedComponent = entity.remove(ValueComponent);
     expect(removedComponent).toBeNull();
   });
 
   test('should trigger callback on component removal', () => {
     const entity = new Entity();
-    const component = new TestComponent(1);
+    const component = new ValueComponent(1);
     entity.add(component);
 
     const onComponentRemoved = vi.fn();
     entity.onComponentRemoved = onComponentRemoved;
-    entity.remove(TestComponent);
+    entity.remove(ValueComponent);
 
-    expect(onComponentRemoved).toHaveBeenCalledWith(entity, TestComponent);
+    expect(onComponentRemoved).toHaveBeenCalledWith(entity, ValueComponent);
+  });
+
+  test('should throw error when adding a non-class instance as component', () => {
+    const entity = new Entity();
+    expect(() => entity.add({ position: 12 })).toThrowError();
   });
 });

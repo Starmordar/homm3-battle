@@ -1,4 +1,4 @@
-import { AnimatedPositionNode } from '@/nodes/AnimatedPositionNode';
+import { AnimatedPositionAspect } from '@/aspects/AnimatedPositionAspect';
 
 import type { System } from '../core/System';
 import type { Engine } from '@/core/Engine';
@@ -9,28 +9,28 @@ class RenderSystem implements System {
   container: Container;
   entities: Entity[] = [];
 
-  private nodes: AnimatedPositionNode[] = [];
+  private aspects: AnimatedPositionAspect[] = [];
 
   constructor(container: Container) {
     this.container = container;
   }
 
   public addToEngine(engine: Engine): void {
-    const nodeList = engine.getNodeList(AnimatedPositionNode);
+    const aspectList = engine.getAspectList(AnimatedPositionAspect);
 
-    for (const node of nodeList.nodes) {
-      this.addToDisplay(node as AnimatedPositionNode);
+    for (const aspect of aspectList.aspects) {
+      this.addToDisplay(aspect);
     }
 
-    nodeList.nodeAdded = this.addToDisplay.bind(this);
-    nodeList.nodeRemoved = this.removeFromDisplay.bind(this);
-    this.nodes = nodeList.nodes;
+    aspectList.aspectAdded = this.addToDisplay.bind(this);
+    aspectList.aspectRemoved = this.removeFromDisplay.bind(this);
+    this.aspects = aspectList.aspects;
   }
 
   public update() {
-    for (const node of this.nodes) {
-      const position = node.position;
-      const animation = node.animation;
+    for (const aspect of this.aspects) {
+      const position = aspect.position;
+      const animation = aspect.animation;
 
       if (!position || !animation) continue;
 
@@ -44,17 +44,16 @@ class RenderSystem implements System {
   }
 
   public removeFromEngine(): void {
-    this.nodes = [];
+    this.aspects = [];
   }
 
-  private addToDisplay(node: AnimatedPositionNode) {
-    const animation = node.animation;
+  private addToDisplay(aspect: AnimatedPositionAspect) {
+    const animation = aspect.animation;
     this.container.addChild(animation.animatedSprite);
   }
 
-  private removeFromDisplay(node: AnimatedPositionNode) {
-    console.log('node :>> ', node);
-    const animation = node.animation;
+  private removeFromDisplay(aspect: AnimatedPositionAspect) {
+    const animation = aspect.animation;
     this.container.removeChild(animation.animatedSprite);
   }
 }
