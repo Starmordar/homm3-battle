@@ -19,7 +19,7 @@ class Engine {
 
   addEntity(entity: Entity) {
     if (this.entityNames.has(entity.name)) {
-      throw new Error(`addEntity: The entity with the same name is already in use ${entity.name}`);
+      throw new Error(`Engine: The entity with the same name is already in use ${entity.name}`);
     }
 
     this.entityNames.set(entity.name, entity);
@@ -35,7 +35,7 @@ class Engine {
 
   removeEntity(entity: Entity) {
     if (!this.entityNames.has(entity.name)) {
-      throw new Error(`removeEntity: The entity with the ${entity.name} name was not found`);
+      throw new Error(`Engine: The entity with the ${entity.name} name was not found`);
     }
 
     entity.onComponentAdded = null;
@@ -59,25 +59,24 @@ class Engine {
     }
   }
 
-  onComponentRemoved(entity: Entity, componentClass: Ctor) {
+  onComponentRemoved(entity: Entity, componentCtor: Ctor) {
     for (const [, archetype] of this.aspectArchetypes) {
-      archetype.onComponentRemoveFromEntity(entity, componentClass);
+      archetype.onComponentRemoveFromEntity(entity, componentCtor);
     }
   }
 
-  getAspectList<T extends Aspect>(aspectClass: Ctor<T>): AspectList<T> {
-    const archetype = this.aspectArchetypes.get(aspectClass.name) as Archetype<T> | undefined;
+  getAspectList<T extends Aspect>(aspectCtor: Ctor<T>): AspectList<T> {
+    const archetype = this.aspectArchetypes.get(aspectCtor.name) as Archetype<T> | undefined;
     if (archetype) return archetype.aspectList;
 
-    const newArchetype = new Archetype(aspectClass);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.aspectArchetypes.set(aspectClass.name, newArchetype as any);
+    const newArchetype = new Archetype(aspectCtor);
+    this.aspectArchetypes.set(aspectCtor.name, newArchetype as unknown as Archetype<Aspect>);
 
     for (const entity of this.entities) {
       newArchetype.onAddEntity(entity);
     }
 
-    return newArchetype.aspectList as unknown as AspectList<T>;
+    return newArchetype.aspectList;
   }
 
   addSystem(system: System) {
@@ -89,7 +88,7 @@ class Engine {
     const systemIndex = this.systems.findIndex((listSystem) => listSystem === system);
 
     if (systemIndex === -1) {
-      throw new Error(`removeSystem(): The system was not found: ${system.constructor.name}`);
+      throw new Error(`Engine: The system was not found: ${system.constructor.name}`);
     }
 
     system.removeFromEngine(this);

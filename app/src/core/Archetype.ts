@@ -15,7 +15,7 @@ class Archetype<AspectType extends Aspect = Aspect> {
   constructor(aspectCtor: Ctor<AspectType>) {
     const componentsData: Meta = Reflect.getMetadata(ComponentMetaKey, aspectCtor.prototype);
     if (!componentsData) {
-      throw new Error(`Archetype: The aspect class ${aspectCtor.name} is missing metadata.`);
+      throw new Error(`Engine: The aspect class ${aspectCtor.name} is missing metadata.`);
     }
 
     for (const [componentKey, componentCtor] of componentsData) {
