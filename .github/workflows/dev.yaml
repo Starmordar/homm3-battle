@@ -1,0 +1,44 @@
+name: Dev
+on:
+  pull_request: {}
+  push:
+    branches:
+      - dev
+
+concurrency:
+  group: '${{ github.workflow }}-${{ github.event.pull_request.number || github.head_ref || github.ref }}'
+  cancel-in-progress: ${{ !contains(github.ref, 'dev') }}
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        include:
+          - service_name: app
+            service_path: app/
+          - service_name: sprite-extractor
+            service_path: sprite-extractor/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: '.nvmrc'
+          package-manager-cache: true
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: ${{ matrix.service_path }}
+
+      - name: Linter
+        run: npm run lint:${{ matrix.service_name }} && npm run type-check:${{ matrix.service_name }}
+
+      - name: Test
+        run: npm run test:${{ matrix.service_name }}

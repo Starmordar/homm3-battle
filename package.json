@@ -5,7 +5,15 @@
   "main": "index.js",
   "scripts": {
     "lint:sprite-extractor": "eslint ./sprite-extractor/src --ext .ts",
-    "lint": "npm run lint:sprite-extractor"
+    "lint:app": "eslint ./app/src --ext .ts",
+    "lint": "npm run lint:sprite-extractor && npm run lint:app",
+    "type-check:app": "cd app && tsc --noEmit",
+    "type-check:sprite-extractor": "cd sprite-extractor && tsc --noEmit",
+    "type-check": "npm run type-check:app && npm run type-check:sprite-extractor",
+    "test:app": "cd app && npm run test",
+    "test:sprite-extractor": "cd sprite-extractor",
+    "test": "npm run test:app && npm run test:sprite-extractor",
+    "validate": "npm run lint && npm run type-check && npm run test"
   },
   "repository": {
     "type": "git",
