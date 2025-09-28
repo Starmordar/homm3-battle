@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 import js from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import importPlugin from 'eslint-plugin-import';
@@ -55,6 +57,7 @@ export default defineConfig([
         {
           singleQuote: true,
           printWidth: 100,
+          endOfLine: 'auto',
         },
       ],
     },
@@ -64,7 +67,10 @@ export default defineConfig([
     extends: [tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       globals: { ...globals.node },
-      parserOptions: { projectService: true, tsconfigRootDir: '/sprite-extractor' },
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: path.join(__dirname, '/sprite-extractor'),
+      },
     },
     rules: {
       '@typescript-eslint/consistent-type-exports': 'error',
@@ -79,7 +85,7 @@ export default defineConfig([
     extends: [],
     languageOptions: {
       globals: { ...globals.node },
-      parserOptions: { projectService: true, tsconfigRootDir: '/app' },
+      parserOptions: { projectService: true, tsconfigRootDir: path.join(__dirname, '/app') },
     },
     settings: {
       'import/resolver': { typescript: { project: './app/tsconfig.json' } },
