@@ -88,5 +88,8 @@ jobs:
           script: |
             cd ~/heroes-might-and-magic/sprite-extractor
             echo INPUT_PATH=../data > .env
-            node -v
+
+            source ~/.nvm/nvm.sh
+            nvm use
+
             npm run extract
