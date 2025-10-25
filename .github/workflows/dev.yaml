@@ -127,7 +127,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd ~/heroes-might-and-magic
-            cp -R ./sprite-extractor/output/spritesheets ./app/public/spritesheets
+            cp -R ./sprite-extractor/output/spritesheets ./app/public
             docker-compose stop
             docker-compose up -d
             
