@@ -1,11 +1,13 @@
 import path from 'node:path';
 
-const INPUT_PATH = path.join(process.cwd(), 'input');
+const INPUT_PATH = path.join(process.cwd(), process.env.INPUT_PATH ?? 'input');
 const SPRITES_SOURCE_PATH = path.join(INPUT_PATH, 'sprites.lod');
 
-const OUTPUT_PATH = path.join(process.cwd(), 'output');
-const OUTPUT_ASSETS_PATH = path.join(OUTPUT_PATH, 'assets');
-const OUTPUT_CONFIG_PATH = path.join(OUTPUT_PATH, 'config');
+const OUTPUT_PATH = path.join(process.cwd(), process.env.OUTPUT_PATH ?? 'output');
+
+const OUTPUT_ASSETS_PATH = path.join(OUTPUT_PATH, 'spritesheets');
+const OUTPUT_CONFIG_PATH = path.join(OUTPUT_PATH, 'spritesheets');
+const ASSETS_FROM_CONFIG_PATH = './';
 
 const FRAME_PADDING = 10;
 
@@ -40,18 +42,18 @@ const ANIMATION_GROUPS = CREATURE_ANIMATION_PHASES.map((name) => name.toLowerCas
 const CREATURE_FILE_NAMES = [
   // // Castle
   'CPKMAN.def',
-  // 'CHALBD.def',
-  // 'CLCBOW.def',
-  // 'CHCBOW.def',
-  // 'CGRIFF.def',
-  // 'CRGRIF.def',
-  // 'CSWORD.def',
-  // 'CCRUSD.def',
-  // 'CMONKK.def',
-  // 'CZEALT.def',
-  // 'CCAVLR.def',
-  // 'CCHAMP.def',
-  // 'CANGEL.def',
+  'CHALBD.def',
+  'CLCBOW.def',
+  'CHCBOW.def',
+  'CGRIFF.def',
+  'CRGRIF.def',
+  'CSWORD.def',
+  'CCRUSD.def',
+  'CMONKK.def',
+  'CZEALT.def',
+  'CCAVLR.def',
+  'CCHAMP.def',
+  'CANGEL.def',
   'CRANGL.def',
 
   // // Dungeon
@@ -205,6 +207,7 @@ export {
   OUTPUT_PATH,
   OUTPUT_ASSETS_PATH,
   OUTPUT_CONFIG_PATH,
+  ASSETS_FROM_CONFIG_PATH,
   CREATURE_FILE_NAMES,
   CREATURE_ANIMATION_PHASES,
   ANIMATION_GROUPS,

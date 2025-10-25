@@ -8,6 +8,9 @@ function minify(assetsPath: string) {
 
   return Promise.all(
     files.map((fileName) => {
+      const isPng = fileName.endsWith('.png');
+      if (!isPng) return Promise.resolve();
+
       const filePath = path.join(assetsPath, fileName);
       return sharp(filePath)
         .webp({ lossless: true })

@@ -1,6 +1,11 @@
 import fs from 'node:fs';
 
-import { FRAME_PADDING, ANIMATION_GROUPS, OUTPUT_CONFIG_PATH } from '../config';
+import {
+  FRAME_PADDING,
+  ANIMATION_GROUPS,
+  OUTPUT_CONFIG_PATH,
+  ASSETS_FROM_CONFIG_PATH,
+} from '../config';
 
 import type { SourceData } from './validate';
 
@@ -96,7 +101,7 @@ class ConfigBuilder {
 
   generateMetaConfig() {
     this.config.meta = {
-      image: `../assets/${this.filename}.webp`,
+      image: `${ASSETS_FROM_CONFIG_PATH}/${this.filename}.webp`,
       format: 'webp',
       size: { w: this.frameWidth * this.maxCol, h: this.frameHeight * this.maxRow },
       scale: '1',

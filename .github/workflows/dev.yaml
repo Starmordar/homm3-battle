@@ -49,3 +49,36 @@ jobs:
       - name: Build
         run: npm run build --if-present
         working-directory: ${{ matrix.service_path }}
+
+  extract-assets:
+    name: Extract Assets
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+         node-version-file: '.nvmrc'
+         package-manager-cache: true
+         cache: 'npm'
+         cache-dependency-path: '**/package-lock.json'
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: sprite-extractor/
+
+      - name: Extract Assets
+        run: npm run extract
+        working-directory: sprite-extractor/
+
+      - name: Copy assets via SSH
+        uses: appleboy/scp-action@v1
+        with:
+         host: ${{ secrets.SSH_HOST }}
+         username: ${{ secrets.SSH_USERNAME }}
+         password: ${{ secrets.SSH_PASSWORD }}
+         source: "sprite-extractor/output/spritesheets/"
+         target: "~/heroes-might-and-magic/data/spritesheets/"
