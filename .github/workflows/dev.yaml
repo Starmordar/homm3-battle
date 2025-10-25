@@ -76,7 +76,7 @@ jobs:
          host: ${{ secrets.SSH_HOST }}
          username: ${{ secrets.SSH_USERNAME }}
          password: ${{ secrets.SSH_PASSWORD }}
-         source: "sprite-extractor"
+         source: "tsconfig.base.json,sprite-extractor"
          target: "~/heroes-might-and-magic"
 
       - name: Execute remote SSH commands using password
