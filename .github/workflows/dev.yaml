@@ -67,7 +67,7 @@ jobs:
          cache-dependency-path: '**/package-lock.json'
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
         working-directory: sprite-extractor/
 
       - name: Copy assets via SSH
