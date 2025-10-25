@@ -116,7 +116,7 @@ jobs:
          host: ${{ secrets.SSH_HOST }}
          username: ${{ secrets.SSH_USERNAME }}
          password: ${{ secrets.SSH_PASSWORD }}
-         source: "app"
+         source: "docker-compose.yml,app"
          target: "~/heroes-might-and-magic"
 
       - name: Execute remote SSH commands using password
