@@ -70,15 +70,23 @@ jobs:
         run: npm ci
         working-directory: sprite-extractor/
 
-      - name: Extract Assets
-        run: npm run extract
-        working-directory: sprite-extractor/
-
       - name: Copy assets via SSH
         uses: appleboy/scp-action@v1
         with:
          host: ${{ secrets.SSH_HOST }}
          username: ${{ secrets.SSH_USERNAME }}
          password: ${{ secrets.SSH_PASSWORD }}
-         source: "sprite-extractor/output/spritesheets/"
-         target: "~/heroes-might-and-magic/data/spritesheets/"
+         source: "sprite-extractor"
+         target: "~/heroes-might-and-magic/sprite-extractor"
+
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd ~/heroes-might-and-magic/sprite-extractor
+            echo INPUT_PATH=../data > .env
+            npm ci 
+            npm run extract

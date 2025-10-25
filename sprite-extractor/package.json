@@ -2,7 +2,7 @@
   "name": "sprite-extractor",
   "version": "1.0.0",
   "scripts": {
-    "extract": "ts-node ./src/index.ts",
+    "extract": "node --env-file=.env -r ts-node/register ./src/index.ts",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
