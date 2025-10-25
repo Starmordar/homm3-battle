@@ -1,8 +1,6 @@
 import path from 'node:path';
 
-console.log('process.env.INPUT_PATH :>> ', process.env.INPUT_PATH);
 const INPUT_PATH = path.join(process.cwd(), process.env.INPUT_PATH ?? 'input');
-console.log('INPUT_PATH :>> ', INPUT_PATH);
 const SPRITES_SOURCE_PATH = path.join(INPUT_PATH, 'sprites.lod');
 
 const OUTPUT_PATH = path.join(process.cwd(), process.env.OUTPUT_PATH ?? 'output');
