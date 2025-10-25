@@ -93,3 +93,41 @@ jobs:
             nvm use
 
             npm run extract
+
+  deploy: 
+    name: Deploy App
+    runs-on: ubuntu-latest
+    needs: extract-assets
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+         node-version-file: '.nvmrc'
+         package-manager-cache: true
+         cache: 'npm'
+         cache-dependency-path: '**/package-lock.json'
+
+      - name: Copy app via SSH
+        uses: appleboy/scp-action@v1
+        with:
+         host: ${{ secrets.SSH_HOST }}
+         username: ${{ secrets.SSH_USERNAME }}
+         password: ${{ secrets.SSH_PASSWORD }}
+         source: "app"
+         target: "~/heroes-might-and-magic"
+
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd ~/heroes-might-and-magic
+            cp -R ./sprite-extractor/output/spritesheets ./app/public/spritesheets
+            docker-compose stop
+            docker-compose up -d
+            
