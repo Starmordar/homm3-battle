@@ -9,6 +9,11 @@ concurrency:
   group: '${{ github.workflow }}-${{ github.event.pull_request.number || github.head_ref || github.ref }}'
   cancel-in-progress: ${{ !contains(github.ref, 'dev') }}
 
+env:
+  VPS_PROJECT_ROOT: ~/heroes-might-and-magic
+  VPS_DATA_PATH: 'data'
+  SPRITESHEETS_OUTPUT_PATH: 'app/public'
+
 jobs:
   validate:
     name: Validate
@@ -50,10 +55,11 @@ jobs:
         run: npm run build --if-present
         working-directory: ${{ matrix.service_path }}
 
-  extract-assets:
-    name: Extract Assets
+  copy-files-to-server:
+    name: Copy Files to Server
     runs-on: ubuntu-latest
     needs: validate
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -66,28 +72,34 @@ jobs:
          cache: 'npm'
          cache-dependency-path: '**/package-lock.json'
 
-      - name: Install Dependencies
+      - name: Install Sprite Extractor Deps
         run: npm install
         working-directory: sprite-extractor/
 
-      - name: Copy assets via SSH
+      - name: Copy Files
         uses: appleboy/scp-action@v1
         with:
          host: ${{ secrets.SSH_HOST }}
          username: ${{ secrets.SSH_USERNAME }}
          password: ${{ secrets.SSH_PASSWORD }}
-         source: "tsconfig.base.json,sprite-extractor"
-         target: "~/heroes-might-and-magic"
+         source: "docker-compose.yml,tsconfig.base.json,app,sprite-extractor"
+         target: ${{ env.VPS_PROJECT_ROOT }}
 
-      - name: Execute remote SSH commands using password
+  extract-spritesheets:
+    name: Extract Spritesheets
+    runs-on: ubuntu-latest
+    needs: copy-files-to-server
+
+    steps:
+      - name: Extract Spritesheets
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd ~/heroes-might-and-magic/sprite-extractor
-            echo INPUT_PATH=../data > .env
+            cd ${{ env.VPS_PROJECT_ROOT }}/sprite-extractor
+            echo "INPUT_PATH=../${{ env.VPS_DATA_PATH }} \nOUTPUT_PATH=../${{ env.SPRITESHEETS_OUTPUT_PATH }}" > .env
 
             source ~/.nvm/nvm.sh
             nvm use
@@ -97,37 +109,18 @@ jobs:
   deploy: 
     name: Deploy App
     runs-on: ubuntu-latest
-    needs: extract-assets
+    needs: extract-spritesheets
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Setup Node
-        uses: actions/setup-node@v5
-        with:
-         node-version-file: '.nvmrc'
-         package-manager-cache: true
-         cache: 'npm'
-         cache-dependency-path: '**/package-lock.json'
-
-      - name: Copy app via SSH
-        uses: appleboy/scp-action@v1
-        with:
-         host: ${{ secrets.SSH_HOST }}
-         username: ${{ secrets.SSH_USERNAME }}
-         password: ${{ secrets.SSH_PASSWORD }}
-         source: "docker-compose.yml,app"
-         target: "~/heroes-might-and-magic"
-
-      - name: Execute remote SSH commands using password
+      - name: Redeploy App
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd ~/heroes-might-and-magic
-            cp -R ./sprite-extractor/output/spritesheets ./app/public
+            cd ${{ env.VPS_PROJECT_ROOT }}
+
             docker-compose stop
             docker-compose up -d
             
