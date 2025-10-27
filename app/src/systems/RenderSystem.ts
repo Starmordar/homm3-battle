@@ -37,9 +37,6 @@ class RenderSystem implements System {
       animation.animatedSprite.x = position.position.x;
       animation.animatedSprite.y = position.position.y;
       animation.animatedSprite.animationSpeed = 0.1;
-
-      if (animation.animatedSprite.playing) continue;
-      animation.animatedSprite.play();
     }
   }
 
@@ -49,12 +46,16 @@ class RenderSystem implements System {
 
   private addToDisplay(aspect: AnimatedPositionAspect) {
     const animation = aspect.animation;
+
     this.container.addChild(animation.animatedSprite);
+    animation.animatedSprite.play();
   }
 
   private removeFromDisplay(aspect: AnimatedPositionAspect) {
     const animation = aspect.animation;
+
     this.container.removeChild(animation.animatedSprite);
+    animation.animatedSprite.stop();
   }
 }
 

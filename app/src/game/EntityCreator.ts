@@ -19,7 +19,7 @@ class EntityCreator {
 
     const entity = new Entity(sprite)
       .add(new PositionComponent(position.x, position.y, 0))
-      .add(new AnimationComponent(new AnimatedSprite(assets.animations['moving'])));
+      .add(new AnimationComponent(new AnimatedSprite(assets.animations['standing'])));
 
     this.engine.addEntity(entity);
     return entity;

@@ -32,6 +32,12 @@ class Homm3 {
       position: { x: 450, y: this.app.screen.height / 2 + 200 },
     });
     console.log('angel :>> ', angel);
+
+    const archer = await creator.createCreature({
+      sprite: 'spritesheets/CHCBOW.json',
+      position: { x: 800, y: this.app.screen.height / 2 + 200 },
+    });
+    console.log('archer :>> ', archer);
   }
 
   start() {
