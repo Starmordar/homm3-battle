@@ -6,7 +6,7 @@ import { PositionComponent } from '@/components/PositionComponent';
 import { Entity } from '@/core/Entity';
 import { GridView } from '@/view/GridView';
 
-import type { GameConfig } from './GameConfig';
+import type { GameConfig } from '../config/GameConfig';
 import type { Engine } from '../core/Engine';
 import type { Point } from '@/types';
 

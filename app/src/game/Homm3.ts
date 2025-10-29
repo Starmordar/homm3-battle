@@ -1,10 +1,10 @@
 import { AnimationSystem } from '@/systems/AnimationSystem';
 import { RenderSystem } from '@/systems/RenderSystem';
 
+import { GameConfig } from '../config/GameConfig';
 import { Engine } from '../core/Engine';
 
 import { EntityCreator } from './EntityCreator';
-import { GameConfig } from './GameConfig';
 
 import type { Application } from 'pixi.js';
 
@@ -26,6 +26,9 @@ class Homm3 {
     this.engine.addSystem(new RenderSystem(this.app.stage));
     this.engine.addSystem(new AnimationSystem(this.app.stage));
 
+    const gridView = creator.createBoard();
+    console.log('gridView :>> ', gridView);
+
     const dragon = await creator.createCreature({
       sprite: 'spritesheets/CDDRAG.json',
       position: { x: 250, y: this.app.screen.height / 2 + 200 },
@@ -43,9 +46,6 @@ class Homm3 {
       position: { x: 800, y: this.app.screen.height / 2 + 200 },
     });
     console.log('archer :>> ', archer);
-
-    const gridView = creator.createBoard();
-    console.log('gridView :>> ', gridView);
   }
 
   start() {

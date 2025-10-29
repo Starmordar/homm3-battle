@@ -1,4 +1,5 @@
 import { RenderAspect } from '@/aspects/RenderAspect';
+import { castArray } from '@/utils/castArray';
 
 import type { System } from '../core/System';
 import type { Engine } from '@/core/Engine';
@@ -29,13 +30,13 @@ class RenderSystem implements System {
   public removeFromEngine(): void {}
 
   private addToDisplay(aspect: RenderAspect) {
-    const graphics = aspect.display.view.graphics;
-    this.container.addChild(graphics);
+    const graphics = castArray(aspect.display.view.graphics);
+    graphics.forEach((graphic) => this.container.addChild(graphic));
   }
 
   private removeFromDisplay(aspect: RenderAspect) {
-    const graphics = aspect.display.view.graphics;
-    graphics.destroy();
+    const graphics = castArray(aspect.display.view.graphics);
+    graphics.forEach((graphic) => graphic.destroy());
   }
 }
 

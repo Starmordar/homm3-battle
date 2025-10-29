@@ -1,15 +1,28 @@
 import { Graphics } from 'pixi.js';
 
 import type { View } from './View';
-import type { GameConfig } from '@/game/GameConfig';
+import type { GameConfig } from '@/config/GameConfig';
 
 class GridView implements View {
-  graphics: Graphics;
+  graphics: Graphics[] = [];
 
   constructor(config: GameConfig) {
-    console.log('config :>> ', config);
+    for (const [, corners] of config.boardConfig.cornerMaps) {
+      const graphics = new Graphics();
+      const startPoint = corners[corners.length - 1];
 
-    this.graphics = new Graphics().rect(50, 50, 100, 100).fill(0xff0000);
+      graphics.beginPath();
+
+      graphics.moveTo(startPoint.x, startPoint.y);
+      for (let i = 0; i < corners.length; i++) {
+        graphics.lineTo(corners[i].x, corners[i].y);
+      }
+
+      graphics.strokeStyle = { width: 1, color: 'yellow' };
+      graphics.stroke();
+
+      this.graphics.push(graphics);
+    }
   }
 }
 
