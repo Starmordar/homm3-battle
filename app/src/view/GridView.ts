@@ -7,7 +7,7 @@ class GridView implements View {
   graphics: Graphics[] = [];
 
   constructor(config: GameConfig) {
-    for (const [, corners] of config.boardConfig.cornerMaps) {
+    for (const [, corners] of config.boardConfig.hexagonCornersMap) {
       const graphics = new Graphics();
       const startPoint = corners[corners.length - 1];
 

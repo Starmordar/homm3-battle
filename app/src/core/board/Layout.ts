@@ -15,18 +15,6 @@ class Layout {
     0.5,
   );
 
-  static flatOnTop: OrientationMatrix = new OrientationMatrix(
-    3.0 / 2.0,
-    0.0,
-    Math.sqrt(3.0) / 2.0,
-    Math.sqrt(3.0),
-    2.0 / 3.0,
-    0.0,
-    -1.0 / 3.0,
-    Math.sqrt(3.0) / 3.0,
-    0.0,
-  );
-
   public readonly orientation: OrientationMatrix;
   public readonly size: Point;
   public readonly origin: Point;
