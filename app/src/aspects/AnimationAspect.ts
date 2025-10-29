@@ -3,7 +3,7 @@ import { PositionComponent } from '@/components/PositionComponent';
 import { Aspect } from '@/core/Aspect';
 import { withComponentMetadata } from '@/core/withComponentMeta';
 
-class AnimatedPositionAspect extends Aspect {
+class AnimationAspect extends Aspect {
   @withComponentMetadata(PositionComponent)
   public position: PositionComponent;
 
@@ -11,4 +11,4 @@ class AnimatedPositionAspect extends Aspect {
   public animation: AnimationComponent;
 }
 
-export { AnimatedPositionAspect };
+export { AnimationAspect };

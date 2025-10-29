@@ -1,4 +1,4 @@
-import { AnimatedPositionAspect } from '@/aspects/AnimatedPositionAspect';
+import { RenderAspect } from '@/aspects/RenderAspect';
 
 import type { System } from '../core/System';
 import type { Engine } from '@/core/Engine';
@@ -9,14 +9,12 @@ class RenderSystem implements System {
   container: Container;
   entities: Entity[] = [];
 
-  private aspects: AnimatedPositionAspect[] = [];
-
   constructor(container: Container) {
     this.container = container;
   }
 
   public addToEngine(engine: Engine): void {
-    const aspectList = engine.getAspectList(AnimatedPositionAspect);
+    const aspectList = engine.getAspectList(RenderAspect);
 
     for (const aspect of aspectList.aspects) {
       this.addToDisplay(aspect);
@@ -24,38 +22,20 @@ class RenderSystem implements System {
 
     aspectList.aspectAdded = this.addToDisplay.bind(this);
     aspectList.aspectRemoved = this.removeFromDisplay.bind(this);
-    this.aspects = aspectList.aspects;
   }
 
-  public update() {
-    for (const aspect of this.aspects) {
-      const position = aspect.position;
-      const animation = aspect.animation;
+  public update() {}
 
-      if (!position || !animation) continue;
+  public removeFromEngine(): void {}
 
-      animation.animatedSprite.x = position.position.x;
-      animation.animatedSprite.y = position.position.y;
-      animation.animatedSprite.animationSpeed = 0.1;
-    }
+  private addToDisplay(aspect: RenderAspect) {
+    const graphics = aspect.display.view.graphics;
+    this.container.addChild(graphics);
   }
 
-  public removeFromEngine(): void {
-    this.aspects = [];
-  }
-
-  private addToDisplay(aspect: AnimatedPositionAspect) {
-    const animation = aspect.animation;
-
-    this.container.addChild(animation.animatedSprite);
-    animation.animatedSprite.play();
-  }
-
-  private removeFromDisplay(aspect: AnimatedPositionAspect) {
-    const animation = aspect.animation;
-
-    this.container.removeChild(animation.animatedSprite);
-    animation.animatedSprite.stop();
+  private removeFromDisplay(aspect: RenderAspect) {
+    const graphics = aspect.display.view.graphics;
+    graphics.destroy();
   }
 }
 
