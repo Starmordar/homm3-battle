@@ -2,13 +2,14 @@ import { AnimatedSprite, Assets } from 'pixi.js';
 
 import { AnimationComponent } from '@/components/AnimationComponet';
 import { DisplayComponent } from '@/components/DisplayComponent';
+import { GridPositionComponent } from '@/components/GridPositionComponent';
 import { PositionComponent } from '@/components/PositionComponent';
 import { Entity } from '@/core/Entity';
 import { GridView } from '@/view/GridView';
 
 import type { GameConfig } from '../config/GameConfig';
 import type { Engine } from '../core/Engine';
-import type { Point } from '@/types';
+import type { Hexagon } from '@/core/board';
 
 class EntityCreator {
   private engine: Engine;
@@ -19,11 +20,12 @@ class EntityCreator {
     this.config = config;
   }
 
-  public async createCreature({ sprite, position }: { sprite: string; position: Point }) {
+  public async createCreature({ sprite, position }: { sprite: string; position: Hexagon }) {
     const assets = await Assets.load(sprite);
 
     const entity = new Entity(sprite)
-      .add(new PositionComponent(position.x, position.y))
+      .add(new GridPositionComponent(position))
+      .add(new PositionComponent())
       .add(new AnimationComponent(new AnimatedSprite(assets.animations['standing'])));
 
     this.engine.addEntity(entity);
